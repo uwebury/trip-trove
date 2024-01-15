@@ -15,7 +15,7 @@ export default function HomePage() {
 
               <Image
                 src={trip.image}
-                width={200}
+                width={300}
                 height={200}
                 alt={trip.destination}
               />
