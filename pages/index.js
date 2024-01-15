@@ -12,7 +12,6 @@ export default function HomePage() {
             <ul>
               <li>{trip.start}</li>
               <li>{trip.end}</li>
-
               <Image
                 src={trip.image}
                 width={300}
