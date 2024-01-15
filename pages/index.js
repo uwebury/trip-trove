@@ -1,27 +1,34 @@
 import { initialTrips } from "@/lib/data";
 import Image from "next/image";
+import Card from "@/components/Card";
 
 export default function HomePage() {
   return (
     <div>
       <h1>TripTrove</h1>
-      <ul>
+      <div>
         {initialTrips.map((trip) => (
-          <li key={trip.slug}>
-            {trip.destination}
-            <ul>
-              <li>{trip.start}</li>
-              <li>{trip.end}</li>
+          <Card key={trip.destination}>
+            <h2>{trip.destination}</h2>
+            <div className="dates">
+              <p>
+                <strong>Start:</strong> {trip.start}
+              </p>
+              <p>
+                <strong>End:</strong> {trip.end}
+              </p>
+            </div>
+            <div className="image-container">
               <Image
                 src={trip.image}
                 width={300}
                 height={200}
                 alt={trip.destination}
               />
-            </ul>
-          </li>
+            </div>
+          </Card>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
