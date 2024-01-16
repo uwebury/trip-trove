@@ -8,7 +8,7 @@ export default function HomePage() {
       <h1>TripTrove</h1>
       <div>
         {initialTrips.map((trip) => (
-          <Card key={trip.destination}>
+          <Card key={trip._id}>
             <h2>{trip.destination}</h2>
             <div className="dates">
               <p>
