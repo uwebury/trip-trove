@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { initialTrips } from "/lib/data";
 import { v4 as uuidv4 } from "uuid";
 
@@ -83,18 +83,19 @@ export default function Form() {
     });
   };
 
+  const formRef = useRef(null);
+
   const handleReset = (event) => {
     event.preventDefault();
-    document.getElementById("tripForm").reset();
-    document.getElementById("tripForm").elements.destination.focus();
+    formRef.current.reset();
+    formRef.current.elements.destination.focus();
   };
-
   return (
     <>
       <FormContainer
         aria-label="trip form"
         onSubmit={handleSubmit}
-        id="tripForm"
+        ref={formRef}
       >
         <Label htmlFor="destination">Destination</Label>
         <Input
