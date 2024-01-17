@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState, useId } from "react";
+import { useState } from "react";
 import { initialTrips } from "/lib/data";
+import { v4 as uuidv4 } from "uuid";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -60,7 +61,7 @@ const StyledFormButton = styled.button`
 
 export default function Form() {
   const [updatedData, setUpdatedData] = useState(initialTrips);
-  const newTripId = useId();
+  const newTripId = uuidv4();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -71,11 +72,12 @@ export default function Form() {
       ...data,
     };
 
+    event.target.reset();
+    event.target.elements.destination.focus();
+
     setUpdatedData((prevData) => {
       const updatedData = [...prevData, newTrip];
 
-      event.target.reset();
-      event.target.elements.destination.focus();
       localStorage.setItem("tripsData", JSON.stringify(updatedData));
       return updatedData;
     });
