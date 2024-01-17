@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { initialTrips } from "@/lib/data";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
