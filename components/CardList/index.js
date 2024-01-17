@@ -19,10 +19,10 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
-export default function CardList() {
+export default function CardList({ trips }) {
   return (
     <StyledCardList>
-      {initialTrips.map((trip) => (
+      {trips.map((trip) => (
         <StyledCard key={trip._id}>
           <h2>{trip.destination}</h2>
           <div>

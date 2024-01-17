@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
-import { initialTrips } from "/lib/data";
+import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 
@@ -61,7 +60,6 @@ const StyledFormButton = styled.button`
 `;
 
 export default function Form() {
-  const [updatedData, setUpdatedData] = useState(initialTrips);
   const newTripId = uuidv4();
   const router = useRouter();
 
@@ -70,8 +68,8 @@ export default function Form() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    const startDate = new Date(data["start-date"]);
-    const endDate = new Date(data["end-date"]);
+    const startDate = new Date(data["start"]);
+    const endDate = new Date(data["end"]);
 
     if (endDate < startDate) {
       alert("End date cannot be before start date");
@@ -86,12 +84,11 @@ export default function Form() {
     event.target.reset();
     event.target.elements.destination.focus();
 
-    setUpdatedData((prevData) => {
-      const updatedData = [...prevData, newTrip];
+    const existingData = JSON.parse(localStorage.getItem("tripsData")) || [];
+    const updatedData = [newTrip, ...existingData];
 
-      localStorage.setItem("tripsData", JSON.stringify(updatedData));
-      return updatedData;
-    });
+    localStorage.setItem("tripsData", JSON.stringify(updatedData));
+
     router.push("/");
   };
 
@@ -118,13 +115,13 @@ export default function Form() {
           required
         />
         <DateContainer>
-          <Label htmlFor="start-date">Start</Label>
-          <Input id="start-date" name="start-date" type="date" required />
-          <Label htmlFor="end-date">End</Label>
-          <Input id="end-date" name="end-date" type="date" required />
+          <Label htmlFor="start">Start</Label>
+          <Input id="start" name="start" type="date" required />
+          <Label htmlFor="end">End</Label>
+          <Input id="end" name="end" type="date" required />
         </DateContainer>
-        <Label htmlFor="image-url">Image URL</Label>
-        <Input id="image-url" name="image-url" type="text" defaultValue="" />
+        <Label htmlFor="image">Image URL</Label>
+        <Input id="image" name="image" type="text" defaultValue="" />
         <Label htmlFor="packing-list">Packing List</Label>
         <Input
           id="packing-list"
