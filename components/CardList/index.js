@@ -39,6 +39,7 @@ export default function CardList() {
             height={200}
             alt={trip.destination}
           />
+          <p>More Details</p>
         </StyledCard>
       ))}
     </StyledCardList>
