@@ -67,6 +67,15 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+
+    const startDate = new Date(data["start-date"]);
+    const endDate = new Date(data["end-date"]);
+
+    if (endDate < startDate) {
+      alert("End date cannot be before start date");
+      return;
+    }
+
     const newTrip = {
       _id: newTripId,
       ...data,
