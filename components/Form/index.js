@@ -122,11 +122,7 @@ export default function Form() {
         <Label htmlFor="notes">Notes</Label>
         <Input id="notes" name="notes" type="text" defaultValue="" />
         <FormButtonContainer>
-          <StyledFormButton
-            // type="button"
-            onClick={handleReset}
-            $backgroundColor="#ffdbdb"
-          >
+          <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
             Reset
           </StyledFormButton>
           <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
