@@ -4,6 +4,7 @@ import { initialTrips } from "@/lib/data";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
+  padding: 0;
   display: flex;
   justify-content: center;
   flex-flow: column wrap;
