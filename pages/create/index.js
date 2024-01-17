@@ -62,8 +62,8 @@ export default function CreatePage() {
     console.log("form submitted");
   };
 
-  const handleCancel = () => {
-    console.log("cancel button clicked");
+  const handleReset = () => {
+    console.log("reset button clicked");
   };
 
   return (
@@ -98,10 +98,10 @@ export default function CreatePage() {
         <FormButtonContainer>
           <StyledFormButton
             type="button"
-            onClick={handleCancel}
+            onClick={handleReset}
             $backgroundColor="#ffdbdb"
           >
-            Cancel
+            Reset
           </StyledFormButton>
           <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
             Save
