@@ -75,17 +75,25 @@ export default function Form() {
       const updatedData = [...prevData, newTrip];
 
       event.target.reset();
+      event.target.elements.destination.focus();
       localStorage.setItem("tripsData", JSON.stringify(updatedData));
       return updatedData;
     });
   };
-  const handleReset = () => {
-    console.log("reset button clicked");
+
+  const handleReset = (event) => {
+    event.preventDefault();
+    document.getElementById("tripForm").reset();
+    document.getElementById("tripForm").elements.destination.focus();
   };
 
   return (
     <>
-      <FormContainer aria-label="create new trip form" onSubmit={handleSubmit}>
+      <FormContainer
+        aria-label="trip form"
+        onSubmit={handleSubmit}
+        id="tripForm"
+      >
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
@@ -113,7 +121,7 @@ export default function Form() {
         <Input id="notes" name="notes" type="text" defaultValue="" />
         <FormButtonContainer>
           <StyledFormButton
-            type="button"
+            // type="button"
             onClick={handleReset}
             $backgroundColor="#ffdbdb"
           >
