@@ -57,10 +57,8 @@ const StyledNavigationLink = styled(Link)`
 
 export default function NavigationButton({ href, letter, position }) {
   return (
-    <>
-      <NavigationLinkContainer position={position}>
-        <StyledNavigationLink href={href}>{letter}</StyledNavigationLink>
-      </NavigationLinkContainer>
-    </>
+    <NavigationLinkContainer position={position}>
+      <StyledNavigationLink href={href}>{letter}</StyledNavigationLink>
+    </NavigationLinkContainer>
   );
 }
