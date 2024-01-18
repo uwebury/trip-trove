@@ -68,8 +68,8 @@ export default function Form() {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    const startDate = new Date(data["start"]);
-    const endDate = new Date(data["end"]);
+    const startDate = new Date(data.start);
+    const endDate = new Date(data.end);
 
     if (endDate < startDate) {
       alert("End date cannot be before start date");
