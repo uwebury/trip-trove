@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import useSWR from "swr";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
@@ -18,10 +19,12 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
-export default function CardList({ trips }) {
+export default function CardList() {
+  const { data } = useSWR("/api/places", { fallbackData: [] });
+
   return (
     <StyledCardList>
-      {trips.map((trip) => (
+      {data.map((trip) => (
         <StyledCard key={trip._id}>
           <h2>{trip.destination}</h2>
           <div>
