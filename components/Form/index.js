@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/router";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -61,7 +60,6 @@ const StyledFormButton = styled.button`
 
 export default function Form() {
   const newTripId = uuidv4();
-  const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -88,8 +86,6 @@ export default function Form() {
     const updatedData = [newTrip, ...existingData];
 
     localStorage.setItem("tripsData", JSON.stringify(updatedData));
-
-    router.push("/");
   };
 
   const formRef = useRef(null);
