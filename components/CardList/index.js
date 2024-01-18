@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { initialTrips } from "@/lib/data";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
+  padding: 0;
   display: flex;
   justify-content: center;
   flex-flow: column wrap;
@@ -18,10 +18,10 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
-export default function CardList() {
+export default function CardList({ trips }) {
   return (
     <StyledCardList>
-      {initialTrips.map((trip) => (
+      {trips.map((trip) => (
         <StyledCard key={trip._id}>
           <h2>{trip.destination}</h2>
           <div>
@@ -38,6 +38,7 @@ export default function CardList() {
             height={200}
             alt={trip.destination}
           />
+          <p>More Details</p>
         </StyledCard>
       ))}
     </StyledCardList>
