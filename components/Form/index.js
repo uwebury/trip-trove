@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import toast, { Toaster } from "react-hot-toast";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -86,6 +87,7 @@ export default function Form() {
     const updatedData = [newTrip, ...existingData];
 
     localStorage.setItem("tripsData", JSON.stringify(updatedData));
+    toast.success("Trip successfully saved!");
   };
 
   const formRef = useRef(null);
@@ -97,6 +99,7 @@ export default function Form() {
   };
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <FormContainer
         aria-label="trip form"
         onSubmit={handleSubmit}

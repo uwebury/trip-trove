@@ -5,6 +5,7 @@ export default function CreatePage(href, letter, position) {
   return (
     <>
       <h1>TripTrove</h1>
+
       <Form />
       <NavigationButton href="/" letter="←" />
     </>
