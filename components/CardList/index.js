@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 import useSWR from "swr";
+import { formatDate } from "@/lib/utils";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
@@ -19,16 +20,11 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toISOString().split("T")[0];
-};
-
 export default function CardList() {
-  const { data, error } = useSWR("/api/trips", { fallbackData: [] });
+  const { data, error, isLoading } = useSWR("/api/trips", { fallbackData: [] });
   if (error) return <div>Failed to load</div>;
 
-  if (!data) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <StyledCardList>
