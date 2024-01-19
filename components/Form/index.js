@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
-import toast, { Toaster } from "react-hot-toast";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -59,37 +57,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form() {
-  const newTripId = uuidv4();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const startDate = new Date(data.start);
-    const endDate = new Date(data.end);
-
-    if (endDate < startDate) {
-      alert("End date cannot be before start date");
-      return;
-    }
-
-    const newTrip = {
-      _id: newTripId,
-      ...data,
-    };
-
-    event.target.reset();
-    event.target.elements.destination.focus();
-
-    const existingData = JSON.parse(localStorage.getItem("tripsData")) || [];
-    const updatedData = [newTrip, ...existingData];
-
-    localStorage.setItem("tripsData", JSON.stringify(updatedData));
-    toast.success("Trip successfully saved!");
-  };
-
+export default function Form({ onSubmit }) {
   const formRef = useRef(null);
 
   const handleReset = (event) => {
@@ -97,14 +65,10 @@ export default function Form() {
     formRef.current.reset();
     formRef.current.elements.destination.focus();
   };
+
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
-      <FormContainer
-        aria-label="trip form"
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
@@ -119,8 +83,8 @@ export default function Form() {
           <Label htmlFor="end">End</Label>
           <Input id="end" name="end" type="date" required />
         </DateContainer>
-        <Label htmlFor="image">Image URL</Label>
-        <Input id="image" name="image" type="text" defaultValue="" />
+        <Label htmlFor="imageURL">Image URL</Label>
+        <Input id="imageURL" name="imageURL" type="text" defaultValue="" />
         <Label htmlFor="packing-list">Packing List</Label>
         <Input
           id="packing-list"
