@@ -20,7 +20,11 @@ const StyledCard = styled.li`
 `;
 
 export default function CardList() {
-  const { data } = useSWR("/api/places", { fallbackData: [] });
+  const { data, error } = useSWR("/api/trips", { fallbackData: [] });
+  console.log("data:", data);
+  if (error) return <div>Failed to load</div>;
+
+  if (!data) return <div>Loading...</div>;
 
   return (
     <StyledCardList>
@@ -36,7 +40,7 @@ export default function CardList() {
             </p>
           </div>
           <Image
-            src={trip.image}
+            src={trip.imageURL}
             width={300}
             height={200}
             alt={trip.destination}
