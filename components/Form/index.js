@@ -58,23 +58,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form(onSubmit) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const startDate = new Date(data.start);
-    const endDate = new Date(data.end);
-
-    if (endDate < startDate) {
-      alert("End date cannot be before start date");
-      return;
-    }
-
-    toast.success("Trip successfully saved!");
-  };
-
+export default function Form({ onSubmit }) {
   const formRef = useRef(null);
 
   const handleReset = (event) => {
@@ -85,11 +69,7 @@ export default function Form(onSubmit) {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <FormContainer
-        aria-label="trip form"
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
@@ -104,8 +84,8 @@ export default function Form(onSubmit) {
           <Label htmlFor="end">End</Label>
           <Input id="end" name="end" type="date" required />
         </DateContainer>
-        <Label htmlFor="image">Image URL</Label>
-        <Input id="image" name="image" type="text" defaultValue="" />
+        <Label htmlFor="imageURL">Image URL</Label>
+        <Input id="imageURL" name="imageURL" type="text" defaultValue="" />
         <Label htmlFor="packing-list">Packing List</Label>
         <Input
           id="packing-list"

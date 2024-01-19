@@ -1,10 +1,8 @@
 import Form from "@/components/Form";
 import NavigationButton from "@/components/NavigationButton";
-import { useRouter } from "next/router";
 import useSWR from "swr";
 
-export default function CreatePage() {
-  const router = useRouter();
+export default function CreateTripPage() {
   const { mutate } = useSWR("/api/trips");
 
   async function addTrip(event) {
@@ -22,7 +20,6 @@ export default function CreatePage() {
 
     if (response.ok) {
       mutate();
-      router.push("/");
     }
   }
 
@@ -30,7 +27,7 @@ export default function CreatePage() {
     <>
       <h1>TripTrove</h1>
 
-      <Form onSubmit={addTrip} />
+      <Form onSubmit={addTrip} formName={"add-trip"} />
       <NavigationButton href="/" letter="←" />
     </>
   );
