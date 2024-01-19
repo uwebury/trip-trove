@@ -19,6 +19,11 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toISOString().split("T")[0];
+};
+
 export default function CardList() {
   const { data, error } = useSWR("/api/trips", { fallbackData: [] });
   if (error) return <div>Failed to load</div>;
@@ -32,10 +37,10 @@ export default function CardList() {
           <h2>{trip.destination}</h2>
           <div>
             <p>
-              <strong>Start:</strong> {trip.start}
+              <strong>Start:</strong> {formatDate(trip.start)}
             </p>
             <p>
-              <strong>End:</strong> {trip.end}
+              <strong>End:</strong> {formatDate(trip.end)}
             </p>
           </div>
           <Image
