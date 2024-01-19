@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
 import toast, { Toaster } from "react-hot-toast";
 
 const FormContainer = styled.form`
@@ -60,8 +59,6 @@ const StyledFormButton = styled.button`
 `;
 
 export default function Form(onSubmit) {
-  const newTripId = uuidv4();
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -75,18 +72,6 @@ export default function Form(onSubmit) {
       return;
     }
 
-    const newTrip = {
-      _id: newTripId,
-      ...data,
-    };
-
-    event.target.reset();
-    event.target.elements.destination.focus();
-
-    const existingData = JSON.parse(localStorage.getItem("tripsData")) || [];
-    const updatedData = [newTrip, ...existingData];
-
-    localStorage.setItem("tripsData", JSON.stringify(updatedData));
     toast.success("Trip successfully saved!");
   };
 
