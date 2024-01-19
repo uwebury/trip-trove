@@ -21,7 +21,6 @@ const StyledCard = styled.li`
 
 export default function CardList() {
   const { data, error } = useSWR("/api/trips", { fallbackData: [] });
-  console.log("data:", data);
   if (error) return <div>Failed to load</div>;
 
   if (!data) return <div>Loading...</div>;

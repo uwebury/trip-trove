@@ -59,7 +59,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form() {
+export default function Form(onSubmit) {
   const newTripId = uuidv4();
 
   const handleSubmit = (event) => {
