@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import toast, { Toaster } from "react-hot-toast";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -66,25 +65,9 @@ export default function Form({ onSubmit }) {
     formRef.current.reset();
     formRef.current.elements.destination.focus();
   };
-  const onSuccess = () => {
-    event.preventDefault();
-    const formData = new FormData(formRef.current);
-    const data = Object.fromEntries(formData);
 
-    const startDate = new Date(data.start);
-    const endDate = new Date(data.end);
-
-    if (endDate < startDate) {
-      toast.error("End date cannot be before start date");
-      return;
-    }
-
-    formRef.current.reset();
-    toast.success("Trip saved successfully");
-  };
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
       <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
         <Label htmlFor="destination">Destination</Label>
         <Input
@@ -115,11 +98,7 @@ export default function Form({ onSubmit }) {
           <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
             Reset
           </StyledFormButton>
-          <StyledFormButton
-            onClick={onSuccess}
-            type="submit"
-            $backgroundColor="#d9d9d9"
-          >
+          <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
             Save
           </StyledFormButton>
         </FormButtonContainer>
