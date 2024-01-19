@@ -13,6 +13,13 @@ export default function CreateTripPage() {
 
     const startDate = new Date(tripData.start);
     const endDate = new Date(tripData.end);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (startDate < today) {
+      toast.error("Start date cannot be in the past");
+      return;
+    }
 
     if (endDate < startDate) {
       toast.error("End date cannot be before start date");
