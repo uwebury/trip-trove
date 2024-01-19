@@ -66,6 +66,11 @@ export default function Form({ onSubmit }) {
     formRef.current.reset();
     formRef.current.elements.destination.focus();
   };
+  const onSuccess = (event) => {
+    event.preventDefault();
+    formRef.current.reset();
+    toast.success("Trip saved successfully");
+  };
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -99,7 +104,11 @@ export default function Form({ onSubmit }) {
           <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
             Reset
           </StyledFormButton>
-          <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
+          <StyledFormButton
+            onClick={onSuccess}
+            type="submit"
+            $backgroundColor="#d9d9d9"
+          >
             Save
           </StyledFormButton>
         </FormButtonContainer>
