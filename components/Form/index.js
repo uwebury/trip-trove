@@ -66,8 +66,19 @@ export default function Form({ onSubmit }) {
     formRef.current.reset();
     formRef.current.elements.destination.focus();
   };
-  const onSuccess = (event) => {
+  const onSuccess = () => {
     event.preventDefault();
+    const formData = new FormData(formRef.current);
+    const data = Object.fromEntries(formData);
+
+    const startDate = new Date(data.start);
+    const endDate = new Date(data.end);
+
+    if (endDate < startDate) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
+
     formRef.current.reset();
     toast.success("Trip saved successfully");
   };
