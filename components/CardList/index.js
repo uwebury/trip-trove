@@ -21,6 +21,20 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
+const StyledLink = styled.a`
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:link,
+  &:visited {
+    color: inherit;
+  }
+`;
+
 export default function CardList() {
   const { data, error, isLoading } = useSWR("/api/trips", {
     fallbackData: [],
@@ -32,11 +46,7 @@ export default function CardList() {
   return (
     <StyledCardList>
       {data.map((trip) => (
-        <Link
-          href={`trips/${trip._id}`}
-          key={trip._id}
-          style={{ textDecoration: "none" }}
-        >
+        <StyledLink href={`trips/${trip._id}`} key={trip._id}>
           <StyledCard>
             <h2>{trip.destination}</h2>
             <strong>Start:</strong> {formatDate(trip.start)} |{" "}
@@ -53,7 +63,7 @@ export default function CardList() {
             </p>
             <p>More Details</p>
           </StyledCard>
-        </Link>
+        </StyledLink>
       ))}
     </StyledCardList>
   );

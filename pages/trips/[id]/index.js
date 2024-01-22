@@ -12,6 +12,7 @@ export default function DetailsPage() {
 
   const { data: trip, isLoading, error } = useSWR(`/api/trips/${id}`);
 
+  if (error) return <h2>Error, please try again later...</h2>;
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
   return (
