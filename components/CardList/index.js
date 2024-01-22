@@ -2,6 +2,7 @@ import useSWR from "swr";
 import Image from "next/image";
 import styled from "styled-components";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 const StyledCardList = styled.ul`
   margin: 0 3rem;
@@ -21,7 +22,9 @@ const StyledCard = styled.li`
 `;
 
 export default function CardList() {
-  const { data, error, isLoading } = useSWR("/api/trips", { fallbackData: [] });
+  const { data, error, isLoading } = useSWR("/api/trips", {
+    fallbackData: [],
+  });
   if (error) return <div>Failed to load</div>;
 
   if (isLoading) return <div>Loading...</div>;
@@ -29,19 +32,25 @@ export default function CardList() {
   return (
     <StyledCardList>
       {data.map((trip) => (
-        <StyledCard key={trip._id}>
-          <h2>{trip.destination}</h2>
-          <strong>Start:</strong> {formatDate(trip.start)} |{" "}
-          <strong>End:</strong>
-          {formatDate(trip.end)}
-          <Image
-            src={trip.imageURL}
-            width={300}
-            height={200}
-            alt={trip.destination}
-          />
-          <p>More Details</p>
-        </StyledCard>
+        <Link
+          href={`trips/${trip._id}`}
+          key={trip._id}
+          style={{ textDecoration: "none" }}
+        >
+          <StyledCard>
+            <h2>{trip.destination}</h2>
+            <strong>Start:</strong> {formatDate(trip.start)} |{" "}
+            <strong>End:</strong>
+            {formatDate(trip.end)}
+            <Image
+              src={trip.imageURL}
+              width={300}
+              height={200}
+              alt={trip.destination}
+            />
+            <p>More Details</p>
+          </StyledCard>
+        </Link>
       ))}
     </StyledCardList>
   );
