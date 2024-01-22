@@ -31,14 +31,9 @@ export default function CardList() {
       {data.map((trip) => (
         <StyledCard key={trip._id}>
           <h2>{trip.destination}</h2>
-          <div>
-            <p>
-              <strong>Start:</strong> {formatDate(trip.start)}
-            </p>
-            <p>
-              <strong>End:</strong> {formatDate(trip.end)}
-            </p>
-          </div>
+          <strong>Start:</strong> {formatDate(trip.start)} |{" "}
+          <strong>End:</strong>
+          {formatDate(trip.end)}
           <Image
             src={trip.imageURL}
             width={300}
