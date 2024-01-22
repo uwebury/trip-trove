@@ -40,14 +40,17 @@ export default function CardList() {
           <StyledCard>
             <h2>{trip.destination}</h2>
             <strong>Start:</strong> {formatDate(trip.start)} |{" "}
-            <strong>End:</strong>
-            {formatDate(trip.end)}
-            <Image
-              src={trip.imageURL}
-              width={300}
-              height={200}
-              alt={trip.destination}
-            />
+            <strong>End:</strong> {formatDate(trip.end)}
+            <p>
+              <Image
+                src={
+                  trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
+                }
+                width={300}
+                height={200}
+                alt={trip.destination}
+              />
+            </p>
             <p>More Details</p>
           </StyledCard>
         </Link>

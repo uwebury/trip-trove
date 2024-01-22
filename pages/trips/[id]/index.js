@@ -17,14 +17,16 @@ export default function DetailsPage() {
   return (
     <>
       <h2>{trip.destination}</h2>
-      <strong>Start:</strong> {formatDate(trip.start)} | <strong>End:</strong>
+      <strong>Start:</strong> {formatDate(trip.start)} | <strong>End:</strong>{" "}
       {formatDate(trip.end)}
-      <Image
-        src={trip.imageURL}
-        width={300}
-        height={200}
-        alt={trip.destination}
-      />
+      <p>
+        <Image
+          src={trip.imageURL !== "" ? trip.imageURL : "/images/default.png"}
+          width={300}
+          height={200}
+          alt={trip.destination}
+        />
+      </p>
       <p>
         <strong>Notes:</strong> {trip.notes}
       </p>
