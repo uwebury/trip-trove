@@ -14,7 +14,7 @@ const StyledFormButton = styled.button`
   border-radius: 0.5rem;
   font-size: inherit;
   font-weight: bold;
-  cursor: pointer; // optional for better UX
+  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`
