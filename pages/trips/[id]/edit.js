@@ -33,7 +33,6 @@ export default function EditPage() {
 
   return (
     <>
-      <h2 id="edit-trip">Edit Trip</h2>
       <Form onSubmit={editTrip} defaultData={trip} isEditMode={true} />
       <BackButton href={`/trips/${id}`} />
     </>
