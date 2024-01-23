@@ -10,7 +10,7 @@ export default function EditPage() {
 
   const { data: trip, isLoading, error, mutate } = useSWR(`/api/trips/${id}`);
 
-  async function editTrip(event) {
+  async function handleEdit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const tripData = Object.fromEntries(formData);
@@ -33,7 +33,7 @@ export default function EditPage() {
 
   return (
     <>
-      <Form onSubmit={editTrip} defaultData={trip} isEditMode={true} />
+      <Form onSubmit={handleEdit} defaultData={trip} isEditMode={true} />
       <BackButton href={`/trips/${id}`} />
     </>
   );

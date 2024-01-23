@@ -30,7 +30,7 @@ export default function Header() {
   } else if (router.pathname === "/create") {
     pageTitle = "Add Trip";
   } else if (router.pathname.includes("/edit")) {
-    pageTitle = "Edit trip";
+    pageTitle = "Edit Trip";
   } else if (router.pathname.includes("/trips/")) {
     pageTitle = "Trip Details";
   }

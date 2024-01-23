@@ -6,7 +6,7 @@ import BackButton from "@/components/Button/BackButton";
 export default function CreateTripPage() {
   const { mutate } = useSWR("/api/trips");
 
-  async function addTrip(event) {
+  async function handleCreate(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const tripData = Object.fromEntries(formData);
@@ -44,7 +44,7 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <Form onSubmit={addTrip} isEditMode={false} />
+      <Form onSubmit={handleCreate} isEditMode={false} />
       <BackButton href="/" />
     </>
   );
