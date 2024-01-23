@@ -3,7 +3,7 @@ import useSWR from "swr";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import PackingList from "@/components/PackingList";
-import NavigationButton from "@/components/NavigationButton";
+import BackButton from "@/components/Button/BackButton";
 
 export default function DetailsPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function DetailsPage() {
         <strong>Notes:</strong> {trip.notes}
       </p>
       <PackingList />
-      <NavigationButton href="/" letter="←" />
+      <BackButton href="/" />
     </>
   );
 }

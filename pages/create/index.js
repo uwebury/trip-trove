@@ -1,7 +1,7 @@
 import Form from "@/components/Form";
-import NavigationButton from "@/components/NavigationButton";
 import useSWR from "swr";
 import toast, { Toaster } from "react-hot-toast";
+import BackButton from "@/components/Button/BackButton";
 
 export default function CreateTripPage() {
   const { mutate } = useSWR("/api/trips");
@@ -44,10 +44,8 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <h1>TripTrove</h1>
-
       <Form onSubmit={addTrip} formName={"add-trip"} />
-      <NavigationButton href="/" letter="←" />
+      <BackButton href="/" />
     </>
   );
 }
