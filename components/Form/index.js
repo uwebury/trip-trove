@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 
 const FormContainer = styled.form`
@@ -60,6 +60,7 @@ const StyledFormButton = styled.button`
 
 export default function Form({ onSubmit, defaultData, isEditMode }) {
   const formRef = useRef(null);
+  const [originalData, setOriginalData] = useState(defaultData);
 
   const handleReset = (event) => {
     event.preventDefault();
@@ -67,6 +68,19 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
     formRef.current.elements.destination.focus();
   };
 
+  const handleCancel = (event) => {
+    event.preventDefault();
+    formRef.current.elements.destination.value =
+      originalData?.destination || "";
+    formRef.current.elements.start.value =
+      formatDateForInput(originalData?.start) || "";
+    formRef.current.elements.end.value =
+      formatDateForInput(originalData?.end) || "";
+    formRef.current.elements.imageURL.value = originalData?.imageURL || "";
+    formRef.current.elements["packing-list"].value =
+      originalData?.packingList || "";
+    formRef.current.elements.notes.value = originalData?.notes || "";
+  };
   return (
     <>
       <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
@@ -118,7 +132,10 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           defaultValue={defaultData?.notes}
         />
         <FormButtonContainer>
-          <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
+          <StyledFormButton
+            onClick={isEditMode ? handleCancel : handleReset}
+            $backgroundColor="#ffdbdb"
+          >
             {isEditMode ? "Cancel" : "Reset"}
           </StyledFormButton>
           <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
