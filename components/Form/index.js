@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRef } from "react";
 
 const FormContainer = styled.form`
-  margin: 0 3rem;
+  margin: 2rem auto;
   display: grid;
   gap: 0.4rem;
   padding: 1rem 1.6rem;

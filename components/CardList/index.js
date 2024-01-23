@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
 const StyledCardList = styled.ul`
-  margin: 0 3rem;
+  margin: 2rem auto;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -21,7 +21,7 @@ const StyledCard = styled.li`
   list-style: none;
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 
