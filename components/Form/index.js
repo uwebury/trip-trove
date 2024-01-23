@@ -77,7 +77,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
     formRef.current.elements.end.value =
       formatDateForInput(originalData?.end) || "";
     formRef.current.elements.imageURL.value = originalData?.imageURL || "";
-    formRef.current.elements["packing-list"].value =
+    formRef.current.elements.packingList.value =
       originalData?.packingList || "";
     formRef.current.elements.notes.value = originalData?.notes || "";
   };
