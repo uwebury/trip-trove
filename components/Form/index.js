@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useRef } from "react";
+import { formatDate } from "@/lib/utils";
 
 const FormContainer = styled.form`
-  margin: 2rem auto;
+  margin: 0 3rem;
   display: grid;
   gap: 0.4rem;
   padding: 1rem 1.6rem;
@@ -57,13 +58,27 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit }) {
+export default function Form({ onSubmit, defaultData }) {
   const formRef = useRef(null);
 
   const handleReset = (event) => {
     event.preventDefault();
     formRef.current.reset();
     formRef.current.elements.destination.focus();
+  };
+
+  const formatDateForInput = (isoDateString) => {
+    if (!isoDateString) return "";
+
+    // Create a Date object from the ISO string
+    const date = new Date(isoDateString);
+
+    // Adjust for timezone offset to ensure the correct date is used
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
+
+    // Format the date as "YYYY-MM-DD"
+    return adjustedDate.toISOString().split("T")[0];
   };
 
   return (
@@ -74,26 +89,48 @@ export default function Form({ onSubmit }) {
           id="destination"
           name="destination"
           type="text"
-          defaultValue=""
+          defaultValue={defaultData?.destination}
           required
         />
         <DateContainer>
           <Label htmlFor="start">Start</Label>
-          <Input id="start" name="start" type="date" required />
+          <Input
+            id="start"
+            name="start"
+            type="date"
+            defaultValue={formatDateForInput(defaultData?.start)}
+            required
+          />
           <Label htmlFor="end">End</Label>
-          <Input id="end" name="end" type="date" required />
+          <Input
+            id="end"
+            name="end"
+            type="date"
+            defaultValue={formatDateForInput(defaultData?.end)}
+            required
+          />
         </DateContainer>
         <Label htmlFor="imageURL">Image URL</Label>
-        <Input id="imageURL" name="imageURL" type="text" defaultValue="" />
+        <Input
+          id="imageURL"
+          name="imageURL"
+          type="text"
+          defaultValue={defaultData?.imageURL}
+        />
         <Label htmlFor="packing-list">Packing List</Label>
         <Input
           id="packing-list"
           name="packing-list"
           type="text"
-          defaultValue=""
+          defaultValue={defaultData?.packingList}
         />
         <Label htmlFor="notes">Notes</Label>
-        <Input id="notes" name="notes" type="text" defaultValue="" />
+        <Input
+          id="notes"
+          name="notes"
+          type="text"
+          defaultValue={defaultData?.notes}
+        />
         <FormButtonContainer>
           <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
             Reset
