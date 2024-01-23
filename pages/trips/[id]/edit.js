@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Form from "@/components/Form";
-import Link from "next/link";
+import BackButton from "@/components/Button/BackButton";
 
 export default function EditPage() {
   const router = useRouter();
@@ -34,10 +34,8 @@ export default function EditPage() {
   return (
     <>
       <h2 id="edit-trip">Edit Trip</h2>
-      <Link href={`/trips/${id}`} passHref legacyBehavior>
-        back
-      </Link>
       <Form onSubmit={editTrip} defaultData={trip} />
+      <BackButton href={`/trips/${id}`} />
     </>
   );
 }
