@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import { formatDate } from "@/lib/utils";
+import { formatDateForInput } from "@/lib/utils";
 
 const FormContainer = styled.form`
   margin: 0 3rem;
@@ -65,20 +65,6 @@ export default function Form({ onSubmit, defaultData }) {
     event.preventDefault();
     formRef.current.reset();
     formRef.current.elements.destination.focus();
-  };
-
-  const formatDateForInput = (isoDateString) => {
-    if (!isoDateString) return "";
-
-    // Create a Date object from the ISO string
-    const date = new Date(isoDateString);
-
-    // Adjust for timezone offset to ensure the correct date is used
-    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
-    const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
-
-    // Format the date as "YYYY-MM-DD"
-    return adjustedDate.toISOString().split("T")[0];
   };
 
   return (
