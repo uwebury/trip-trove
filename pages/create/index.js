@@ -44,7 +44,7 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <Form onSubmit={addTrip} formName={"add-trip"} />
+      <Form onSubmit={addTrip} isEditMode={false} />
       <BackButton href="/" />
     </>
   );

@@ -58,7 +58,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit, defaultData }) {
+export default function Form({ onSubmit, defaultData, isEditMode }) {
   const formRef = useRef(null);
 
   const handleReset = (event) => {
@@ -119,7 +119,7 @@ export default function Form({ onSubmit, defaultData }) {
         />
         <FormButtonContainer>
           <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
-            Reset
+            {isEditMode ? "Cancel" : "Reset"}
           </StyledFormButton>
           <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
             Save
