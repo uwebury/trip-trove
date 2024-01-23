@@ -117,10 +117,10 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           type="text"
           defaultValue={defaultData?.imageURL}
         />
-        <Label htmlFor="packing-list">Packing List</Label>
+        <Label htmlFor="packingList">Packing List</Label>
         <Input
-          id="packing-list"
-          name="packing-list"
+          id="packingList"
+          name="packingList"
           type="text"
           defaultValue={defaultData?.packingList}
         />
