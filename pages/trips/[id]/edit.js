@@ -37,7 +37,7 @@ export default function EditPage() {
       <Link href={`/trips/${id}`} passHref legacyBehavior>
         back
       </Link>
-      <Form onSubmit={editTrip} formName={"edit-trip"} defaultData={trip} />
+      <Form onSubmit={editTrip} defaultData={trip} />
     </>
   );
 }
