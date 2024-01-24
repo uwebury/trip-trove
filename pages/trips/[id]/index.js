@@ -22,6 +22,10 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledMessage = styled.h2`
+  margin: 2rem auto;
+`;
+
 export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
@@ -33,8 +37,9 @@ export default function DetailsPage() {
     router.push(`${id}/edit`);
   };
 
-  if (error) return <h2>Error, please try again later...</h2>;
-  if (!isReady || isLoading) return <h2>Loading...</h2>;
+  if (error)
+    return <StyledMessage>Error, please try again later...</StyledMessage>;
+  if (!isReady || isLoading) return <StyledMessage>Loading...</StyledMessage>;
 
   return (
     <>
