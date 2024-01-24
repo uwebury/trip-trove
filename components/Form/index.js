@@ -60,7 +60,13 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit, defaultData, isEditMode }) {
+export default function Form({
+  onSubmit,
+  defaultData,
+  isEditMode,
+  isDisabled,
+  onToastToggle,
+}) {
   const formRef = useRef(null);
   const [originalData, setOriginalData] = useState(defaultData);
 
@@ -72,11 +78,17 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
 
   const handleCancel = (event) => {
     event.preventDefault();
+    onToastToggle(true);
 
     toast(
       <CancelEditMessage
-        onConfirm={() => {}}
-        onCancel={() => discardChanges()}
+        onConfirm={() => {
+          onToastToggle(false);
+        }}
+        onCancel={() => {
+          discardChanges();
+          onToastToggle(false);
+        }}
         originalData={originalData}
       />,
       {
@@ -108,6 +120,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           type="text"
           defaultValue={defaultData?.destination}
           required
+          disabled={isDisabled}
         />
         <DateContainer>
           <Label htmlFor="start">Start</Label>
@@ -117,6 +130,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
             type="date"
             defaultValue={formatDateForInput(defaultData?.start)}
             required
+            disabled={isDisabled}
           />
           <Label htmlFor="end">End</Label>
           <Input
@@ -125,6 +139,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
             type="date"
             defaultValue={formatDateForInput(defaultData?.end)}
             required
+            disabled={isDisabled}
           />
         </DateContainer>
         <Label htmlFor="imageURL">Image URL</Label>
@@ -133,6 +148,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           name="imageURL"
           type="text"
           defaultValue={defaultData?.imageURL}
+          disabled={isDisabled}
         />
         <Label htmlFor="packingList">Packing List</Label>
         <Input
@@ -140,6 +156,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           name="packingList"
           type="text"
           defaultValue={defaultData?.packingList}
+          disabled={isDisabled}
         />
         <Label htmlFor="notes">Notes</Label>
         <Input
@@ -147,15 +164,21 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
           name="notes"
           type="text"
           defaultValue={defaultData?.notes}
+          disabled={isDisabled}
         />
         <FormButtonContainer>
           <StyledFormButton
             onClick={isEditMode ? handleCancel : handleReset}
             $backgroundColor="#ffdbdb"
+            disabled={isDisabled}
           >
             {isEditMode ? "Cancel" : "Reset"}
           </StyledFormButton>
-          <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
+          <StyledFormButton
+            type="submit"
+            $backgroundColor="#d9d9d9"
+            disabled={isDisabled}
+          >
             Save
           </StyledFormButton>
         </FormButtonContainer>
