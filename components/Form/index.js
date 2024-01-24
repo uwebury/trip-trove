@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 import { DiscardChangesMessage } from "../ToastMessage";
 import toast from "react-hot-toast";
+import { set } from "mongoose";
 
 const FormContainer = styled.form`
   margin: 2rem auto;
@@ -61,22 +62,30 @@ const StyledFormButton = styled.button`
 `;
 
 export default function Form({
-  onSubmit,
+  handleSubmit,
   defaultData,
   isEditMode,
   isDisabled,
   onToastToggle,
 }) {
   const formRef = useRef(null);
-  const [originalData, setOriginalData] = useState(defaultData);
+  const [handoverData, setHandoverData] = useState(defaultData);
 
-  const handleReset = (event) => {
+  function handleInput(event) {
+    setHandoverData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function handleReset(event) {
     event.preventDefault();
+    setHandoverData(defaultData);
     formRef.current.reset();
     formRef.current.elements.destination.focus();
-  };
+  }
 
-  const handleDiscard = (event) => {
+  function handleDiscard(event) {
     event.preventDefault();
     onToastToggle(true);
 
@@ -86,39 +95,31 @@ export default function Form({
           onToastToggle(false);
         }}
         onCancel={() => {
-          discardChanges();
+          setHandoverData(defaultData);
           onToastToggle(false);
         }}
-        originalData={originalData}
+        handoverData={handoverData}
       />,
       {
         duration: Infinity,
       }
     );
-
-    const discardChanges = () => {
-      formRef.current.elements.destination.value =
-        originalData?.destination || "";
-      formRef.current.elements.start.value =
-        formatDateForInput(originalData?.start) || "";
-      formRef.current.elements.end.value =
-        formatDateForInput(originalData?.end) || "";
-      formRef.current.elements.imageURL.value = originalData?.imageURL || "";
-      formRef.current.elements.packingList.value =
-        originalData?.packingList || "";
-      formRef.current.elements.notes.value = originalData?.notes || "";
-    };
-  };
+  }
 
   return (
     <>
-      <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
+      <FormContainer
+        aria-label="trip form"
+        onSubmit={handleSubmit}
+        ref={formRef}
+      >
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
           name="destination"
           type="text"
-          defaultValue={defaultData?.destination}
+          value={handoverData?.destination || ""}
+          onInput={handleInput}
           required
           disabled={isDisabled}
         />
@@ -128,7 +129,8 @@ export default function Form({
             id="start"
             name="start"
             type="date"
-            defaultValue={formatDateForInput(defaultData?.start)}
+            value={formatDateForInput(handoverData?.start || "")}
+            onInput={handleInput}
             required
             disabled={isDisabled}
           />
@@ -137,7 +139,8 @@ export default function Form({
             id="end"
             name="end"
             type="date"
-            defaultValue={formatDateForInput(defaultData?.end)}
+            value={formatDateForInput(handoverData?.end || "")}
+            onInput={handleInput}
             required
             disabled={isDisabled}
           />
@@ -147,7 +150,8 @@ export default function Form({
           id="imageURL"
           name="imageURL"
           type="text"
-          defaultValue={defaultData?.imageURL}
+          value={handoverData?.imageURL || ""}
+          onInput={handleInput}
           disabled={isDisabled}
         />
         <Label htmlFor="packingList">Packing List</Label>
@@ -155,7 +159,8 @@ export default function Form({
           id="packingList"
           name="packingList"
           type="text"
-          defaultValue={defaultData?.packingList}
+          value={handoverData?.packingList || ""}
+          onInput={handleInput}
           disabled={isDisabled}
         />
         <Label htmlFor="notes">Notes</Label>
@@ -163,7 +168,8 @@ export default function Form({
           id="notes"
           name="notes"
           type="text"
-          defaultValue={defaultData?.notes}
+          value={handoverData?.notes || ""}
+          onInput={handleInput}
           disabled={isDisabled}
         />
         <FormButtonContainer>

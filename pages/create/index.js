@@ -34,7 +34,7 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <Form onSubmit={handleCreateSave} isEditMode={false} />
+      <Form handleSubmit={handleCreateSave} isEditMode={false} />
       <BackButton href="/" />
     </>
   );

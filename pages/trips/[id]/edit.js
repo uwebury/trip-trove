@@ -75,7 +75,7 @@ export default function EditPage() {
     <>
       <Toaster />
       <Form
-        onSubmit={handleEditSave}
+        handleSubmit={handleEditSave}
         defaultData={trip}
         isEditMode={true}
         isDisabled={isToastActive}
