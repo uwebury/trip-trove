@@ -1,8 +1,14 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 import Form from "@/components/Form";
 import BackButton from "@/components/Button/BackButton";
 import { toast, Toaster } from "react-hot-toast";
+import { SaveChangesMessage } from "@/components/ToastMessage";
+
+const StyledMessage = styled.h2`
+  margin: 2rem auto;
+`;
 
 export default function EditPage() {
   const router = useRouter();
@@ -32,28 +38,19 @@ export default function EditPage() {
     const tripData = Object.fromEntries(formData);
 
     toast(
-      (t) => (
-        <div>
-          <p>Are you sure to save changes?</p>
-          <button
-            onClick={() => {
-              toast.dismiss(t.id);
-              handleSave(tripData);
-            }}
-          >
-            Save
-          </button>
-          <button onClick={() => toast.dismiss(t.id)}>Cancel</button>
-        </div>
-      ),
+      <SaveChangesMessage
+        onConfirm={() => handleSave(tripData)}
+        onCancel={() => {}}
+      />,
       {
         duration: Infinity,
       }
     );
   }
 
-  if (error) return <h2>Error, please try again later...</h2>;
-  if (!isReady || isLoading) return <h2>Loading...</h2>;
+  if (error)
+    return <StyledMessage>Error, please try again later...</StyledMessage>;
+  if (!isReady || isLoading) return <StyledMessage>Loading...</StyledMessage>;
 
   return (
     <>
