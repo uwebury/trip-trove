@@ -6,6 +6,7 @@ import BackButton from "@/components/Button/BackButton";
 import { toast, Toaster } from "react-hot-toast";
 import { SaveChangesMessage } from "@/components/ToastMessage";
 import { useState } from "react";
+import { validateTripDates } from "@/lib/utils";
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -39,6 +40,11 @@ export default function EditPage() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const tripData = Object.fromEntries(formData);
+
+    if (!validateTripDates(tripData)) {
+      return;
+    }
+
     setIsToastActive(true);
 
     toast(
