@@ -69,6 +69,13 @@ export default createGlobalStyle`
 
   --color-page-up-button: var(--color-tertiary-300);
   --color-page-up-button-hover: var(--color-tertiary-50);
+
+  --color-text-button: var(--color-secondary-100);
+  --color-text-button-border: var(--color-secondary-300);
+  --color-text-button-hover: var(--color-secondary-200);
+
+  --color-input-field: var(--color-tertiary-50);
+
   }
   
   *,

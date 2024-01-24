@@ -2,30 +2,31 @@ import styled from "styled-components";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 import { DiscardChangesMessage } from "../ToastMessage";
+import { ButtonContainer, StyledTextButton } from "../Button/TextButton";
 import toast from "react-hot-toast";
-import { set } from "mongoose";
 
 const FormContainer = styled.form`
   margin: 2rem auto;
   display: grid;
   gap: 0.4rem;
   padding: 1rem 1.6rem;
-  border: 2px solid #ddd;
-  border-radius: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Label = styled.label`
-  margin-top: 0.6rem;
+  margin-top: 0.4rem;
   font-weight: bold;
 `;
 
 const Input = styled.input`
   padding: 0.5rem;
   font-size: inherit;
-  background-color: #f5f7f9;
-  border: 2px solid #ddd;
-  border-radius: 0.5rem;
+  background-color: var(--color-input-field);
+  border: 1px solid #ddd;
+  border-radius: 8px;
   margin-bottom: 0.1rem;
 `;
 
@@ -40,25 +41,6 @@ const DateContainer = styled.fieldset`
   gap: inherit;
   grid-auto-flow: column;
   justify-content: space-between;
-`;
-
-const FormButtonContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-`;
-
-const StyledFormButton = styled.button`
-  min-width: 140px;
-  padding: 0.5rem;
-  background-color: ${({ $backgroundColor }) => $backgroundColor};
-  border: 2px solid #848484;
-  border-radius: 0.5rem;
-  font-size: inherit;
-  font-weight: bold;
 `;
 
 export default function Form({
@@ -172,23 +154,18 @@ export default function Form({
           onInput={handleInput}
           disabled={isDisabled}
         />
-        <FormButtonContainer>
-          <StyledFormButton
+        <ButtonContainer>
+          <StyledTextButton
             type="button"
             onClick={isEditMode ? handleDiscard : handleReset}
-            $backgroundColor="#ffdbdb"
             disabled={isDisabled}
           >
             {isEditMode ? "Discard" : "Reset"}
-          </StyledFormButton>
-          <StyledFormButton
-            type="submit"
-            $backgroundColor="#d9d9d9"
-            disabled={isDisabled}
-          >
+          </StyledTextButton>
+          <StyledTextButton type="submit" disabled={isDisabled}>
             Save
-          </StyledFormButton>
-        </FormButtonContainer>
+          </StyledTextButton>
+        </ButtonContainer>
       </FormContainer>
     </>
   );

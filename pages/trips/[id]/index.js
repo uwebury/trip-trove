@@ -3,24 +3,12 @@ import useSWR from "swr";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import PackingList from "@/components/PackingList";
+import {
+  ButtonContainer,
+  StyledTextButton,
+} from "@/components/Button/TextButton";
 import BackButton from "@/components/Button/BackButton";
 import styled from "styled-components";
-
-const StyledFormButton = styled.button`
-  min-width: 140px;
-  padding: 0.5rem;
-  background-color: ${({ $backgroundColor }) => $backgroundColor};
-  border: 2px solid #848484;
-  border-radius: 0.5rem;
-  font-size: inherit;
-  font-weight: bold;
-  cursor: pointer;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -54,10 +42,8 @@ export default function DetailsPage() {
           alt={trip.destination}
         />
       </p>
-      <ButtonContainer>
-        <StyledFormButton onClick={handleEditClick} $backgroundColor="#ffdbdb">
-          Edit
-        </StyledFormButton>
+      <ButtonContainer $justifyContent="flex-end">
+        <StyledTextButton onClick={handleEditClick}>Edit</StyledTextButton>
       </ButtonContainer>
       <p>
         <strong>Notes:</strong> {trip.notes}
