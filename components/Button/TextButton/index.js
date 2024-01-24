@@ -15,7 +15,7 @@ export const StyledTextButton = styled.button`
   background-color: var(--color-text-button);
   border: 2px solid var(--color-text-button-border);
   border-radius: 20px;
-  font-size: inherit;
+  font-size: 0.95rem;
   font-weight: bold;
   transition: color 0.3s ease, transform 0.3s ease;
 
