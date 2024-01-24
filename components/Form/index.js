@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
+import { CancelEditMessage } from "../ToastMessage";
 
 const FormContainer = styled.form`
   margin: 2rem auto;
@@ -58,7 +59,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit, defaultData, isEditMode }) {
+export default function Form({ onSubmit, defaultData, isEditMode, onCancel }) {
   const formRef = useRef(null);
   const [originalData, setOriginalData] = useState(defaultData);
 
@@ -70,6 +71,7 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
 
   const handleCancel = (event) => {
     event.preventDefault();
+    if (onCancel) onCancel(originalData);
     formRef.current.elements.destination.value =
       originalData?.destination || "";
     formRef.current.elements.start.value =
@@ -80,6 +82,17 @@ export default function Form({ onSubmit, defaultData, isEditMode }) {
     formRef.current.elements.packingList.value =
       originalData?.packingList || "";
     formRef.current.elements.notes.value = originalData?.notes || "";
+
+    toast(
+      <CancelEditMessage
+        onConfirm={() => {}}
+        onCancel={() => handleResetFields(originalData)}
+        originalData={originalData}
+      />,
+      {
+        duration: Infinity,
+      }
+    );
   };
   return (
     <>
