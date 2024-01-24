@@ -168,6 +168,7 @@ export default function Form({
         />
         <FormButtonContainer>
           <StyledFormButton
+            type="button"
             onClick={isEditMode ? handleDiscard : handleReset}
             $backgroundColor="#ffdbdb"
             disabled={isDisabled}
