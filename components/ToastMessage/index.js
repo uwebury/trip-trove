@@ -2,7 +2,7 @@ import { toast } from "react-hot-toast";
 
 export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
   <div>
-    <p>Are you sure to save changes?</p>
+    <p>Are you sure to save all changes?</p>
     <button
       onClick={() => {
         onConfirm();
@@ -22,9 +22,13 @@ export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
   </div>
 );
 
-export const CancelEditMessage = ({ onConfirm, onCancel, originalData }) => (
+export const DiscardChangesMessage = ({
+  onConfirm,
+  onCancel,
+  originalData,
+}) => (
   <div>
-    <p>Are you sure to discard all changes without saving?</p>
+    <p>Are you sure to discard all changes?</p>
     <button
       onClick={() => {
         // Pass the original data to onCancel

@@ -35,7 +35,7 @@ export default function EditPage() {
     }
   };
 
-  async function handleEdit(event) {
+  async function handleEditSave(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const tripData = Object.fromEntries(formData);
@@ -69,7 +69,7 @@ export default function EditPage() {
     <>
       <Toaster />
       <Form
-        onSubmit={handleEdit}
+        onSubmit={handleEditSave}
         defaultData={trip}
         isEditMode={true}
         isDisabled={isToastActive}

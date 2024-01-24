@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
-import { CancelEditMessage } from "../ToastMessage";
+import { CancelEditMessage, DiscardChangesMessage } from "../ToastMessage";
 import toast from "react-hot-toast";
 
 const FormContainer = styled.form`
@@ -76,12 +76,12 @@ export default function Form({
     formRef.current.elements.destination.focus();
   };
 
-  const handleCancel = (event) => {
+  const handleDiscard = (event) => {
     event.preventDefault();
     onToastToggle(true);
 
     toast(
-      <CancelEditMessage
+      <DiscardChangesMessage
         onConfirm={() => {
           onToastToggle(false);
         }}
@@ -168,11 +168,11 @@ export default function Form({
         />
         <FormButtonContainer>
           <StyledFormButton
-            onClick={isEditMode ? handleCancel : handleReset}
+            onClick={isEditMode ? handleDiscard : handleReset}
             $backgroundColor="#ffdbdb"
             disabled={isDisabled}
           >
-            {isEditMode ? "Cancel" : "Reset"}
+            {isEditMode ? "Discard" : "Reset"}
           </StyledFormButton>
           <StyledFormButton
             type="submit"
