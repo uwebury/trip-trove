@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 import { CancelEditMessage } from "../ToastMessage";
+import toast from "react-hot-toast";
 
 const FormContainer = styled.form`
   margin: 2rem auto;
@@ -59,7 +60,7 @@ const StyledFormButton = styled.button`
   font-weight: bold;
 `;
 
-export default function Form({ onSubmit, defaultData, isEditMode, onCancel }) {
+export default function Form({ onSubmit, defaultData, isEditMode }) {
   const formRef = useRef(null);
   const [originalData, setOriginalData] = useState(defaultData);
 
@@ -71,29 +72,32 @@ export default function Form({ onSubmit, defaultData, isEditMode, onCancel }) {
 
   const handleCancel = (event) => {
     event.preventDefault();
-    if (onCancel) onCancel(originalData);
-    formRef.current.elements.destination.value =
-      originalData?.destination || "";
-    formRef.current.elements.start.value =
-      formatDateForInput(originalData?.start) || "";
-    formRef.current.elements.end.value =
-      formatDateForInput(originalData?.end) || "";
-    formRef.current.elements.imageURL.value = originalData?.imageURL || "";
-    formRef.current.elements.packingList.value =
-      originalData?.packingList || "";
-    formRef.current.elements.notes.value = originalData?.notes || "";
 
     toast(
       <CancelEditMessage
         onConfirm={() => {}}
-        onCancel={() => handleResetFields(originalData)}
+        onCancel={() => discardChanges()}
         originalData={originalData}
       />,
       {
         duration: Infinity,
       }
     );
+
+    const discardChanges = () => {
+      formRef.current.elements.destination.value =
+        originalData?.destination || "";
+      formRef.current.elements.start.value =
+        formatDateForInput(originalData?.start) || "";
+      formRef.current.elements.end.value =
+        formatDateForInput(originalData?.end) || "";
+      formRef.current.elements.imageURL.value = originalData?.imageURL || "";
+      formRef.current.elements.packingList.value =
+        originalData?.packingList || "";
+      formRef.current.elements.notes.value = originalData?.notes || "";
+    };
   };
+
   return (
     <>
       <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>

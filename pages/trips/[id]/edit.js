@@ -4,10 +4,7 @@ import styled from "styled-components";
 import Form from "@/components/Form";
 import BackButton from "@/components/Button/BackButton";
 import { toast, Toaster } from "react-hot-toast";
-import {
-  SaveChangesMessage,
-  CancelEditMessage,
-} from "@/components/ToastMessage";
+import { SaveChangesMessage } from "@/components/ToastMessage";
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -35,8 +32,6 @@ export default function EditPage() {
     }
   };
 
-  const handleCancelToast = (originalData) => {};
-
   async function handleEdit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -60,12 +55,7 @@ export default function EditPage() {
   return (
     <>
       <Toaster />
-      <Form
-        onSubmit={handleEdit}
-        onCancel={handleCancelToast}
-        defaultData={trip}
-        isEditMode={true}
-      />
+      <Form onSubmit={handleEdit} defaultData={trip} isEditMode={true} />
       <BackButton href={`/trips/${id}`} />
     </>
   );
