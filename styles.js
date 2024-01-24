@@ -74,7 +74,8 @@ export default createGlobalStyle`
   --color-text-button-border: var(--color-secondary-300);
   --color-text-button-hover: var(--color-secondary-200);
 
-  --color-input-field: var(--color-tertiary-50);
+  --color-form-label: var(--color-tertiary-800);
+  --color-form-input: var(--color-tertiary-50);
 
   }
   

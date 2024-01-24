@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { defaultFont } from "../../../styles.js";
 
 export const ButtonContainer = styled.div`
   display: flex;
@@ -15,7 +16,8 @@ export const StyledTextButton = styled.button`
   background-color: var(--color-text-button);
   border: 2px solid var(--color-text-button-border);
   border-radius: 20px;
-  font-size: 0.95rem;
+  font-family: ${defaultFont.style.fontFamily};
+  font-size: 1rem;
   font-weight: bold;
   transition: color 0.3s ease, transform 0.3s ease;
 

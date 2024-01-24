@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { defaultFont } from "../../styles.js";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 import { DiscardChangesMessage } from "../ToastMessage";
@@ -8,7 +9,7 @@ import toast from "react-hot-toast";
 const FormContainer = styled.form`
   margin: 2rem auto;
   display: grid;
-  gap: 0.4rem;
+  gap: 0.3rem;
   padding: 1rem 1.6rem;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -19,12 +20,15 @@ const FormContainer = styled.form`
 const Label = styled.label`
   margin-top: 0.4rem;
   font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-form-label);
 `;
 
 const Input = styled.input`
   padding: 0.5rem;
+  font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
-  background-color: var(--color-input-field);
+  background-color: var(--color-form-input);
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 0.1rem;
