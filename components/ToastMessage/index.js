@@ -1,6 +1,9 @@
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import styled from "styled-components";
-import { ButtonContainer, StyledTextButton } from "../Button/TextButton";
+import {
+  ButtonContainer,
+  StyledTextButton,
+} from "@/components/Button/TextButton";
 
 const ToasterContainer = styled.div`
   border: 1px solid #ddd;

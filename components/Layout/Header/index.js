@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import Logo from "../Logo";
+import Logo from "@/components/Layout/Logo";
 
 const HeaderContainer = styled.header`
   background-color: var(--color-header);

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { defaultFont } from "../../../styles.js";
+import { defaultFont } from "@/styles.js";
 
 export const ButtonContainer = styled.div`
   display: flex;

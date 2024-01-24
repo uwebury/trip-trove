@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { defaultFont } from "../../styles.js";
+import { defaultFont } from "@/styles.js";
 import { useRef, useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
-import { DiscardChangesMessage } from "../ToastMessage";
-import { ButtonContainer, StyledTextButton } from "../Button/TextButton";
+import { DiscardChangesMessage } from "@/components/ToastMessage";
+import {
+  ButtonContainer,
+  StyledTextButton,
+} from "@/components/Button/TextButton";
 import toast from "react-hot-toast";
 
 const FormContainer = styled.form`
