@@ -17,7 +17,7 @@ export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
         toast.dismiss();
       }}
     >
-      No, don&#39;t save
+      No, do not save
     </button>
   </div>
 );
@@ -44,7 +44,7 @@ export const DiscardChangesMessage = ({
         toast.dismiss(); // Dismiss the toast after confirming
       }}
     >
-      No, don&#39;t discard
+      No, do not discard
     </button>
   </div>
 );
