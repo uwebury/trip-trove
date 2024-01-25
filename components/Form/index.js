@@ -67,15 +67,13 @@ export default function Form({
     }));
   }
 
-  function handleReset(event) {
-    event.preventDefault();
+  function handleReset() {
     setHandoverData(defaultData);
     formRef.current.reset();
     formRef.current.elements.destination.focus();
   }
 
-  function handleDiscard(event) {
-    event.preventDefault();
+  function handleDiscard() {
     onToastToggle(true);
 
     toast(
@@ -169,9 +167,7 @@ export default function Form({
           >
             {isEditMode ? "Discard" : "Reset"}
           </StyledTextButton>
-          <StyledTextButton type="submit" disabled={isDisabled}>
-            Save
-          </StyledTextButton>
+          <StyledTextButton disabled={isDisabled}>Save</StyledTextButton>
         </ButtonContainer>
       </FormContainer>
     </>
