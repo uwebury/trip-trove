@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { defaultFont } from "@/styles.js";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { formatDateForInput } from "@/lib/utils";
 import { DiscardChangesMessage } from "@/components/ToastMessage";
 import {
@@ -57,7 +57,6 @@ export default function Form({
   isDisabled,
   onToastToggle,
 }) {
-  const formRef = useRef(null);
   const [handoverData, setHandoverData] = useState(defaultData);
 
   function handleInput(event) {
@@ -69,8 +68,6 @@ export default function Form({
 
   function handleReset() {
     setHandoverData(defaultData);
-    formRef.current.reset();
-    formRef.current.elements.destination.focus();
   }
 
   function handleDiscard() {
@@ -85,7 +82,6 @@ export default function Form({
           setHandoverData(defaultData);
           onToastToggle(false);
         }}
-        handoverData={handoverData}
       />,
       {
         duration: Infinity,
@@ -95,11 +91,7 @@ export default function Form({
 
   return (
     <>
-      <FormContainer
-        aria-label="trip form"
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <FormContainer aria-label="trip form" onSubmit={handleSubmit}>
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
@@ -109,6 +101,7 @@ export default function Form({
           onInput={handleInput}
           required
           disabled={isDisabled}
+          autoFocus
         />
         <DateContainer>
           <Label htmlFor="start">Start</Label>

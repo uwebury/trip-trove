@@ -42,17 +42,13 @@ export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
   </div>
 );
 
-export const DiscardChangesMessage = ({
-  onConfirm,
-  onCancel,
-  originalData,
-}) => (
+export const DiscardChangesMessage = ({ onConfirm, onCancel }) => (
   <div>
     <ToasterMessage>Are you sure to discard all changes?</ToasterMessage>
     <ButtonContainer>
       <StyledTextButton
         onClick={() => {
-          onCancel(originalData);
+          onCancel();
           toast.dismiss();
         }}
       >
