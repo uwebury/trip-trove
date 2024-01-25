@@ -43,13 +43,9 @@ export default function CardList() {
 
   if (isLoading) return <div>Loading...</div>;
 
-  // implemented line 48 and changed line 52 from data.map to reversedData.map for debugging + testing issues
-
-  const reversedData = [...data].reverse();
-
   return (
     <StyledCardList>
-      {reversedData.map((trip) => (
+      {[...data].reverse().map((trip) => (
         <StyledLink href={`trips/${trip._id}`} key={trip._id}>
           <StyledCard>
             <h2>{trip.destination}</h2>
