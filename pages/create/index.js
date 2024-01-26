@@ -1,21 +1,12 @@
-import Form from "@/components/Form";
 import useSWR from "swr";
-import toast, { Toaster } from "react-hot-toast";
+import Form from "@/components/Form";
 import BackButton from "@/components/Button/BackButton";
-import { validateTripDates } from "@/lib/utils";
+import { toast, Toaster } from "react-hot-toast";
 
 export default function CreateTripPage() {
   const { mutate } = useSWR("/api/trips");
 
-  async function handleCreateSave(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const tripData = Object.fromEntries(formData);
-
-    if (!validateTripDates(tripData)) {
-      return;
-    }
-
+  async function handleSubmit(tripData) {
     const response = await fetch(`/api/trips`, {
       method: "POST",
       headers: {
@@ -26,15 +17,20 @@ export default function CreateTripPage() {
 
     if (response.ok) {
       mutate();
-      toast.success("Trip saved successfully");
-      event.target.reset();
+      toast.success("New trip successfully saved.");
+    }
+
+    if (!response.ok) {
+      toast.error(
+        "Oops! Something went wrong while processing your request. Please check your input and try again."
+      );
     }
   }
 
   return (
     <>
       <Toaster />
-      <Form handleSubmit={handleCreateSave} isEditMode={false} />
+      <Form onSubmit={handleSubmit} defaultData={{}} isEditMode={false} />
       <BackButton href="/" />
     </>
   );

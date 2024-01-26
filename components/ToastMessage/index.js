@@ -5,14 +5,6 @@ import {
   StyledTextButton,
 } from "@/components/Button/TextButton";
 
-const ToasterContainer = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
 const ToasterMessage = styled.p`
   text-align: center;
   font-size: 1.1rem;
@@ -28,7 +20,7 @@ export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
           toast.dismiss();
         }}
       >
-        Yes, save
+        Yes, save please!
       </StyledTextButton>
       <StyledTextButton
         onClick={() => {
@@ -36,23 +28,23 @@ export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
           toast.dismiss();
         }}
       >
-        No, do not save
+        No, don&apos;t save.
       </StyledTextButton>
     </ButtonContainer>
   </div>
 );
 
-export const DiscardChangesMessage = ({ onConfirm, onCancel }) => (
+export const DiscardChangesMessage = ({ onConfirm, onCancel, defaultData }) => (
   <div>
     <ToasterMessage>Are you sure to discard all changes?</ToasterMessage>
     <ButtonContainer>
       <StyledTextButton
         onClick={() => {
-          onCancel();
+          onCancel(defaultData);
           toast.dismiss();
         }}
       >
-        Yes, discard
+        Yes, discard please.
       </StyledTextButton>
       <StyledTextButton
         onClick={() => {
@@ -60,7 +52,7 @@ export const DiscardChangesMessage = ({ onConfirm, onCancel }) => (
           toast.dismiss();
         }}
       >
-        No, do not discard
+        No, don&apos;t discard!
       </StyledTextButton>
     </ButtonContainer>
   </div>

@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { defaultFont } from "@/styles.js";
 import { useState } from "react";
-import { formatDateForInput } from "@/lib/utils";
-import { DiscardChangesMessage } from "@/components/ToastMessage";
+import { validateTripDates, formatDateForInput } from "@/lib/utils";
+import {
+  SaveChangesMessage,
+  DiscardChangesMessage,
+} from "@/components/ToastMessage";
 import {
   ButtonContainer,
   StyledTextButton,
@@ -50,14 +53,10 @@ const DateContainer = styled.fieldset`
   justify-content: space-between;
 `;
 
-export default function Form({
-  handleSubmit,
-  defaultData,
-  isEditMode,
-  isDisabled,
-  onToastToggle,
-}) {
+export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
+
+  const [isDisabled, setIsDisabled] = useState(false);
 
   function handleInput(event) {
     setHandoverData((prev) => ({
@@ -67,20 +66,84 @@ export default function Form({
   }
 
   function handleReset() {
+    setIsDisabled(true);
+    if (handoverData === defaultData) {
+      toast.error("No entries yet, nothing to reset...");
+      setIsDisabled(false);
+      return;
+    }
     setHandoverData(defaultData);
   }
 
   function handleDiscard() {
-    onToastToggle(true);
+    setIsDisabled(true);
+    if (handoverData === defaultData) {
+      toast.error("No changes yet, nothing to discard...");
+      setIsDisabled(false);
+      return;
+    }
 
     toast(
       <DiscardChangesMessage
         onConfirm={() => {
-          onToastToggle(false);
+          setIsDisabled(false);
         }}
         onCancel={() => {
           setHandoverData(defaultData);
-          onToastToggle(false);
+          setIsDisabled(false);
+        }}
+        handoverData={handoverData}
+      />,
+      {
+        duration: Infinity,
+      }
+    );
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setIsDisabled(true);
+
+    // ==========================
+    // TBD: as destination, start and end are required inputs there's no need to check if (isEditMode). If you agree just kick the commented lines!
+    // ==========================
+
+    // if (handoverData === defaultData) {
+    //   if (isEditMode) {
+    //     toast.error("No changes yet, nothing to save...");
+    //   } else {
+    //     toast.error("No data entries yet, nothing to save...");
+    //   }
+
+    //   setIsDisabled(false);
+    //   return;
+    // }
+
+    if (handoverData === defaultData) {
+      toast.error("No changes yet, nothing to save...");
+      setIsDisabled(false);
+      return;
+    }
+
+    if (!validateTripDates(handoverData)) {
+      toast.error("Oops! End date earlier than start date?");
+      setIsDisabled(false);
+      return;
+    }
+
+    toast(
+      <SaveChangesMessage
+        onConfirm={() => {
+          onSubmit(handoverData);
+          setIsDisabled(false);
+        }}
+        onCancel={() => {
+          setIsDisabled(false);
+          toast.error("Data not saved.");
+          // ==========================
+          // toast is not displayed yet, but would make sense >>> check!
+          // ==========================
+          return;
         }}
       />,
       {
