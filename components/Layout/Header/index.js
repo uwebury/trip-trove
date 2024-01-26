@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import Logo from "../Logo";
+import Logo from "@/components/Layout/Logo";
 
 const HeaderContainer = styled.header`
   background-color: var(--color-header);
@@ -29,6 +29,8 @@ export default function Header() {
     pageTitle = "Trip Overview";
   } else if (router.pathname === "/create") {
     pageTitle = "Add Trip";
+  } else if (router.pathname.includes("/edit")) {
+    pageTitle = "Edit Trip";
   } else if (router.pathname.includes("/trips/")) {
     pageTitle = "Trip Details";
   }

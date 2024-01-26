@@ -45,7 +45,7 @@ export default function CardList() {
 
   return (
     <StyledCardList>
-      {data.map((trip) => (
+      {[...data].reverse().map((trip) => (
         <StyledLink href={`trips/${trip._id}`} key={trip._id}>
           <StyledCard>
             <h2>{trip.destination}</h2>

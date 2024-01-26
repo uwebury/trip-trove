@@ -1,27 +1,39 @@
 import styled from "styled-components";
-import { useRef } from "react";
+import { defaultFont } from "@/styles.js";
+import { useState } from "react";
+import { formatDateForInput } from "@/lib/utils";
+import { DiscardChangesMessage } from "@/components/ToastMessage";
+import {
+  ButtonContainer,
+  StyledTextButton,
+} from "@/components/Button/TextButton";
+import toast from "react-hot-toast";
 
 const FormContainer = styled.form`
   margin: 2rem auto;
   display: grid;
-  gap: 0.4rem;
+  gap: 0.3rem;
   padding: 1rem 1.6rem;
-  border: 2px solid #ddd;
-  border-radius: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Label = styled.label`
-  margin-top: 0.6rem;
+  margin-top: 0.4rem;
   font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-form-label);
 `;
 
 const Input = styled.input`
   padding: 0.5rem;
+  font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
-  background-color: #f5f7f9;
-  border: 2px solid #ddd;
-  border-radius: 0.5rem;
+  background-color: var(--color-form-input);
+  border: 1px solid #ddd;
+  border-radius: 8px;
   margin-bottom: 0.1rem;
 `;
 
@@ -38,70 +50,118 @@ const DateContainer = styled.fieldset`
   justify-content: space-between;
 `;
 
-const FormButtonContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-`;
+export default function Form({
+  handleSubmit,
+  defaultData,
+  isEditMode,
+  isDisabled,
+  onToastToggle,
+}) {
+  const [handoverData, setHandoverData] = useState(defaultData);
 
-const StyledFormButton = styled.button`
-  min-width: 140px;
-  padding: 0.5rem;
-  background-color: ${({ $backgroundColor }) => $backgroundColor};
-  border: 2px solid #848484;
-  border-radius: 0.5rem;
-  font-size: inherit;
-  font-weight: bold;
-`;
+  function handleInput(event) {
+    setHandoverData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
 
-export default function Form({ onSubmit }) {
-  const formRef = useRef(null);
+  function handleReset() {
+    setHandoverData(defaultData);
+  }
 
-  const handleReset = (event) => {
-    event.preventDefault();
-    formRef.current.reset();
-    formRef.current.elements.destination.focus();
-  };
+  function handleDiscard() {
+    onToastToggle(true);
+
+    toast(
+      <DiscardChangesMessage
+        onConfirm={() => {
+          onToastToggle(false);
+        }}
+        onCancel={() => {
+          setHandoverData(defaultData);
+          onToastToggle(false);
+        }}
+      />,
+      {
+        duration: Infinity,
+      }
+    );
+  }
 
   return (
     <>
-      <FormContainer aria-label="trip form" onSubmit={onSubmit} ref={formRef}>
+      <FormContainer aria-label="trip form" onSubmit={handleSubmit}>
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
           name="destination"
           type="text"
-          defaultValue=""
+          value={handoverData?.destination || ""}
+          onInput={handleInput}
           required
+          disabled={isDisabled}
+          autoFocus
         />
         <DateContainer>
           <Label htmlFor="start">Start</Label>
-          <Input id="start" name="start" type="date" required />
+          <Input
+            id="start"
+            name="start"
+            type="date"
+            value={formatDateForInput(handoverData?.start || "")}
+            onInput={handleInput}
+            required
+            disabled={isDisabled}
+          />
           <Label htmlFor="end">End</Label>
-          <Input id="end" name="end" type="date" required />
+          <Input
+            id="end"
+            name="end"
+            type="date"
+            value={formatDateForInput(handoverData?.end || "")}
+            onInput={handleInput}
+            required
+            disabled={isDisabled}
+          />
         </DateContainer>
         <Label htmlFor="imageURL">Image URL</Label>
-        <Input id="imageURL" name="imageURL" type="text" defaultValue="" />
-        <Label htmlFor="packing-list">Packing List</Label>
         <Input
-          id="packing-list"
-          name="packing-list"
+          id="imageURL"
+          name="imageURL"
           type="text"
-          defaultValue=""
+          value={handoverData?.imageURL || ""}
+          onInput={handleInput}
+          disabled={isDisabled}
+        />
+        <Label htmlFor="packingList">Packing List</Label>
+        <Input
+          id="packingList"
+          name="packingList"
+          type="text"
+          value={handoverData?.packingList || ""}
+          onInput={handleInput}
+          disabled={isDisabled}
         />
         <Label htmlFor="notes">Notes</Label>
-        <Input id="notes" name="notes" type="text" defaultValue="" />
-        <FormButtonContainer>
-          <StyledFormButton onClick={handleReset} $backgroundColor="#ffdbdb">
-            Reset
-          </StyledFormButton>
-          <StyledFormButton type="submit" $backgroundColor="#d9d9d9">
-            Save
-          </StyledFormButton>
-        </FormButtonContainer>
+        <Input
+          id="notes"
+          name="notes"
+          type="text"
+          value={handoverData?.notes || ""}
+          onInput={handleInput}
+          disabled={isDisabled}
+        />
+        <ButtonContainer>
+          <StyledTextButton
+            type="button"
+            onClick={isEditMode ? handleDiscard : handleReset}
+            disabled={isDisabled}
+          >
+            {isEditMode ? "Discard" : "Reset"}
+          </StyledTextButton>
+          <StyledTextButton disabled={isDisabled}>Save</StyledTextButton>
+        </ButtonContainer>
       </FormContainer>
     </>
   );

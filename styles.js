@@ -69,6 +69,15 @@ export default createGlobalStyle`
 
   --color-page-up-button: var(--color-tertiary-300);
   --color-page-up-button-hover: var(--color-tertiary-50);
+
+  --color-button: var(--color-secondary-100);
+  --color-button-text: var(--color-tertiary-1000);
+  --color-button-border: var(--color-secondary-300);
+  --color-button-hover: var(--color-secondary-200);
+
+  --color-form-label: var(--color-tertiary-800);
+  --color-form-input: var(--color-tertiary-50);
+
   }
   
   *,
@@ -76,7 +85,7 @@ export default createGlobalStyle`
   *::after {
     box-sizing: border-box;
   }
-
+ 
   body {
     margin: 0 auto;
     padding: 0;

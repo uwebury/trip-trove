@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import Navigation from "./Navigation";
-import PageUpButton from "../Button/PageUpButton";
+import Navigation from "@/components/Layout/Navigation";
+import PageUpButton from "@/components/Button/PageUpButton";
 
 const LayoutContainer = styled.div`
   display: flex;

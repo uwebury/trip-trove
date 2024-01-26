@@ -1,9 +1,18 @@
-import { useRouter } from "next/router.js";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import PackingList from "@/components/PackingList";
+import {
+  ButtonContainer,
+  StyledTextButton,
+} from "@/components/Button/TextButton";
 import BackButton from "@/components/Button/BackButton";
+import styled from "styled-components";
+
+const StyledMessage = styled.h2`
+  margin: 2rem auto;
+`;
 
 export default function DetailsPage() {
   const router = useRouter();
@@ -12,8 +21,13 @@ export default function DetailsPage() {
 
   const { data: trip, isLoading, error } = useSWR(`/api/trips/${id}`);
 
-  if (error) return <h2>Error, please try again later...</h2>;
-  if (!isReady || isLoading || error) return <h2>Loading...</h2>;
+  const handleEditClick = () => {
+    router.push(`${id}/edit`);
+  };
+
+  if (error)
+    return <StyledMessage>Error, please try again later...</StyledMessage>;
+  if (!isReady || isLoading) return <StyledMessage>Loading...</StyledMessage>;
 
   return (
     <>
@@ -28,6 +42,9 @@ export default function DetailsPage() {
           alt={trip.destination}
         />
       </p>
+      <ButtonContainer $justifyContent="flex-end">
+        <StyledTextButton onClick={handleEditClick}>Edit</StyledTextButton>
+      </ButtonContainer>
       <p>
         <strong>Notes:</strong> {trip.notes}
       </p>

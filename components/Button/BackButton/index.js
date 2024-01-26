@@ -15,11 +15,8 @@ const BackButtonLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
   border-radius: 50%;
-  transition:
-    color 0.6s ease,
-    transform 0.6s ease;
+  transition: color 0.6s ease, transform 0.6s ease;
   &:hover {
     background-color: var(--color-back-button-hover);
     transform: scale(1.1);
