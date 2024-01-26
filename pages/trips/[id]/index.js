@@ -42,12 +42,10 @@ export default function DetailsPage() {
         method: "DELETE",
       });
       toast.success("Trip successfully deleted.");
-      // Wait for the toast to be shown before navigating away
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Adjust timing as needed
       router.push("/");
     } catch (error) {
       toast.error("Error deleting trip!");
-      // Handle error and show error toast if necessary
     }
   }
 
@@ -57,7 +55,6 @@ export default function DetailsPage() {
 
   return (
     <>
-      {/* <Toaster position="top-center" reverseOrder={false} /> */}
       <Toaster />
       <h2>{trip.destination}</h2>
       <strong>Start:</strong> {formatDate(trip.start)} | <strong>End:</strong>{" "}
