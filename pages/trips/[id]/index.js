@@ -50,7 +50,7 @@ export default function DetailsPage() {
           alt={trip.destination}
         />
       </p>
-      <ButtonContainer $justifyContent="flex-end">
+      <ButtonContainer>
         <StyledTextButton onClick={handleEditClick}>Edit</StyledTextButton>
       </ButtonContainer>
       <p>
