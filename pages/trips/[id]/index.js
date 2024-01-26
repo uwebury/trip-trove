@@ -9,6 +9,7 @@ import {
 } from "@/components/Button/TextButton";
 import BackButton from "@/components/Button/BackButton";
 import styled from "styled-components";
+import toast, { Toaster } from "react-hot-toast";
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -25,11 +26,21 @@ export default function DetailsPage() {
     router.push(`${id}/edit`);
   };
 
+  const confirmDelete = () => {
+    deleteTrip();
+    // toast(
+    //   <DeleteConfirmationMessage
+    //     onConfirm={deleteTrip}
+    //     onCancel={() => toast.dismiss()}
+    //   />
+    // );
+  };
+
   async function deleteTrip() {
     await fetch(`/api/trips/${id}`, {
       method: "DELETE",
     });
-    toast.dismiss();
+    // toast.dismiss("Dismiss");
     router.push("/");
   }
 
@@ -39,6 +50,7 @@ export default function DetailsPage() {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <h2>{trip.destination}</h2>
       <strong>Start:</strong> {formatDate(trip.start)} | <strong>End:</strong>{" "}
       {formatDate(trip.end)}
@@ -51,6 +63,7 @@ export default function DetailsPage() {
         />
       </p>
       <ButtonContainer>
+        <StyledTextButton onClick={confirmDelete}>Delete</StyledTextButton>
         <StyledTextButton onClick={handleEditClick}>Edit</StyledTextButton>
       </ButtonContainer>
       <p>
