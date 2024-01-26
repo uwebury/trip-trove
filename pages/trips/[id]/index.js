@@ -10,6 +10,7 @@ import {
 import BackButton from "@/components/Button/BackButton";
 import styled from "styled-components";
 import toast, { Toaster } from "react-hot-toast";
+import { DeleteConfirmationMessage } from "@/components/ToastMessage";
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -27,20 +28,19 @@ export default function DetailsPage() {
   };
 
   const confirmDelete = () => {
-    deleteTrip();
-    // toast(
-    //   <DeleteConfirmationMessage
-    //     onConfirm={deleteTrip}
-    //     onCancel={() => toast.dismiss()}
-    //   />
-    // );
+    toast(
+      <DeleteConfirmationMessage
+        onConfirm={deleteTrip}
+        onCancel={() => toast.dismiss()}
+      />
+    );
   };
 
   async function deleteTrip() {
     await fetch(`/api/trips/${id}`, {
       method: "DELETE",
     });
-    // toast.dismiss("Dismiss");
+    toast.dismiss("Dismiss");
     router.push("/");
   }
 
