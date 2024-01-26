@@ -25,6 +25,14 @@ export default function DetailsPage() {
     router.push(`${id}/edit`);
   };
 
+  async function deleteTrip() {
+    await fetch(`/api/trips/${id}`, {
+      method: "DELETE",
+    });
+    toast.dismiss();
+    router.push("/");
+  }
+
   if (error)
     return <StyledMessage>Error, please try again later...</StyledMessage>;
   if (!isReady || isLoading) return <StyledMessage>Loading...</StyledMessage>;
