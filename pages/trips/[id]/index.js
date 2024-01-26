@@ -40,7 +40,7 @@ export default function DetailsPage() {
     await fetch(`/api/trips/${id}`, {
       method: "DELETE",
     });
-    toast.dismiss("Dismiss");
+    toast.success();
     router.push("/");
   }
 
