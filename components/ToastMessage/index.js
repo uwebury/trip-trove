@@ -65,3 +65,27 @@ export const DiscardChangesMessage = ({ onConfirm, onCancel }) => (
     </ButtonContainer>
   </div>
 );
+
+export const DeleteConfirmationMessage = ({ onConfirm, onCancel }) => (
+  <div>
+    <ToasterMessage>Are you sure to delete this trip?</ToasterMessage>
+    <ButtonContainer>
+      <StyledTextButton
+        onClick={() => {
+          onConfirm();
+          toast.dismiss();
+        }}
+      >
+        OK
+      </StyledTextButton>
+      <StyledTextButton
+        onClick={() => {
+          onCancel();
+          toast.dismiss();
+        }}
+      >
+        Cancel
+      </StyledTextButton>
+    </ButtonContainer>
+  </div>
+);
