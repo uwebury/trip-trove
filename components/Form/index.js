@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { defaultFont } from "@/styles.js";
 import { useState } from "react";
 import { validateTripDates, formatDateForInput } from "@/lib/utils";
@@ -21,6 +21,14 @@ const FormContainer = styled.form`
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Disable form elements when formDisabled is true */
+  ${({ formDisabled }) =>
+    formDisabled &&
+    css`
+      pointer-events: none;
+      opacity: 0.5;
+    `}
 `;
 
 const Label = styled.label`
@@ -55,8 +63,7 @@ const DateContainer = styled.fieldset`
 
 export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
-
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [formDisabled, setFormDisabled] = useState(false); // Initialize as not disabled
 
   function handleInput(event) {
     setHandoverData((prev) => ({
@@ -66,31 +73,32 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }
 
   function handleReset() {
-    setIsDisabled(true);
+    setFormDisabled(true); // Disable the entire form
     if (handoverData === defaultData) {
       toast.error("No entries yet, nothing to reset...");
-      setIsDisabled(false);
+      setFormDisabled(false); // Enable the form
       return;
     }
     setHandoverData(defaultData);
+    setFormDisabled(false); // Enable the form
   }
 
   function handleDiscard() {
-    setIsDisabled(true);
+    setFormDisabled(true); // Disable the entire form
     if (handoverData === defaultData) {
       toast.error("No changes yet, nothing to discard...");
-      setIsDisabled(false);
+      setFormDisabled(false); // Enable the form
       return;
     }
 
     toast(
       <DiscardChangesMessage
         onConfirm={() => {
-          setIsDisabled(false);
+          setFormDisabled(false); // Enable the form
         }}
         onCancel={() => {
           setHandoverData(defaultData);
-          setIsDisabled(false);
+          setFormDisabled(false); // Enable the form
         }}
         handoverData={handoverData}
       />,
@@ -102,32 +110,17 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setIsDisabled(true);
-
-    // ==========================
-    // TBD: as destination, start and end are required inputs there's no need to check if (isEditMode). If you agree just kick the commented lines!
-    // ==========================
-
-    // if (handoverData === defaultData) {
-    //   if (isEditMode) {
-    //     toast.error("No changes yet, nothing to save...");
-    //   } else {
-    //     toast.error("No data entries yet, nothing to save...");
-    //   }
-
-    //   setIsDisabled(false);
-    //   return;
-    // }
+    setFormDisabled(true); // Disable the entire form
 
     if (handoverData === defaultData) {
       toast.error("No changes yet, nothing to save...");
-      setIsDisabled(false);
+      setFormDisabled(false); // Enable the form
       return;
     }
 
     if (!validateTripDates(handoverData)) {
       toast.error("Oops! End date earlier than start date?");
-      setIsDisabled(false);
+      setFormDisabled(false); // Enable the form
       return;
     }
 
@@ -135,14 +128,12 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       <SaveChangesMessage
         onConfirm={() => {
           onSubmit(handoverData);
-          setIsDisabled(false);
+          setFormDisabled(false); // Enable the form
         }}
         onCancel={() => {
-          setIsDisabled(false);
+          setFormDisabled(false); // Enable the form
           toast.error("Data not saved.");
-          // ==========================
-          // toast is not displayed yet, but would make sense >>> check!
-          // ==========================
+          // Check if toast is displayed
           return;
         }}
       />,
@@ -154,7 +145,11 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
 
   return (
     <>
-      <FormContainer aria-label="trip form" onSubmit={handleSubmit}>
+      <FormContainer
+        aria-label="trip form"
+        onSubmit={handleSubmit}
+        formDisabled={formDisabled}
+      >
         <Label htmlFor="destination">Destination</Label>
         <Input
           id="destination"
@@ -163,8 +158,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           value={handoverData?.destination || ""}
           onInput={handleInput}
           required
-          disabled={isDisabled}
           autoFocus
+          disabled={formDisabled}
         />
         <DateContainer>
           <Label htmlFor="start">Start</Label>
@@ -175,7 +170,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             value={formatDateForInput(handoverData?.start || "")}
             onInput={handleInput}
             required
-            disabled={isDisabled}
+            disabled={formDisabled}
           />
           <Label htmlFor="end">End</Label>
           <Input
@@ -185,7 +180,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             value={formatDateForInput(handoverData?.end || "")}
             onInput={handleInput}
             required
-            disabled={isDisabled}
+            disabled={formDisabled}
           />
         </DateContainer>
         <Label htmlFor="imageURL">Image URL</Label>
@@ -195,7 +190,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           type="text"
           value={handoverData?.imageURL || ""}
           onInput={handleInput}
-          disabled={isDisabled}
+          disabled={formDisabled}
         />
         <Label htmlFor="packingList">Packing List</Label>
         <Input
@@ -204,7 +199,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           type="text"
           value={handoverData?.packingList || ""}
           onInput={handleInput}
-          disabled={isDisabled}
+          disabled={formDisabled}
         />
         <Label htmlFor="notes">Notes</Label>
         <Input
@@ -213,17 +208,19 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           type="text"
           value={handoverData?.notes || ""}
           onInput={handleInput}
-          disabled={isDisabled}
+          disabled={formDisabled}
         />
         <ButtonContainer>
           <StyledTextButton
             type="button"
             onClick={isEditMode ? handleDiscard : handleReset}
-            disabled={isDisabled}
+            disabled={formDisabled}
           >
             {isEditMode ? "Discard" : "Reset"}
           </StyledTextButton>
-          <StyledTextButton disabled={isDisabled}>Save</StyledTextButton>
+          <StyledTextButton type="submit" disabled={formDisabled}>
+            Save
+          </StyledTextButton>
         </ButtonContainer>
       </FormContainer>
     </>
