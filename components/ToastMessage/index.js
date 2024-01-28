@@ -14,17 +14,18 @@ export const ToastMessage = ({
   message,
   onConfirm,
   onCancel,
-  dismissToast,
   textConfirmButton,
   textCancelButton,
   messageAfterConfirm,
   messageAfterCancel,
+  toastDuration,
+  dismissToast,
 }) => {
   const handleConfirm = () => {
     onConfirm();
     dismissToast();
     if (messageAfterConfirm) {
-      toast.success(messageAfterConfirm);
+      toast.success(messageAfterConfirm, { duration: toastDuration });
     }
   };
 
@@ -32,7 +33,7 @@ export const ToastMessage = ({
     onCancel();
     dismissToast();
     if (messageAfterCancel) {
-      toast.success(messageAfterCancel);
+      toast.success(messageAfterCancel, { duration: toastDuration });
     }
   };
 

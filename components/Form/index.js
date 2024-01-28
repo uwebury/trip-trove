@@ -18,6 +18,8 @@ const FormContainer = styled.form`
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: ${(props) => (props.formDisabled ? "0.7" : "1")};
+  pointer-events: ${(props) => (props.formDisabled ? "none" : "auto")};
 `;
 
 const Label = styled.label`
@@ -53,12 +55,30 @@ const DateContainer = styled.fieldset`
 export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
+  const toastDuration = 1800;
+
+  const dismissToast = () => {
+    toast.dismiss();
+  };
 
   useEffect(() => {
     setHandoverData(defaultData);
   }, [defaultData]);
 
-  const dismissToast = () => toast.dismiss();
+  useEffect(() => {
+    const handleButtonClick = () => {
+      dismissToast();
+    };
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.addEventListener("click", handleButtonClick);
+    });
+    return () => {
+      buttons.forEach((button) => {
+        button.removeEventListener("click", handleButtonClick);
+      });
+    };
+  }, []);
 
   function handleInput(event) {
     setHandoverData((prev) => ({
@@ -70,18 +90,39 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleReset() {
     setFormDisabled(true);
     if (handoverData === defaultData) {
-      toast.error("No entries yet, nothing to reset...");
+      toast.error("No entries yet, nothing to reset...", {
+        duration: toastDuration,
+      });
       setFormDisabled(false);
       return;
     }
-    setHandoverData(defaultData);
-    setFormDisabled(false);
+    toast(
+      <ToastMessage
+        message="Are you sure to reset form?"
+        textConfirmButton="Yes, reset please."
+        messageAfterConfirm="Ok, form reset."
+        textCancelButton="No, don't reset!"
+        messageAfterCancel="Ok, no reset."
+        toastDuration={toastDuration}
+        dismissToast={dismissToast}
+        onConfirm={() => {
+          setHandoverData(defaultData);
+          setFormDisabled(false);
+        }}
+        onCancel={() => {
+          setFormDisabled(false);
+        }}
+      />,
+      { duration: Infinity }
+    );
   }
 
   function handleDiscard() {
     setFormDisabled(true);
     if (handoverData === defaultData) {
-      toast.error("No changes yet, nothing to discard...");
+      toast.error("No changes yet, nothing to discard...", {
+        duration: toastDuration,
+      });
       setFormDisabled(false);
       return;
     }
@@ -90,9 +131,11 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       <ToastMessage
         message="Are you sure to discard all changes?"
         textConfirmButton="Yes, discard please."
-        // if messageAfterConfirm not provided or empty, no message displayed
+        messageAfterConfirm="Form reset to last saved version."
         textCancelButton="No, don't discard!"
-        // if messageAfterCancel not provided or empty, no message displayed
+        messageAfterCancel="Nothing changed."
+        toastDuration={toastDuration}
+        dismissToast={dismissToast}
         onConfirm={() => {
           setHandoverData(defaultData);
           setFormDisabled(false);
@@ -100,11 +143,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onCancel={() => {
           setFormDisabled(false);
         }}
-        dismissToast={dismissToast}
       />,
-      {
-        duration: Infinity,
-      }
+      { duration: Infinity }
     );
   }
 
@@ -113,13 +153,17 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     setFormDisabled(true);
 
     if (handoverData === defaultData) {
-      toast.error("No changes yet, nothing to save...");
+      toast.error("No changes yet, nothing to save...", {
+        duration: toastDuration,
+      });
       setFormDisabled(false);
       return;
     }
 
     if (!validateTripDates(handoverData)) {
-      toast.error("Oops! End date earlier than start date?");
+      toast.error("End date earlier than start date...", {
+        duration: toastDuration,
+      });
       setFormDisabled(false);
       return;
     }
@@ -131,6 +175,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterConfirm="Data successfully saved."
         textCancelButton="No, don't save."
         messageAfterCancel="Data not saved."
+        toastDuration={toastDuration}
+        dismissToast={dismissToast}
         onConfirm={() => {
           onSubmit(handoverData);
           setFormDisabled(false);
@@ -138,16 +184,17 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onCancel={() => {
           setFormDisabled(false);
         }}
-        dismissToast={dismissToast}
       />,
-      {
-        duration: Infinity,
-      }
+      { duration: Infinity }
     );
   }
 
   return (
-    <FormContainer aria-label="trip form" onSubmit={handleSubmit}>
+    <FormContainer
+      aria-label="trip form"
+      onSubmit={handleSubmit}
+      formDisabled={formDisabled}
+    >
       <Label htmlFor="destination">Destination</Label>
       <Input
         id="destination"
