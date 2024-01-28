@@ -4,6 +4,7 @@ import {
   StyledTextButton,
 } from "@/components/Button/TextButton";
 import { toast } from "react-hot-toast";
+import { toastDuration } from "@/lib/utils";
 
 const StyledToasterMessage = styled.p`
   text-align: center;
@@ -19,8 +20,6 @@ export function ToastMessage({
   messageAfterConfirm,
   messageAfterCancel,
 }) {
-  const toastDuration = 2000;
-
   function handleConfirm() {
     onConfirm();
     toast.dismiss();

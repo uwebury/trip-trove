@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useState } from "react";
 import Image from "next/image";
-import { formatDate } from "@/lib/utils";
+import { toastDuration, formatDate } from "@/lib/utils";
 import PackingList from "@/components/PackingList";
 import {
   ButtonContainer,
@@ -25,7 +25,6 @@ export default function DetailsPage() {
   const { data: trip, isLoading, error } = useSWR(`/api/trips/${id}`);
 
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const toastDuration = 2000;
 
   function handleEdit() {
     router.push(`${id}/edit`);

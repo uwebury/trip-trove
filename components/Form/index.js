@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { defaultFont } from "@/styles.js";
-import { validateTripDates, formatDateForInput } from "@/lib/utils";
+import {
+  toastDuration,
+  validateTripDates,
+  formatDateForInput,
+} from "@/lib/utils";
 import { ToastMessage } from "@/components/ToastMessage";
 import {
   ButtonContainer,
@@ -61,8 +65,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   const imageURLRef = useRef(null);
   const packingListRef = useRef(null);
   const notesRef = useRef(null);
-
-  const toastDuration = 2000;
 
   useEffect(() => {
     setHandoverData(defaultData);
