@@ -73,6 +73,10 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }, [defaultData]);
 
   useEffect(() => {
+    destinationRef.current.focus();
+  }, []);
+
+  useEffect(() => {
     const handleButtonClick = () => {
       dismissToast();
     };
