@@ -21,6 +21,8 @@ export const StyledTextButton = styled.button`
   font-weight: bold;
   color: var(--color-button-text);
   transition: color 0.3s ease, transform 0.3s ease;
+  opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
 
   &:hover {
     color: inherit;
