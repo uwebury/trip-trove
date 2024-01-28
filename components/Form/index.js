@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { defaultFont } from "@/styles.js";
 import { validateTripDates, formatDateForInput } from "@/lib/utils";
@@ -53,6 +53,10 @@ const DateContainer = styled.fieldset`
 export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
+
+  useEffect(() => {
+    setHandoverData(defaultData);
+  }, [defaultData]);
 
   const dismissToast = () => toast.dismiss();
 
