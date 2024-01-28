@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { defaultFont } from "@/styles.js";
 import { validateTripDates, formatDateForInput } from "@/lib/utils";
@@ -55,6 +55,13 @@ const DateContainer = styled.fieldset`
 export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
+  const destinationRef = useRef(null);
+  const startRef = useRef(null);
+  const endRef = useRef(null);
+  const imageURLRef = useRef(null);
+  const packingListRef = useRef(null);
+  const notesRef = useRef(null);
+
   const toastDuration = 1800;
 
   const dismissToast = () => {
@@ -80,6 +87,44 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     };
   }, []);
 
+  function handleKeyDown(event, currentRef) {
+    const isEnterKey = (event) => {
+      return event.key === "Enter";
+    };
+
+    const handleEnterKey = (currentRef) => {
+      const nextRef = getNextRef(currentRef);
+      if (nextRef !== null) {
+        nextRef.current.focus();
+      } else {
+        handleSubmit(event);
+      }
+    };
+
+    const getNextRef = (currentRef) => {
+      switch (currentRef) {
+        case destinationRef:
+          return startRef;
+        case startRef:
+          return endRef;
+        case endRef:
+          return imageURLRef;
+        case imageURLRef:
+          return packingListRef;
+        case packingListRef:
+          return notesRef;
+        case notesRef:
+          return null;
+        default:
+          return null;
+      }
+    };
+
+    if (isEnterKey(event)) {
+      event.preventDefault();
+      handleEnterKey(currentRef);
+    }
+  }
   function handleInput(event) {
     setHandoverData((prev) => ({
       ...prev,
@@ -205,6 +250,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         required
         autoFocus
         disabled={formDisabled}
+        ref={destinationRef}
+        onKeyDown={(event) => handleKeyDown(event, destinationRef)}
       />
       <DateContainer>
         <Label htmlFor="start">Start</Label>
@@ -216,6 +263,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           onInput={handleInput}
           required
           disabled={formDisabled}
+          ref={startRef}
+          onKeyDown={(event) => handleKeyDown(event, startRef)}
         />
         <Label htmlFor="end">End</Label>
         <Input
@@ -226,6 +275,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           onInput={handleInput}
           required
           disabled={formDisabled}
+          ref={endRef}
+          onKeyDown={(event) => handleKeyDown(event, endRef)}
         />
       </DateContainer>
       <Label htmlFor="imageURL">Image URL</Label>
@@ -236,6 +287,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         value={handoverData?.imageURL || ""}
         onInput={handleInput}
         disabled={formDisabled}
+        ref={imageURLRef}
+        onKeyDown={(event) => handleKeyDown(event, imageURLRef)}
       />
       <Label htmlFor="packingList">Packing List</Label>
       <Input
@@ -245,6 +298,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         value={handoverData?.packingList || ""}
         onInput={handleInput}
         disabled={formDisabled}
+        ref={packingListRef}
+        onKeyDown={(event) => handleKeyDown(event, packingListRef)}
       />
       <Label htmlFor="notes">Notes</Label>
       <Input
@@ -254,6 +309,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         value={handoverData?.notes || ""}
         onInput={handleInput}
         disabled={formDisabled}
+        ref={notesRef}
+        onKeyDown={(event) => handleKeyDown(event, notesRef)}
       />
       <ButtonContainer>
         <StyledTextButton
