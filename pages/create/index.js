@@ -17,7 +17,6 @@ export default function CreateTripPage() {
 
     if (response.ok) {
       mutate();
-      toast.success("New trip successfully saved.");
     }
 
     if (!response.ok) {

@@ -3,6 +3,7 @@ import {
   ButtonContainer,
   StyledTextButton,
 } from "@/components/Button/TextButton";
+import { toast } from "react-hot-toast";
 
 const ToasterMessage = styled.p`
   text-align: center;
@@ -16,15 +17,23 @@ export const ToastMessage = ({
   dismissToast,
   textConfirmButton,
   textCancelButton,
+  messageAfterConfirm,
+  messageAfterCancel,
 }) => {
   const handleConfirm = () => {
     onConfirm();
     dismissToast();
+    if (messageAfterConfirm) {
+      toast.success(messageAfterConfirm);
+    }
   };
 
   const handleCancel = () => {
     onCancel();
     dismissToast();
+    if (messageAfterCancel) {
+      toast.success(messageAfterCancel);
+    }
   };
 
   return (

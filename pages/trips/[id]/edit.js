@@ -22,7 +22,6 @@ export default function EditPage() {
 
     if (response.ok) {
       mutate();
-      toast.success("Modified trip data successfully saved.");
     }
 
     if (!response.ok) {
