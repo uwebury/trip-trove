@@ -5,12 +5,12 @@ import {
 } from "@/components/Button/TextButton";
 import { toast } from "react-hot-toast";
 
-const ToasterMessage = styled.p`
+const StyledToasterMessage = styled.p`
   text-align: center;
   font-size: 1.1rem;
 `;
 
-export const ToastMessage = ({
+export function ToastMessage({
   message,
   onConfirm,
   onCancel,
@@ -18,28 +18,28 @@ export const ToastMessage = ({
   textCancelButton,
   messageAfterConfirm,
   messageAfterCancel,
-  toastDuration,
-  dismissToast,
-}) => {
-  const handleConfirm = () => {
+}) {
+  const toastDuration = 2000;
+
+  function handleConfirm() {
     onConfirm();
-    dismissToast();
+    toast.dismiss();
     if (messageAfterConfirm) {
       toast.success(messageAfterConfirm, { duration: toastDuration });
     }
-  };
+  }
 
-  const handleCancel = () => {
+  function handleCancel() {
     onCancel();
-    dismissToast();
+    toast.dismiss();
     if (messageAfterCancel) {
       toast.success(messageAfterCancel, { duration: toastDuration });
     }
-  };
+  }
 
   return (
     <div>
-      <ToasterMessage>{message}</ToasterMessage>
+      <StyledToasterMessage>{message}</StyledToasterMessage>
       <ButtonContainer>
         <StyledTextButton onClick={handleConfirm}>
           {textConfirmButton || "OK"}
@@ -50,4 +50,4 @@ export const ToastMessage = ({
       </ButtonContainer>
     </div>
   );
-};
+}

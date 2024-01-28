@@ -62,11 +62,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   const packingListRef = useRef(null);
   const notesRef = useRef(null);
 
-  const toastDuration = 1800;
-
-  const dismissToast = () => {
-    toast.dismiss();
-  };
+  const toastDuration = 2000;
 
   useEffect(() => {
     setHandoverData(defaultData);
@@ -78,7 +74,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
 
   useEffect(() => {
     const handleButtonClick = () => {
-      dismissToast();
+      toast.dismiss();
     };
     const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
@@ -150,10 +146,9 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         message="Are you sure to reset form?"
         textConfirmButton="Yes, reset please."
         messageAfterConfirm="Ok, form reset."
-        textCancelButton="No, don't reset!"
+        textCancelButton="No, don&rsquo;t reset!"
         messageAfterCancel="Ok, no reset."
         toastDuration={toastDuration}
-        dismissToast={dismissToast}
         onConfirm={() => {
           setHandoverData(defaultData);
           setFormDisabled(false);
@@ -181,10 +176,9 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         message="Are you sure to discard all changes?"
         textConfirmButton="Yes, discard please."
         messageAfterConfirm="Form reset to last saved version."
-        textCancelButton="No, don't discard!"
+        textCancelButton="No, don&rsquo;t discard!"
         messageAfterCancel="Nothing changed."
         toastDuration={toastDuration}
-        dismissToast={dismissToast}
         onConfirm={() => {
           setHandoverData(defaultData);
           setFormDisabled(false);
@@ -222,10 +216,9 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         message="Are you sure to save all changes?"
         textConfirmButton="Yes, save please!"
         messageAfterConfirm="Data successfully saved."
-        textCancelButton="No, don't save."
+        textCancelButton="No, don&rsquo;t save."
         messageAfterCancel="Data not saved."
         toastDuration={toastDuration}
-        dismissToast={dismissToast}
         onConfirm={() => {
           onSubmit(handoverData);
           setFormDisabled(false);
@@ -252,7 +245,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         value={handoverData?.destination || ""}
         onInput={handleInput}
         required
-        autoFocus
         disabled={formDisabled}
         ref={destinationRef}
         onKeyDown={(event) => handleKeyDown(event, destinationRef)}
