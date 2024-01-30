@@ -3,7 +3,7 @@ import {
   ButtonContainer,
   StyledTextButton,
 } from "@/components/Button/TextButton";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { toastDuration } from "@/lib/utils";
 
 const StyledToasterMessage = styled.p`

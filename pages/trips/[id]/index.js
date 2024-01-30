@@ -55,7 +55,7 @@ export default function DetailsPage() {
       await fetch(`/api/trips/${id}`, {
         method: "DELETE",
       });
-      await new Promise((resolve) => setTimeout(resolve, toastDuration)); //
+      await new Promise((resolve) => setTimeout(resolve, toastDuration));
       router.push("/");
     } catch (error) {
       setButtonsDisabled(false);

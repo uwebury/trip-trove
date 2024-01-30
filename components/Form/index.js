@@ -13,7 +13,7 @@ import {
   StyledTextButton,
 } from "@/components/Button/TextButton";
 
-const FormContainer = styled.form`
+const TripForm = styled.form`
   margin: 2rem auto;
   display: grid;
   gap: 0.3rem;
@@ -22,8 +22,6 @@ const FormContainer = styled.form`
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  opacity: ${(props) => (props.formDisabled ? "0.7" : "1")};
-  pointer-events: ${(props) => (props.formDisabled ? "none" : "auto")};
 `;
 
 const Label = styled.label`
@@ -102,7 +100,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterConfirm="Ok, form reset."
         textCancelButton="No, don&rsquo;t reset!"
         messageAfterCancel="Ok, no reset."
-        toastDuration={toastDuration}
         onConfirm={() => {
           setHandoverData(defaultData);
           setFormDisabled(false);
@@ -132,7 +129,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterConfirm="Form reset to last saved version."
         textCancelButton="No, don&rsquo;t discard!"
         messageAfterCancel="Nothing changed."
-        toastDuration={toastDuration}
         onConfirm={() => {
           setHandoverData(defaultData);
           setFormDisabled(false);
@@ -172,7 +168,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterConfirm="Data successfully saved."
         textCancelButton="No, don&rsquo;t save."
         messageAfterCancel="Data not saved."
-        toastDuration={toastDuration}
         onConfirm={() => {
           onSubmit(handoverData);
           setFormDisabled(false);
@@ -186,7 +181,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }
 
   return (
-    <FormContainer
+    <TripForm
       aria-label="trip form"
       onSubmit={handleSubmit}
       formDisabled={formDisabled}
@@ -263,6 +258,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           Save
         </StyledTextButton>
       </ButtonContainer>
-    </FormContainer>
+    </TripForm>
   );
 }
