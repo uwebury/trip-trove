@@ -62,21 +62,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     setHandoverData(defaultData);
   }, [defaultData]);
 
-  useEffect(() => {
-    const handleButtonClick = () => {
-      toast.dismiss();
-    };
-    const buttons = document.querySelectorAll("button");
-    buttons.forEach((button) => {
-      button.addEventListener("click", handleButtonClick);
-    });
-    return () => {
-      buttons.forEach((button) => {
-        button.removeEventListener("click", handleButtonClick);
-      });
-    };
-  }, []);
-
   function handleInput(event) {
     setHandoverData((prev) => ({
       ...prev,
@@ -85,6 +70,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }
 
   function handleReset() {
+    toast.dismiss();
     setFormDisabled(true);
     if (handoverData === defaultData) {
       toast.error("No entries yet, nothing to reset.", {
@@ -113,6 +99,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }
 
   function handleDiscard() {
+    toast.dismiss();
     setFormDisabled(true);
     if (handoverData === defaultData) {
       toast.error("No changes yet, nothing to discard.", {
@@ -143,6 +130,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    toast.dismiss();
     setFormDisabled(true);
 
     if (handoverData === defaultData) {
