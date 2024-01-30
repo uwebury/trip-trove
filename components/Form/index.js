@@ -89,7 +89,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleReset() {
     setFormDisabled(true);
     if (handoverData === defaultData) {
-      toast.error("No entries yet, nothing to reset...", {
+      toast.error("No entries yet, nothing to reset.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
@@ -118,7 +118,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleDiscard() {
     setFormDisabled(true);
     if (handoverData === defaultData) {
-      toast.error("No changes yet, nothing to discard...", {
+      toast.error("No changes yet, nothing to discard.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
@@ -150,7 +150,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     setFormDisabled(true);
 
     if (handoverData === defaultData) {
-      toast.error("No changes yet, nothing to save...", {
+      toast.error("No changes yet, nothing to save.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
@@ -158,7 +158,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     }
 
     if (!validateTripDates(handoverData)) {
-      toast.error("End date earlier than start date...", {
+      toast.error("End date earlier than start date.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
@@ -168,7 +168,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     toast(
       <ToastMessage
         message="Are you sure to save all changes?"
-        textConfirmButton="Yes, save please!"
+        textConfirmButton="Yes, save please."
         messageAfterConfirm="Data successfully saved."
         textCancelButton="No, don&rsquo;t save."
         messageAfterCancel="Data not saved."
