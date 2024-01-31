@@ -1,15 +1,19 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { defaultFont } from "@/styles.js";
-import { useState } from "react";
-import { formatDateForInput } from "@/lib/utils";
-import { DiscardChangesMessage } from "@/components/ToastMessage";
+import {
+  toastDuration,
+  validateTripDates,
+  formatDateForInput,
+} from "@/lib/utils";
+import { ToastMessage } from "@/components/ToastMessage";
 import {
   ButtonContainer,
   StyledTextButton,
 } from "@/components/Button/TextButton";
-import toast from "react-hot-toast";
 
-const FormContainer = styled.form`
+const TripForm = styled.form`
   margin: 2rem auto;
   display: grid;
   gap: 0.3rem;
@@ -50,14 +54,13 @@ const DateContainer = styled.fieldset`
   justify-content: space-between;
 `;
 
-export default function Form({
-  handleSubmit,
-  defaultData,
-  isEditMode,
-  isDisabled,
-  onToastToggle,
-}) {
+export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
+  const [formDisabled, setFormDisabled] = useState(false);
+
+  useEffect(() => {
+    setHandoverData(defaultData);
+  }, [defaultData]);
 
   function handleInput(event) {
     setHandoverData((prev) => ({
@@ -67,102 +70,182 @@ export default function Form({
   }
 
   function handleReset() {
-    setHandoverData(defaultData);
+    toast.dismiss();
+    setFormDisabled(true);
+    if (handoverData === defaultData) {
+      toast.error("No entries yet, nothing to reset.", {
+        duration: toastDuration,
+      });
+      setFormDisabled(false);
+      return;
+    }
+    toast(
+      <ToastMessage
+        message="Are you sure to reset form?"
+        textConfirmButton="Yes, reset please."
+        messageAfterConfirm="Ok, form reset."
+        textCancelButton="No, don&rsquo;t reset!"
+        messageAfterCancel="Ok, no reset."
+        onConfirm={() => {
+          setHandoverData(defaultData);
+          setFormDisabled(false);
+        }}
+        onCancel={() => {
+          setFormDisabled(false);
+        }}
+      />,
+      { duration: Infinity }
+    );
   }
 
   function handleDiscard() {
-    onToastToggle(true);
+    toast.dismiss();
+    setFormDisabled(true);
+    if (handoverData === defaultData) {
+      toast.error("No changes yet, nothing to discard.", {
+        duration: toastDuration,
+      });
+      setFormDisabled(false);
+      return;
+    }
 
     toast(
-      <DiscardChangesMessage
+      <ToastMessage
+        message="Are you sure to discard all changes?"
+        textConfirmButton="Yes, discard please."
+        messageAfterConfirm="Form reset to last saved version."
+        textCancelButton="No, don&rsquo;t discard!"
+        messageAfterCancel="Nothing changed."
         onConfirm={() => {
-          onToastToggle(false);
+          setHandoverData(defaultData);
+          setFormDisabled(false);
         }}
         onCancel={() => {
-          setHandoverData(defaultData);
-          onToastToggle(false);
+          setFormDisabled(false);
         }}
       />,
-      {
-        duration: Infinity,
-      }
+      { duration: Infinity }
+    );
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    toast.dismiss();
+    setFormDisabled(true);
+
+    if (handoverData === defaultData) {
+      toast.error("No changes yet, nothing to save.", {
+        duration: toastDuration,
+      });
+      setFormDisabled(false);
+      return;
+    }
+
+    if (!validateTripDates(handoverData)) {
+      toast.error("End date earlier than start date.", {
+        duration: toastDuration,
+      });
+      setFormDisabled(false);
+      return;
+    }
+
+    toast(
+      <ToastMessage
+        message="Are you sure to save all changes?"
+        textConfirmButton="Yes, save please."
+        messageAfterConfirm="Data successfully saved."
+        textCancelButton="No, don&rsquo;t save."
+        messageAfterCancel="Data not saved."
+        onConfirm={() => {
+          onSubmit(handoverData);
+          setFormDisabled(false);
+        }}
+        onCancel={() => {
+          setFormDisabled(false);
+        }}
+      />,
+      { duration: Infinity }
     );
   }
 
   return (
-    <>
-      <FormContainer aria-label="trip form" onSubmit={handleSubmit}>
-        <Label htmlFor="destination">Destination</Label>
+    <TripForm
+      aria-label="trip form"
+      onSubmit={handleSubmit}
+      formDisabled={formDisabled}
+    >
+      <Label htmlFor="destination">Destination</Label>
+      <Input
+        id="destination"
+        name="destination"
+        type="text"
+        value={handoverData?.destination || ""}
+        onInput={handleInput}
+        required
+        disabled={formDisabled}
+        autoFocus
+      />
+      <DateContainer>
+        <Label htmlFor="start">Start</Label>
         <Input
-          id="destination"
-          name="destination"
-          type="text"
-          value={handoverData?.destination || ""}
+          id="start"
+          name="start"
+          type="date"
+          value={formatDateForInput(handoverData?.start || "")}
           onInput={handleInput}
           required
-          disabled={isDisabled}
-          autoFocus
+          disabled={formDisabled}
         />
-        <DateContainer>
-          <Label htmlFor="start">Start</Label>
-          <Input
-            id="start"
-            name="start"
-            type="date"
-            value={formatDateForInput(handoverData?.start || "")}
-            onInput={handleInput}
-            required
-            disabled={isDisabled}
-          />
-          <Label htmlFor="end">End</Label>
-          <Input
-            id="end"
-            name="end"
-            type="date"
-            value={formatDateForInput(handoverData?.end || "")}
-            onInput={handleInput}
-            required
-            disabled={isDisabled}
-          />
-        </DateContainer>
-        <Label htmlFor="imageURL">Image URL</Label>
+        <Label htmlFor="end">End</Label>
         <Input
-          id="imageURL"
-          name="imageURL"
-          type="text"
-          value={handoverData?.imageURL || ""}
+          id="end"
+          name="end"
+          type="date"
+          value={formatDateForInput(handoverData?.end || "")}
           onInput={handleInput}
-          disabled={isDisabled}
+          required
+          disabled={formDisabled}
         />
-        <Label htmlFor="packingList">Packing List</Label>
-        <Input
-          id="packingList"
-          name="packingList"
-          type="text"
-          value={handoverData?.packingList || ""}
-          onInput={handleInput}
-          disabled={isDisabled}
-        />
-        <Label htmlFor="notes">Notes</Label>
-        <Input
-          id="notes"
-          name="notes"
-          type="text"
-          value={handoverData?.notes || ""}
-          onInput={handleInput}
-          disabled={isDisabled}
-        />
-        <ButtonContainer>
-          <StyledTextButton
-            type="button"
-            onClick={isEditMode ? handleDiscard : handleReset}
-            disabled={isDisabled}
-          >
-            {isEditMode ? "Discard" : "Reset"}
-          </StyledTextButton>
-          <StyledTextButton disabled={isDisabled}>Save</StyledTextButton>
-        </ButtonContainer>
-      </FormContainer>
-    </>
+      </DateContainer>
+      <Label htmlFor="imageURL">Image URL</Label>
+      <Input
+        id="imageURL"
+        name="imageURL"
+        type="text"
+        value={handoverData?.imageURL || ""}
+        onInput={handleInput}
+        disabled={formDisabled}
+      />
+      <Label htmlFor="packingList">Packing List</Label>
+      <Input
+        id="packingList"
+        name="packingList"
+        type="text"
+        value={handoverData?.packingList || ""}
+        onInput={handleInput}
+        disabled={formDisabled}
+      />
+      <Label htmlFor="notes">Notes</Label>
+      <Input
+        id="notes"
+        name="notes"
+        type="text"
+        value={handoverData?.notes || ""}
+        onInput={handleInput}
+        disabled={formDisabled}
+      />
+      <ButtonContainer>
+        <StyledTextButton
+          type="button"
+          onClick={isEditMode ? handleDiscard : handleReset}
+          disabled={formDisabled}
+        >
+          {isEditMode ? "Discard" : "Reset"}
+        </StyledTextButton>
+        <StyledTextButton type="submit" disabled={formDisabled}>
+          Save
+        </StyledTextButton>
+      </ButtonContainer>
+    </TripForm>
   );
 }

@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useState } from "react";
 import Image from "next/image";
-import { formatDate } from "@/lib/utils";
+import { toastDuration, formatDate } from "@/lib/utils";
 import PackingList from "@/components/PackingList";
 import {
   ButtonContainer,
@@ -10,7 +11,7 @@ import {
 import BackButton from "@/components/Button/BackButton";
 import styled from "styled-components";
 import toast, { Toaster } from "react-hot-toast";
-import { DeleteConfirmationMessage } from "@/components/ToastMessage";
+import { ToastMessage } from "@/components/ToastMessage";
 
 const StyledMessage = styled.h2`
   margin: 2rem auto;
@@ -23,28 +24,41 @@ export default function DetailsPage() {
 
   const { data: trip, isLoading, error } = useSWR(`/api/trips/${id}`);
 
-  const handleEditClick = () => {
-    router.push(`${id}/edit`);
-  };
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
-  const confirmDelete = () => {
+  function handleEdit() {
+    router.push(`${id}/edit`);
+  }
+
+  function handleDelete() {
+    setButtonsDisabled(true);
     toast(
-      <DeleteConfirmationMessage
-        onConfirm={deleteTrip}
-        onCancel={() => toast.dismiss()}
-      />
+      <ToastMessage
+        message="Are you sure to delete trip?"
+        textConfirmButton="Yes, delete."
+        messageAfterConfirm="Trip successfully deleted."
+        textCancelButton="No, don&rsquo;t delete!"
+        messageAfterCancel="Trip not deleted."
+        onConfirm={() => {
+          deleteTrip();
+        }}
+        onCancel={() => {
+          setButtonsDisabled(false);
+        }}
+      />,
+      { duration: Infinity }
     );
-  };
+  }
 
   async function deleteTrip() {
     try {
       await fetch(`/api/trips/${id}`, {
         method: "DELETE",
       });
-      toast.success("Trip successfully deleted.");
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Adjust timing as needed
+      await new Promise((resolve) => setTimeout(resolve, toastDuration));
       router.push("/");
     } catch (error) {
+      setButtonsDisabled(false);
       toast.error("Error deleting trip!");
     }
   }
@@ -68,8 +82,12 @@ export default function DetailsPage() {
         />
       </p>
       <ButtonContainer>
-        <StyledTextButton onClick={confirmDelete}>Delete</StyledTextButton>
-        <StyledTextButton onClick={handleEditClick}>Edit</StyledTextButton>
+        <StyledTextButton onClick={handleDelete} disabled={buttonsDisabled}>
+          Delete
+        </StyledTextButton>
+        <StyledTextButton onClick={handleEdit} disabled={buttonsDisabled}>
+          Edit
+        </StyledTextButton>
       </ButtonContainer>
       <p>
         <strong>Notes:</strong> {trip.notes}

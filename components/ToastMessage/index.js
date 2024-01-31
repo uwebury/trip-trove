@@ -1,91 +1,52 @@
-import { toast } from "react-hot-toast";
 import styled from "styled-components";
 import {
   ButtonContainer,
   StyledTextButton,
 } from "@/components/Button/TextButton";
+import toast from "react-hot-toast";
+import { toastDuration } from "@/lib/utils";
 
-const ToasterContainer = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const ToasterMessage = styled.p`
+const StyledToasterMessage = styled.p`
   text-align: center;
   font-size: 1.1rem;
 `;
 
-export const SaveChangesMessage = ({ onConfirm, onCancel }) => (
-  <div>
-    <ToasterMessage>Are you sure to save all changes?</ToasterMessage>
-    <ButtonContainer>
-      <StyledTextButton
-        onClick={() => {
-          onConfirm();
-          toast.dismiss();
-        }}
-      >
-        Yes, save
-      </StyledTextButton>
-      <StyledTextButton
-        onClick={() => {
-          onCancel();
-          toast.dismiss();
-        }}
-      >
-        No, do not save
-      </StyledTextButton>
-    </ButtonContainer>
-  </div>
-);
+export function ToastMessage({
+  message,
+  onConfirm,
+  onCancel,
+  textConfirmButton,
+  textCancelButton,
+  messageAfterConfirm,
+  messageAfterCancel,
+}) {
+  function handleConfirm() {
+    onConfirm();
+    toast.dismiss();
+    if (messageAfterConfirm) {
+      toast.success(messageAfterConfirm, { duration: toastDuration });
+    }
+  }
 
-export const DiscardChangesMessage = ({ onConfirm, onCancel }) => (
-  <div>
-    <ToasterMessage>Are you sure to discard all changes?</ToasterMessage>
-    <ButtonContainer>
-      <StyledTextButton
-        onClick={() => {
-          onCancel();
-          toast.dismiss();
-        }}
-      >
-        Yes, discard
-      </StyledTextButton>
-      <StyledTextButton
-        onClick={() => {
-          onConfirm();
-          toast.dismiss();
-        }}
-      >
-        No, do not discard
-      </StyledTextButton>
-    </ButtonContainer>
-  </div>
-);
+  function handleCancel() {
+    onCancel();
+    toast.dismiss();
+    if (messageAfterCancel) {
+      toast.success(messageAfterCancel, { duration: toastDuration });
+    }
+  }
 
-export const DeleteConfirmationMessage = ({ onConfirm, onCancel }) => (
-  <div>
-    <ToasterMessage>Are you sure to delete this trip?</ToasterMessage>
-    <ButtonContainer>
-      <StyledTextButton
-        onClick={() => {
-          onConfirm();
-          toast.dismiss();
-        }}
-      >
-        OK
-      </StyledTextButton>
-      <StyledTextButton
-        onClick={() => {
-          onCancel();
-          toast.dismiss();
-        }}
-      >
-        Cancel
-      </StyledTextButton>
-    </ButtonContainer>
-  </div>
-);
+  return (
+    <div>
+      <StyledToasterMessage>{message}</StyledToasterMessage>
+      <ButtonContainer>
+        <StyledTextButton onClick={handleConfirm}>
+          {textConfirmButton || "OK"}
+        </StyledTextButton>
+        <StyledTextButton onClick={handleCancel}>
+          {textCancelButton || "Cancel"}
+        </StyledTextButton>
+      </ButtonContainer>
+    </div>
+  );
+}
