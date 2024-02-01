@@ -350,7 +350,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 defaultColor={"var(--color-delete-button)"}
                 hoverColor={"var(--color-delete-button-hover)"}
                 textColor={"var(--color-delete-button-text)"}
-                onClick={() => handleDeleteItem(index)}
+                onClick={() => handleRemoveItem(index)}
                 disabled={formDisabled}
               >
                 X
