@@ -31,7 +31,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     if (defaultData?.packingList?.length === 0) {
       setHandoverData((prev) => ({
         ...prev,
-        packingList: [{ itemName: "", itemQuantity: "" }],
+        packingList: [{ itemName: "", itemQuantity: null }],
       }));
     }
   }, [defaultData]);
@@ -50,7 +50,10 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     if (!lastItem || lastItem.itemName.trim() !== "") {
       setHandoverData((prev) => ({
         ...prev,
-        packingList: [...prev.packingList, { itemName: "", itemQuantity: "" }],
+        packingList: [
+          ...prev.packingList,
+          { itemName: "", itemQuantity: null },
+        ],
       }));
     }
   }
@@ -75,7 +78,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       ) {
         updatedPackingList.splice(index, 1);
       } else {
-        updatedPackingList[index] = { itemName: "", itemQuantity: "" };
+        updatedPackingList[index] = { itemName: "", itemQuantity: null };
       }
       return {
         ...prev,
@@ -164,6 +167,17 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       return;
     }
 
+    const hasEmptyItems = handoverData.packingList.some(
+      (item) => item.itemName.trim() === "" && item.itemQuantity === null
+    );
+
+    const modifiedHandoverData = hasEmptyItems
+      ? {
+          ...handoverData,
+          packingList: [],
+        }
+      : handoverData;
+
     toast(
       <ToastMessage
         message="Are you sure to save all changes?"
@@ -172,7 +186,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         textCancelButton="No, don&rsquo;t save."
         messageAfterCancel="Data not saved."
         onConfirm={() => {
-          onSubmit(handoverData);
+          onSubmit(modifiedHandoverData);
           setFormDisabled(false);
         }}
         onCancel={() => {
