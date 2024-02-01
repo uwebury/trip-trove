@@ -72,11 +72,29 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     });
   }
 
+  // function handleRemoveItem(index) {
+  //   setHandoverData((prev) => {
+  //     const updatedPackingList = [...prev.packingList];
+  //     if (updatedPackingList.length > 1) {
+  //       updatedPackingList.splice(index, 1);
+  //     }
+  //     return {
+  //       ...prev,
+  //       packingList: updatedPackingList,
+  //     };
+  //   });
+  // }
+
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
-      if (updatedPackingList.length > 1) {
+      if (
+        updatedPackingList.length > 1 ||
+        index !== updatedPackingList.length - 1
+      ) {
         updatedPackingList.splice(index, 1);
+      } else {
+        updatedPackingList[index] = { itemName: "", itemQuantity: 1 }; // Reset itemName and itemQuantity
       }
       return {
         ...prev,
@@ -246,7 +264,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                   handleUpdateItem(index, event.target.value, item.itemQuantity)
                 }
                 disabled={formDisabled}
-                required
+                // required
               />
               <InputQuantity
                 id={`packingList_quantity_${index}`}
@@ -263,7 +281,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 disabled={formDisabled}
                 min="1"
                 max="999"
-                required
+                // required
               />
               <StyledMiniButton
                 type="button"
