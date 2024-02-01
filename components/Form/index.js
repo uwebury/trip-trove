@@ -253,8 +253,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             name={`packingList_${index}`}
             type="text"
             value={item.itemName}
-            onChange={(e) =>
-              handleUpdateItem(index, e.target.value, item.itemQuantity)
+            onChange={(event) =>
+              handleUpdateItem(index, event.target.value, item.itemQuantity)
             }
             disabled={formDisabled}
             required
@@ -264,11 +264,11 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             name={`packingList_quantity_${index}`}
             type="number"
             value={item.itemQuantity}
-            onChange={(e) =>
+            onChange={(event) =>
               handleUpdateItem(
                 index,
                 item.itemName,
-                Math.max(1, parseInt(e.target.value))
+                Math.max(1, parseInt(event.target.value))
               )
             }
             disabled={formDisabled}
