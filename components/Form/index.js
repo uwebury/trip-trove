@@ -257,6 +257,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
               handleUpdateItem(index, e.target.value, item.itemQuantity)
             }
             disabled={formDisabled}
+            required
           />
           <Input
             id={`packingList_quantity_${index}`}
