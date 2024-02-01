@@ -31,7 +31,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     if (defaultData?.packingList?.length === 0) {
       setHandoverData((prev) => ({
         ...prev,
-        packingList: [{ itemName: "", itemQuantity: 1 }],
+        packingList: [{ itemName: "", itemQuantity: "" }],
       }));
     }
   }, [defaultData]);
@@ -50,7 +50,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     if (!lastItem || lastItem.itemName.trim() !== "") {
       setHandoverData((prev) => ({
         ...prev,
-        packingList: [...prev.packingList, { itemName: "", itemQuantity: 1 }],
+        packingList: [...prev.packingList, { itemName: "", itemQuantity: "" }],
       }));
     }
   }
@@ -75,7 +75,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       ) {
         updatedPackingList.splice(index, 1);
       } else {
-        updatedPackingList[index] = { itemName: "", itemQuantity: 1 }; // Reset itemName and itemQuantity
+        updatedPackingList[index] = { itemName: "", itemQuantity: "" };
       }
       return {
         ...prev,
@@ -255,11 +255,11 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                   handleUpdateItem(
                     index,
                     item.itemName,
-                    Math.max(1, parseInt(event.target.value))
+                    Math.max(0, parseInt(event.target.value))
                   )
                 }
                 disabled={formDisabled}
-                min="1"
+                min="0"
                 max="999"
               />
               <StyledMiniButton
