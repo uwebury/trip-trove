@@ -9,7 +9,7 @@ const tripSchema = new Schema(
     end: { type: Date, required: true },
     imageURL: { type: String, default: "" },
     notes: { type: String },
-    packingList: { type: String },
+    packingList: [{ itemName: { type: String } }],
   },
   { timestamps: true }
 );
