@@ -12,7 +12,7 @@ const tripSchema = new Schema(
     packingList: [
       {
         itemName: { type: String },
-        itemQuantity: { type: Number, default: 1 },
+        itemQuantity: { type: Number },
       },
     ],
   },
