@@ -12,7 +12,7 @@ export default function CreateTripPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tripData),
+      body: JSON.stringify({ ...tripData, packingList: [] }),
     });
 
     if (response.ok) {
@@ -29,7 +29,11 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster />
-      <Form onSubmit={handleSubmit} isEditMode={false} />
+      <Form
+        defaultData={{ packingList: [] }}
+        onSubmit={handleSubmit}
+        isEditMode={false}
+      />
       <BackButton href="/" />
     </>
   );
