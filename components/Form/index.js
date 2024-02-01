@@ -54,6 +54,74 @@ const DateContainer = styled.fieldset`
   justify-content: space-between;
 `;
 
+const PackListContainer = styled.fieldset`
+  margin-top: 0.4rem;
+  padding: 0;
+  /* background-color: yellow; */
+  border: none;
+  max-width: auto;
+`;
+
+const PackList = styled.ul`
+  margin: auto;
+  padding: 0;
+`;
+
+const InputContainer = styled.li`
+  display: grid;
+  grid-template-columns: 8fr 2fr 1fr 1fr;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  margin-top: 6px;
+  width: 100%;
+`;
+
+const InputItem = styled(Input)`
+  width: 100%;
+  margin: 0; /* Add this line to remove any default margin */
+  /* background-color: salmon; */
+`;
+
+const InputQuantity = styled(Input)`
+  width: 100%;
+  margin: 0; /* Add this line to remove any default margin */
+  /* background-color: purple; */
+`;
+
+const StyledMiniButton = styled.div`
+  margin: 0; /* Add this line to remove any default margin */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0.5rem;
+  background-color: ${({ defaultColor }) => defaultColor};
+  border: 0px;
+  border-radius: 10px;
+  color: ${({ textColor }) => textColor};
+  font-family: ${defaultFont.style.fontFamily};
+  font-size: ${({ fontSize }) => fontSize || "1rem"};
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &:active,
+  :visited {
+    color: inherit;
+  }
+
+  &:hover {
+    background-color: ${({ hoverColor }) => hoverColor};
+    cursor: pointer;
+    transform: scale(1.03);
+  }
+`;
+
 export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
@@ -245,49 +313,66 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onInput={handleInput}
         disabled={formDisabled}
       />
-      <Label htmlFor="packingList">Packing List</Label>
-      {handoverData?.packingList?.map((item, index) => (
-        <div key={index}>
-          <Input
-            id={`packingList_${index}`}
-            name={`packingList_${index}`}
-            type="text"
-            value={item.itemName}
-            onChange={(event) =>
-              handleUpdateItem(index, event.target.value, item.itemQuantity)
-            }
-            disabled={formDisabled}
-            required
-          />
-          <Input
-            id={`packingList_quantity_${index}`}
-            name={`packingList_quantity_${index}`}
-            type="number"
-            value={item.itemQuantity}
-            onChange={(event) =>
-              handleUpdateItem(
-                index,
-                item.itemName,
-                Math.max(1, parseInt(event.target.value))
-              )
-            }
-            disabled={formDisabled}
-            min="1"
-            required
-          />
+      <PackListContainer>
+        <Label htmlFor="packingList">Packing List</Label>
+        <PackList>
+          {handoverData?.packingList?.map((item, index) => (
+            <InputContainer key={index}>
+              <InputItem
+                id={`packingList_${index}`}
+                name={`packingList_${index}`}
+                type="text"
+                value={item.itemName}
+                onChange={(event) =>
+                  handleUpdateItem(index, event.target.value, item.itemQuantity)
+                }
+                disabled={formDisabled}
+                required
+              />
+              <InputQuantity
+                id={`packingList_quantity_${index}`}
+                name={`packingList_quantity_${index}`}
+                type="number"
+                value={item.itemQuantity}
+                onChange={(event) =>
+                  handleUpdateItem(
+                    index,
+                    item.itemName,
+                    Math.max(1, parseInt(event.target.value))
+                  )
+                }
+                disabled={formDisabled}
+                min="1"
+                required
+              />
+              <StyledMiniButton
+                type="button"
+                defaultColor={"var(--color-delete-button)"}
+                hoverColor={"var(--color-delete-button-hover)"}
+                textColor={"var(--color-delete-button-text)"}
+                onClick={() => handleDeleteItem(index)}
+                disabled={formDisabled}
+              >
+                X
+              </StyledMiniButton>
 
-          <button
-            type="button"
-            onClick={() => handleRemoveItem(index)}
-            disabled={formDisabled}
-          >
-            Remove Item
-          </button>
-        </div>
-      ))}
-      <button type="button" onClick={handleAddItem} disabled={formDisabled}>
-        Add Item
-      </button>
+              {index === handoverData.packingList.length - 1 && (
+                <StyledMiniButton
+                  type="button"
+                  defaultColor={"var(--color-add-button)"}
+                  hoverColor={"var(--color-add-button-hover)"}
+                  textColor={"var(--color-add-button-text)"}
+                  fontSize={"1.4rem"}
+                  onClick={handleAddItem}
+                  disabled={formDisabled}
+                >
+                  +
+                </StyledMiniButton>
+              )}
+            </InputContainer>
+          ))}
+        </PackList>
+      </PackListContainer>
       <Label htmlFor="notes">Notes</Label>
       <Input
         id="notes"
