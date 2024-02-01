@@ -39,10 +39,15 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   }
 
   function handleAddItem() {
-    setHandoverData((prev) => ({
-      ...prev,
-      packingList: [...prev.packingList, { itemName: "", itemQuantity: 1 }],
-    }));
+    const lastItem =
+      handoverData.packingList[handoverData.packingList.length - 1];
+
+    if (!lastItem || lastItem.itemName.trim() !== "") {
+      setHandoverData((prev) => ({
+        ...prev,
+        packingList: [...prev.packingList, { itemName: "", itemQuantity: 1 }],
+      }));
+    }
   }
 
   function handleUpdateItem(index, itemName, itemQuantity) {
@@ -59,7 +64,9 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
-      updatedPackingList.splice(index, 1);
+      if (updatedPackingList.length > 1) {
+        updatedPackingList.splice(index, 1);
+      }
       return {
         ...prev,
         packingList: updatedPackingList,
