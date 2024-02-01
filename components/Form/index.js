@@ -273,6 +273,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             }
             disabled={formDisabled}
             min="1"
+            required
           />
 
           <button
