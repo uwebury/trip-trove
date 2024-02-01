@@ -251,6 +251,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 }
                 disabled={formDisabled}
                 min="1"
+                max="999"
                 required
               />
               <StyledMiniButton
