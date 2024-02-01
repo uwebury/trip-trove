@@ -265,10 +265,16 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             type="number"
             value={item.itemQuantity}
             onChange={(e) =>
-              handleUpdateItem(index, item.itemName, parseInt(e.target.value))
+              handleUpdateItem(
+                index,
+                item.itemName,
+                Math.max(1, parseInt(e.target.value))
+              )
             }
             disabled={formDisabled}
+            min="1"
           />
+
           <button
             type="button"
             onClick={() => handleRemoveItem(index)}
