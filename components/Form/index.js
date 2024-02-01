@@ -27,14 +27,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
 
-  // useEffect(() => {
-  //   setHandoverData(defaultData);
-  // }, [defaultData]);
-
   useEffect(() => {
-    // Check if defaultData contains empty packingList
     if (defaultData?.packingList?.length === 0) {
-      // If so, add an array with default objects
       setHandoverData((prev) => ({
         ...prev,
         packingList: [{ itemName: "", itemQuantity: 1 }],
@@ -71,19 +65,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       };
     });
   }
-
-  // function handleRemoveItem(index) {
-  //   setHandoverData((prev) => {
-  //     const updatedPackingList = [...prev.packingList];
-  //     if (updatedPackingList.length > 1) {
-  //       updatedPackingList.splice(index, 1);
-  //     }
-  //     return {
-  //       ...prev,
-  //       packingList: updatedPackingList,
-  //     };
-  //   });
-  // }
 
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
@@ -264,7 +245,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                   handleUpdateItem(index, event.target.value, item.itemQuantity)
                 }
                 disabled={formDisabled}
-                // required
               />
               <InputQuantity
                 id={`packingList_quantity_${index}`}
@@ -281,7 +261,6 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 disabled={formDisabled}
                 min="1"
                 max="999"
-                // required
               />
               <StyledMiniButton
                 type="button"
