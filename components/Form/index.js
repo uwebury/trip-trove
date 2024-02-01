@@ -167,6 +167,26 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       return;
     }
 
+    const hasEmptyItems = handoverData.packingList.some(
+      (item) => item.itemName.trim() === "" && item.itemQuantity === null
+    );
+
+    const modifiedHandoverData =
+      handoverData?.packingList.length === 1 && hasEmptyItems
+        ? {
+            ...handoverData,
+            packingList: [],
+          }
+        : handoverData?.packingList.length > 1 && hasEmptyItems
+        ? {
+            ...handoverData,
+            packingList: handoverData.packingList.filter(
+              (item) =>
+                item.itemName.trim() !== "" || item.itemQuantity !== null
+            ),
+          }
+        : handoverData;
+
     toast(
       <ToastMessage
         message="Are you sure to save all changes?"
@@ -175,7 +195,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         textCancelButton="No, don&rsquo;t save."
         messageAfterCancel="Data not saved."
         onConfirm={() => {
-          onSubmit(handoverData);
+          onSubmit(modifiedHandoverData);
           setFormDisabled(false);
         }}
         onCancel={() => {
