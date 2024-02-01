@@ -11,7 +11,10 @@ export default function PackingList() {
       <strong>Packing list:</strong>
       <ul>
         {trip?.packingList?.map((item, index) => (
-          <li key={index}>{item.itemName}</li>
+          <li key={index}>
+            {item.itemQuantity > 1 ? `${item.itemQuantity}x ` : ""}
+            {item.itemName}
+          </li>
         ))}
       </ul>
     </div>
