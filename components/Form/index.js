@@ -69,6 +69,35 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     }));
   }
 
+  function handleAddItem() {
+    setHandoverData((prev) => ({
+      ...prev,
+      packingList: [...prev.packingList, { itemName: "" }],
+    }));
+  }
+
+  function handleUpdateItem(index, itemName) {
+    setHandoverData((prev) => {
+      const updatedPackingList = [...prev.packingList];
+      updatedPackingList[index] = { itemName };
+      return {
+        ...prev,
+        packingList: updatedPackingList,
+      };
+    });
+  }
+
+  function handleRemoveItem(index) {
+    setHandoverData((prev) => {
+      const updatedPackingList = [...prev.packingList];
+      updatedPackingList.splice(index, 1);
+      return {
+        ...prev,
+        packingList: updatedPackingList,
+      };
+    });
+  }
+
   function handleReset() {
     toast.dismiss();
     setFormDisabled(true);
@@ -217,14 +246,28 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         disabled={formDisabled}
       />
       <Label htmlFor="packingList">Packing List</Label>
-      <Input
-        id="packingList"
-        name="packingList"
-        type="text"
-        value={handoverData?.packingList || ""}
-        onInput={handleInput}
-        disabled={formDisabled}
-      />
+      {handoverData?.packingList?.map((item, index) => (
+        <div key={index}>
+          <Input
+            id={`packingList_${index}`}
+            name={`packingList_${index}`}
+            type="text"
+            value={item.itemName}
+            onChange={(e) => handleUpdateItem(index, e.target.value)}
+            disabled={formDisabled}
+          />
+          <button
+            type="button"
+            onClick={() => handleRemoveItem(index)}
+            disabled={formDisabled}
+          >
+            Remove Item
+          </button>
+        </div>
+      ))}
+      <button type="button" onClick={handleAddItem} disabled={formDisabled}>
+        Add Item
+      </button>
       <Label htmlFor="notes">Notes</Label>
       <Input
         id="notes"
