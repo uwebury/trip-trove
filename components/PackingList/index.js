@@ -7,8 +7,13 @@ export default function PackingList() {
   const { data: trip } = useSWR(`/api/trips/${id}`);
 
   return (
-    <p>
-      <strong>Packing list:</strong> {trip.packingList}
-    </p>
+    <div>
+      <strong>Packing list:</strong>
+      <ul>
+        {trip?.packingList?.map((item, index) => (
+          <li key={index}>{item.itemName}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
