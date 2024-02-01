@@ -72,14 +72,14 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleAddItem() {
     setHandoverData((prev) => ({
       ...prev,
-      packingList: [...prev.packingList, { itemName: "" }],
+      packingList: [...prev.packingList, { itemName: "", itemQuantity: 1 }],
     }));
   }
 
-  function handleUpdateItem(index, itemName) {
+  function handleUpdateItem(index, itemName, itemQuantity) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
-      updatedPackingList[index] = { itemName };
+      updatedPackingList[index] = { itemName, itemQuantity };
       return {
         ...prev,
         packingList: updatedPackingList,
@@ -90,10 +90,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
-      if (updatedPackingList.length > 1) {
-        updatedPackingList.splice(index, 1);
-      }
-
+      updatedPackingList.splice(index, 1);
       return {
         ...prev,
         packingList: updatedPackingList,
@@ -256,7 +253,19 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
             name={`packingList_${index}`}
             type="text"
             value={item.itemName}
-            onChange={(e) => handleUpdateItem(index, e.target.value)}
+            onChange={(e) =>
+              handleUpdateItem(index, e.target.value, item.itemQuantity)
+            }
+            disabled={formDisabled}
+          />
+          <Input
+            id={`packingList_quantity_${index}`}
+            name={`packingList_quantity_${index}`}
+            type="number"
+            value={item.itemQuantity}
+            onChange={(e) =>
+              handleUpdateItem(index, item.itemName, parseInt(e.target.value))
+            }
             disabled={formDisabled}
           />
           <button
