@@ -90,7 +90,10 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
-      updatedPackingList.splice(index, 1);
+      if (updatedPackingList.length > 1) {
+        updatedPackingList.splice(index, 1);
+      }
+
       return {
         ...prev,
         packingList: updatedPackingList,
