@@ -16,11 +16,7 @@ export default function PackingList() {
       <ul>
         {filteredPackingList?.map((item) => (
           <li key={item._id}>
-            {item.itemQuantity !== null &&
-            item.itemQuantity !== undefined &&
-            item.itemQuantity !== 0
-              ? `${item.itemQuantity}x `
-              : ""}
+            {item.itemQuantity ? `${item.itemQuantity}x ` : ""}
             {item.itemName}
           </li>
         ))}
