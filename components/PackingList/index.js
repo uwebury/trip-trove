@@ -14,8 +14,8 @@ export default function PackingList() {
     <div>
       <strong>Packing list:</strong>
       <ul>
-        {filteredPackingList?.map((item, index) => (
-          <li key={index}>
+        {filteredPackingList?.map((item) => (
+          <li key={item._id}>
             {item.itemQuantity !== null &&
             item.itemQuantity !== undefined &&
             item.itemQuantity !== 0
