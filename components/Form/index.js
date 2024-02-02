@@ -284,9 +284,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
               />
               <StyledMiniButton
                 type="button"
-                defaultColor={"var(--color-delete-button)"}
-                hoverColor={"var(--color-delete-button-hover)"}
-                textColor={"var(--color-delete-button-text)"}
+                id="delete"
+                action="delete"
                 onClick={() => handleRemoveItem(index)}
                 disabled={formDisabled}
               >
@@ -296,9 +295,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
               {index === handoverData.packingList.length - 1 && (
                 <StyledMiniButton
                   type="button"
-                  defaultColor={"var(--color-add-button)"}
-                  hoverColor={"var(--color-add-button-hover)"}
-                  textColor={"var(--color-add-button-text)"}
+                  id="add"
+                  action="add"
                   fontSize={"1.4rem"}
                   onClick={handleAddItem}
                   disabled={formDisabled}

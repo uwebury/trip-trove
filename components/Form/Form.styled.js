@@ -45,7 +45,6 @@ export const DateContainer = styled.fieldset`
 export const PackListContainer = styled.fieldset`
   margin-top: 0.4rem;
   padding: 0;
-  /* background-color: yellow; */
   border: none;
   max-width: auto;
 `;
@@ -68,18 +67,16 @@ export const InputContainer = styled.li`
 
 export const InputItem = styled(Input)`
   width: 100%;
-  margin: 0; /* Add this line to remove any default margin */
-  /* background-color: salmon; */
+  margin: 0;
 `;
 
 export const InputQuantity = styled(Input)`
   width: 100%;
-  margin: 0; /* Add this line to remove any default margin */
-  /* background-color: purple; */
+  margin: 0;
 `;
 
 export const StyledMiniButton = styled.div`
-  margin: 0; /* Add this line to remove any default margin */
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,10 +84,20 @@ export const StyledMiniButton = styled.div`
   width: 1.8rem;
   height: 1.8rem;
   padding: 0.5rem;
-  background-color: ${({ defaultColor }) => defaultColor};
+  background-color: ${(props) =>
+    props.action === "add"
+      ? "var(--color-mini-button-add)"
+      : props.action === "delete"
+      ? "var(--color-mini-button-delete)"
+      : "var(--color-mini-button)"};
+  color: ${(props) =>
+    props.action === "add"
+      ? "var(--color-mini-button-add-text)"
+      : props.action === "delete"
+      ? "var(--color-mini-button-delete-text)"
+      : "var(--color-mini-button-text)"};
   border: 0px;
   border-radius: 10px;
-  color: ${({ textColor }) => textColor};
   font-family: ${defaultFont.style.fontFamily};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   font-weight: bold;
@@ -104,8 +111,45 @@ export const StyledMiniButton = styled.div`
   }
 
   &:hover {
-    background-color: ${({ hoverColor }) => hoverColor};
+    background-color: ${(props) =>
+      props.action === "add"
+        ? "var(--color-mini-button-add-hover)"
+        : props.action === "delete"
+        ? "var(--color-mini-button-delete-hover)"
+        : "var(--color-mini-button-hover)"};
     cursor: pointer;
     transform: scale(1.03);
   }
 `;
+
+// export const StyledMiniButton = styled.div`
+//   margin: 0; /* Add this line to remove any default margin */
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   justify-self: center;
+//   width: 1.8rem;
+//   height: 1.8rem;
+//   padding: 0.5rem;
+//   background-color: ${({ defaultColor }) => defaultColor};
+//   border: 0px;
+//   border-radius: 10px;
+//   color: ${({ textColor }) => textColor};
+//   font-family: ${defaultFont.style.fontFamily};
+//   font-size: ${({ fontSize }) => fontSize || "1rem"};
+//   font-weight: bold;
+//   text-align: center;
+//   text-decoration: none;
+//   transition: color 0.3s ease, transform 0.3s ease;
+
+//   &:active,
+//   :visited {
+//     color: inherit;
+//   }
+
+//   &:hover {
+//     background-color: ${({ hoverColor }) => hoverColor};
+//     cursor: pointer;
+//     transform: scale(1.03);
+//   }
+// `;

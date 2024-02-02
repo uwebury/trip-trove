@@ -98,13 +98,17 @@ export default createGlobalStyle`
   --color-page-up-button: var(--color-grey-300);
   --color-page-up-button-hover: var(--color-grey-50);
   
-  --color-delete-button: var(--color-red-700);
-  --color-delete-button-hover: var(--color-red-800);
-  --color-delete-button-text: var(--color-red-0);
+  --color-mini-button: var(--color-orange-200);
+  --color-mini-button-hover: var(--color-orange-300);
+  --color-mini-button-text: var(--color-grey-1000);
   
-  --color-add-button: var(--color-green-600);
-  --color-add-button-hover: var(--color-green-700);
-  --color-add-button-text: var(--color-green-0);
+  --color-mini-button-delete: var(--color-red-700);
+  --color-mini-button-delete-hover: var(--color-red-800);
+  --color-mini-button-delete-text: var(--color-red-0);
+  
+  --color-mini-button-add: var(--color-green-600);
+  --color-mini-button-add-hover: var(--color-green-700);
+  --color-mini-button-add-text: var(--color-green-0);
 
   --color-button: var(--color-orange-100);
   --color-button-text: var(--color-grey-1000);
