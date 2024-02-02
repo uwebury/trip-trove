@@ -72,6 +72,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleRemoveItem(index) {
     setHandoverData((prev) => {
       const updatedPackingList = [...prev.packingList];
+
       if (
         updatedPackingList.length > 1 ||
         index !== updatedPackingList.length - 1
@@ -275,11 +276,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 type="number"
                 value={item.itemQuantity}
                 onChange={(event) =>
-                  handleUpdateItem(
-                    index,
-                    item.itemName,
-                    Math.max(0, parseInt(event.target.value))
-                  )
+                  handleUpdateItem(index, item.itemName, event.target.value)
                 }
                 disabled={formDisabled}
                 min="0"
