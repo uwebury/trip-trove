@@ -121,35 +121,3 @@ export const StyledMiniButton = styled.div`
     transform: scale(1.03);
   }
 `;
-
-// export const StyledMiniButton = styled.div`
-//   margin: 0; /* Add this line to remove any default margin */
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   justify-self: center;
-//   width: 1.8rem;
-//   height: 1.8rem;
-//   padding: 0.5rem;
-//   background-color: ${({ defaultColor }) => defaultColor};
-//   border: 0px;
-//   border-radius: 10px;
-//   color: ${({ textColor }) => textColor};
-//   font-family: ${defaultFont.style.fontFamily};
-//   font-size: ${({ fontSize }) => fontSize || "1rem"};
-//   font-weight: bold;
-//   text-align: center;
-//   text-decoration: none;
-//   transition: color 0.3s ease, transform 0.3s ease;
-
-//   &:active,
-//   :visited {
-//     color: inherit;
-//   }
-
-//   &:hover {
-//     background-color: ${({ hoverColor }) => hoverColor};
-//     cursor: pointer;
-//     transform: scale(1.03);
-//   }
-// `;
