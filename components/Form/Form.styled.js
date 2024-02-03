@@ -84,18 +84,26 @@ export const StyledMiniButton = styled.div`
   width: 1.8rem;
   height: 1.8rem;
   padding: 0.5rem;
-  background-color: ${(props) =>
-    props.action === "add"
-      ? "var(--color-mini-button-add)"
-      : props.action === "delete"
-      ? "var(--color-mini-button-delete)"
-      : "var(--color-mini-button)"};
-  color: ${(props) =>
-    props.action === "add"
-      ? "var(--color-mini-button-add-text)"
-      : props.action === "delete"
-      ? "var(--color-mini-button-delete-text)"
-      : "var(--color-mini-button-text)"};
+  background-color: ${(props) => {
+    switch (props.action) {
+      case "add":
+        return "var(--color-mini-button-add)";
+      case "delete":
+        return "var(--color-mini-button-delete)";
+      default:
+        return "var(--color-mini-button)";
+    }
+  }};
+  color: ${(props) => {
+    switch (props.action) {
+      case "add":
+        return "var(--color-mini-button-add-text)";
+      case "delete":
+        return "var(--color-mini-button-delete-text)";
+      default:
+        return "var(--color-mini-button-text)";
+    }
+  }};
   border: 0px;
   border-radius: 10px;
   font-family: ${defaultFont.style.fontFamily};
@@ -111,12 +119,16 @@ export const StyledMiniButton = styled.div`
   }
 
   &:hover {
-    background-color: ${(props) =>
-      props.action === "add"
-        ? "var(--color-mini-button-add-hover)"
-        : props.action === "delete"
-        ? "var(--color-mini-button-delete-hover)"
-        : "var(--color-mini-button-hover)"};
+    background-color: ${(props) => {
+      switch (props.action) {
+        case "add":
+          return "var(--color-mini-button-add-hover)";
+        case "delete":
+          return "var(--color-mini-button-delete-hover)";
+        default:
+          return "var(--color-mini-button-hover)";
+      }
+    }};
     cursor: pointer;
     transform: scale(1.03);
   }
