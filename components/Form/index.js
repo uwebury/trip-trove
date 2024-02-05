@@ -309,71 +309,75 @@ export default function Form({
   );
 }
 
-const NewPackingListItem = ({
-  newPackingListItem,
-  handleUpdateNewPackingListItemName,
-  handleUpdateNewPackingListItemQuantity,
-  formDisabled,
-}) => (
-  <InputContainer>
-    <InputItem
-      type="text"
-      disabled={formDisabled}
-      value={newPackingListItem.itemName}
-      onChange={(event) =>
-        handleUpdateNewPackingListItemName(event.target.value)
-      }
-    />
-    <InputQuantity
-      type="number"
-      disabled={formDisabled}
-      value={newPackingListItem.itemQuantity}
-      onChange={(event) =>
-        handleUpdateNewPackingListItemQuantity(event.target.value)
-      }
-      min="0"
-      max="999"
-    />
-  </InputContainer>
-);
-
-const InputItemAndQuantity = ({
+function InputItemAndQuantity({
   item,
   handleUpdateItem,
   handleRemoveItem,
   formDisabled,
-}) => (
-  <>
-    <InputItem
-      id={`packingList_${item._id}`}
-      name={`packingList_${item._id}`}
-      type="text"
-      value={item.itemName}
-      onChange={(event) =>
-        handleUpdateItem(item._id, event.target.value, item.itemQuantity)
-      }
-      disabled={formDisabled}
-    />
-    <InputQuantity
-      id={`packingList_quantity_${item._id}`}
-      name={`packingList_quantity_${item._id}`}
-      type="number"
-      value={item.itemQuantity}
-      onChange={(event) =>
-        handleUpdateItem(item._id, item.itemName, event.target.value)
-      }
-      disabled={formDisabled}
-      min="0"
-      max="999"
-    />
-    <StyledMiniButton
-      type="button"
-      id="delete"
-      action="delete"
-      onClick={() => handleRemoveItem(item._id)}
-      disabled={formDisabled}
-    >
-      X
-    </StyledMiniButton>
-  </>
-);
+}) {
+  return (
+    <>
+      <InputItem
+        id={`packingList_${item._id}`}
+        name={`packingList_${item._id}`}
+        type="text"
+        value={item.itemName}
+        onChange={(event) =>
+          handleUpdateItem(item._id, event.target.value, item.itemQuantity)
+        }
+        disabled={formDisabled}
+      />
+      <InputQuantity
+        id={`packingList_quantity_${item._id}`}
+        name={`packingList_quantity_${item._id}`}
+        type="number"
+        value={item.itemQuantity}
+        onChange={(event) =>
+          handleUpdateItem(item._id, item.itemName, event.target.value)
+        }
+        disabled={formDisabled}
+        min="0"
+        max="999"
+      />
+      <StyledMiniButton
+        type="button"
+        id="delete"
+        action="delete"
+        onClick={() => handleRemoveItem(item._id)}
+        disabled={formDisabled}
+      >
+        X
+      </StyledMiniButton>
+    </>
+  );
+}
+
+function NewPackingListItem({
+  newPackingListItem,
+  handleUpdateNewPackingListItemName,
+  handleUpdateNewPackingListItemQuantity,
+  formDisabled,
+}) {
+  return (
+    <InputContainer>
+      <InputItem
+        type="text"
+        disabled={formDisabled}
+        value={newPackingListItem.itemName}
+        onChange={(event) =>
+          handleUpdateNewPackingListItemName(event.target.value)
+        }
+      />
+      <InputQuantity
+        type="number"
+        disabled={formDisabled}
+        value={newPackingListItem.itemQuantity}
+        onChange={(event) =>
+          handleUpdateNewPackingListItemQuantity(event.target.value)
+        }
+        min="0"
+        max="999"
+      />
+    </InputContainer>
+  );
+}
