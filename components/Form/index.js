@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import mongoose from "mongoose";
 import toast from "react-hot-toast";
 import {
@@ -41,7 +41,6 @@ export default function Form({
   const [formDisabled, setFormDisabled] = useState(false);
   const [handoverData, setHandoverData] = useState(defaultData);
   const [hasChanges, setHasChanges] = useState(false);
-
   const [newPackingListItem, setNewPackingListItem] = useState({
     itemQuantity: "",
     itemName: "",
@@ -79,7 +78,10 @@ export default function Form({
       ...handoverData.packingList,
       nextPackingListItem,
     ];
-    setHandoverData({ ...handoverData, packingList: updatedPackingList });
+    setHandoverData((prevData) => ({
+      ...prevData,
+      packingList: updatedPackingList,
+    }));
     setNewPackingListItem({ itemName: "", itemQuantity: "" });
     setHasChanges(true);
   }
@@ -250,74 +252,36 @@ export default function Form({
         <PackList>
           {handoverData.packingList.map((item, index) => (
             <InputContainer key={item._id}>
-              <InputItem
-                id={`packingList_${item._id}`}
-                name={`packingList_${item._id}`}
-                type="text"
-                value={item.itemName}
-                onChange={(event) =>
-                  handleUpdateItem(
-                    item._id,
-                    event.target.value,
-                    item.itemQuantity
-                  )
-                }
-                disabled={formDisabled}
+              <InputItemAndQuantity
+                item={item}
+                handleUpdateItem={handleUpdateItem}
+                handleRemoveItem={handleRemoveItem}
+                formDisabled={formDisabled}
               />
-              <InputQuantity
-                id={`packingList_quantity_${item._id}`}
-                name={`packingList_quantity_${item._id}`}
-                type="number"
-                value={item.itemQuantity}
-                onChange={(event) =>
-                  handleUpdateItem(item._id, item.itemName, event.target.value)
-                }
-                disabled={formDisabled}
-                min="0"
-                max="999"
-              />
-              <StyledMiniButton
-                type="button"
-                id="delete"
-                action="delete"
-                onClick={() => handleRemoveItem(item._id)}
-                disabled={formDisabled}
-              >
-                X
-              </StyledMiniButton>
             </InputContainer>
           ))}
-          <InputContainer>
-            <InputItem
-              type="text"
-              disabled={formDisabled}
-              value={newPackingListItem.itemName}
-              onChange={(event) =>
-                handleUpdateNewPackingListItemName(event.target.value)
+          {handoverData.showNewPackingListItem && (
+            <NewPackingListItem
+              newPackingListItem={newPackingListItem}
+              handleUpdateNewPackingListItemName={
+                handleUpdateNewPackingListItemName
               }
-            />
-            <InputQuantity
-              type="number"
-              disabled={formDisabled}
-              value={newPackingListItem.itemQuantity}
-              onChange={(event) =>
-                handleUpdateNewPackingListItemQuantity(event.target.value)
+              handleUpdateNewPackingListItemQuantity={
+                handleUpdateNewPackingListItemQuantity
               }
-              min="0"
-              max="999"
+              formDisabled={formDisabled}
             />
-
-            <StyledMiniButton
-              type="button"
-              id="add"
-              action="add"
-              fontSize={"1.4rem"}
-              onClick={handleAddPackingListItem}
-              disabled={formDisabled}
-            >
-              +
-            </StyledMiniButton>
-          </InputContainer>
+          )}
+          <StyledMiniButton
+            type="button"
+            id="add"
+            action="add"
+            fontSize={"1.4rem"}
+            onClick={handleAddPackingListItem}
+            disabled={formDisabled}
+          >
+            +
+          </StyledMiniButton>
         </PackList>
       </PackListContainer>
       <Label htmlFor="notes">Notes</Label>
@@ -344,3 +308,72 @@ export default function Form({
     </TripForm>
   );
 }
+
+const NewPackingListItem = ({
+  newPackingListItem,
+  handleUpdateNewPackingListItemName,
+  handleUpdateNewPackingListItemQuantity,
+  formDisabled,
+}) => (
+  <InputContainer>
+    <InputItem
+      type="text"
+      disabled={formDisabled}
+      value={newPackingListItem.itemName}
+      onChange={(event) =>
+        handleUpdateNewPackingListItemName(event.target.value)
+      }
+    />
+    <InputQuantity
+      type="number"
+      disabled={formDisabled}
+      value={newPackingListItem.itemQuantity}
+      onChange={(event) =>
+        handleUpdateNewPackingListItemQuantity(event.target.value)
+      }
+      min="0"
+      max="999"
+    />
+  </InputContainer>
+);
+
+const InputItemAndQuantity = ({
+  item,
+  handleUpdateItem,
+  handleRemoveItem,
+  formDisabled,
+}) => (
+  <>
+    <InputItem
+      id={`packingList_${item._id}`}
+      name={`packingList_${item._id}`}
+      type="text"
+      value={item.itemName}
+      onChange={(event) =>
+        handleUpdateItem(item._id, event.target.value, item.itemQuantity)
+      }
+      disabled={formDisabled}
+    />
+    <InputQuantity
+      id={`packingList_quantity_${item._id}`}
+      name={`packingList_quantity_${item._id}`}
+      type="number"
+      value={item.itemQuantity}
+      onChange={(event) =>
+        handleUpdateItem(item._id, item.itemName, event.target.value)
+      }
+      disabled={formDisabled}
+      min="0"
+      max="999"
+    />
+    <StyledMiniButton
+      type="button"
+      id="delete"
+      action="delete"
+      onClick={() => handleRemoveItem(item._id)}
+      disabled={formDisabled}
+    >
+      X
+    </StyledMiniButton>
+  </>
+);
