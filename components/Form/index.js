@@ -70,18 +70,28 @@ export default function Form({
   }
 
   function handleAddPackingListItem() {
+    const lastItem =
+      handoverData.packingList[handoverData.packingList.length - 1];
+
+    if (lastItem && lastItem.itemName === "") {
+      return;
+    }
+
     const nextPackingListItem = {
       ...newPackingListItem,
       _id: generateObjectId(),
     };
+
     const updatedPackingList = [
       ...handoverData.packingList,
       nextPackingListItem,
     ];
+
     setHandoverData((prevData) => ({
       ...prevData,
       packingList: updatedPackingList,
     }));
+
     setNewPackingListItem({ itemName: "", itemQuantity: null });
     setHasChanges(true);
   }
