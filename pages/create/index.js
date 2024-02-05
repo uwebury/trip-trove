@@ -6,8 +6,6 @@ import toast, { Toaster } from "react-hot-toast";
 export default function CreateTripPage() {
   const { mutate } = useSWR("/api/trips");
 
-  const initialData = { packingList: [{ itemName: "", itemQuantity: null }] };
-
   async function handleSubmit(tripData) {
     const response = await fetch(`/api/trips`, {
       method: "POST",
@@ -31,11 +29,7 @@ export default function CreateTripPage() {
   return (
     <>
       <Toaster />
-      <Form
-        defaultData={initialData}
-        onSubmit={handleSubmit}
-        isEditMode={false}
-      />
+      <Form onSubmit={handleSubmit} isEditMode={false} />
       <BackButton href="/" />
     </>
   );
