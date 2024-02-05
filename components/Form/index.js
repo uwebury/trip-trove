@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import mongoose from "mongoose";
 import toast from "react-hot-toast";
 import {
   toastDuration,
@@ -24,23 +25,43 @@ import {
 } from "@/components/Form/Form.styled";
 
 export default function Form({ defaultData, isEditMode, onSubmit }) {
-  const [handoverData, setHandoverData] = useState(defaultData);
   const [formDisabled, setFormDisabled] = useState(false);
+  const [handoverData, setHandoverData] = useState(defaultData);
+  const [initialPackingList, setInitialPackingList] = useState();
+  const [updatedPackingList, setUpdatedPackingList] = useState();
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const { ObjectId } = mongoose.Types;
+
+  function generateObjectId() {
+    const newObjectId = new ObjectId().toString();
+    return newObjectId;
+  }
 
   useEffect(() => {
-    if (defaultData?.packingList?.length === 0) {
-      setHandoverData((prev) => ({
-        ...prev,
-        packingList: [{ itemName: "", itemQuantity: null }],
-      }));
+    if (!defaultData || defaultData?.packingList?.length === 0) {
+      setInitialPackingList([
+        { _id: generateObjectId(), itemName: "", itemQuantity: null },
+      ]);
+    } else {
+      setInitialPackingList(defaultData?.packingList);
     }
+    setUpdatedPackingList(initialPackingList);
   }, [defaultData]);
+
+  useEffect(() => {
+    setHandoverData((prev) => ({
+      ...prev,
+      packingList: initialPackingList,
+    }));
+  }, [initialPackingList]);
 
   function handleInput(event) {
     setHandoverData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    setHasChanges(true);
   }
 
   function handleAddItem() {
@@ -52,16 +73,21 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         ...prev,
         packingList: [
           ...prev.packingList,
-          { itemName: "", itemQuantity: null },
+          { _id: generateObjectId(), itemName: "", itemQuantity: null },
         ],
       }));
     }
   }
 
-  function handleUpdateItem(index, itemName, itemQuantity) {
+  function handleUpdateItem(itemId, itemName, itemQuantity) {
     setHandoverData((prev) => {
-      const updatedPackingList = [...prev.packingList];
-      updatedPackingList[index] = { itemName, itemQuantity };
+      const updatedPackingList = prev.packingList.map((item) =>
+        item._id === itemId ? { ...item, itemName, itemQuantity } : item
+      );
+
+      setUpdatedPackingList(updatedPackingList);
+      setHasChanges(true);
+
       return {
         ...prev,
         packingList: updatedPackingList,
@@ -69,20 +95,33 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     });
   }
 
-  function handleRemoveItem(index) {
-    setHandoverData((prev) => {
-      const updatedPackingList = [...prev.packingList];
+  function handleRemoveItem(itemIdToRemove) {
+    setHandoverData((prevData) => {
+      let updatedPackingList;
+      let hasChanges = true;
+
+      if (prevData.packingList.length === 1) {
+        updatedPackingList = [
+          { _id: generateObjectId(), itemName: "", itemQuantity: null },
+        ];
+      } else {
+        updatedPackingList = prevData.packingList.filter(
+          (item) => item._id !== itemIdToRemove
+        );
+      }
 
       if (
-        updatedPackingList.length > 1 ||
-        index !== updatedPackingList.length - 1
+        JSON.stringify(updatedPackingList) ===
+        JSON.stringify(prevData.packingList)
       ) {
-        updatedPackingList.splice(index, 1);
-      } else {
-        updatedPackingList[index] = { itemName: "", itemQuantity: null };
+        hasChanges = false;
       }
+
+      setUpdatedPackingList(updatedPackingList);
+      setHasChanges(hasChanges);
+
       return {
-        ...prev,
+        ...prevData,
         packingList: updatedPackingList,
       };
     });
@@ -91,13 +130,18 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleReset() {
     toast.dismiss();
     setFormDisabled(true);
-    if (handoverData === defaultData) {
+    if (!hasChanges) {
       toast.error("No entries yet, nothing to reset.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
       return;
     }
+
+    const resetPackingList = [
+      { _id: generateObjectId(), itemName: "", itemQuantity: null },
+    ];
+
     toast(
       <ToastMessage
         message="Are you sure to reset form?"
@@ -106,6 +150,8 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         textCancelButton="No, don&rsquo;t reset!"
         messageAfterCancel="Ok, no reset."
         onConfirm={() => {
+          setInitialPackingList(resetPackingList);
+          setUpdatedPackingList(resetPackingList);
           setHandoverData(defaultData);
           setFormDisabled(false);
         }}
@@ -120,7 +166,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
   function handleDiscard() {
     toast.dismiss();
     setFormDisabled(true);
-    if (handoverData === defaultData) {
+    if (!hasChanges) {
       toast.error("No changes yet, nothing to discard.", {
         duration: toastDuration,
       });
@@ -137,6 +183,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterCancel="Nothing changed."
         onConfirm={() => {
           setHandoverData(defaultData);
+          setUpdatedPackingList(initialPackingList);
           setFormDisabled(false);
         }}
         onCancel={() => {
@@ -152,7 +199,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     toast.dismiss();
     setFormDisabled(true);
 
-    if (handoverData === defaultData) {
+    if (!hasChanges) {
       toast.error("No changes yet, nothing to save.", {
         duration: toastDuration,
       });
@@ -259,24 +306,28 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         <Label htmlFor="packingList">Packing List</Label>
         <PackList>
           {handoverData?.packingList?.map((item, index) => (
-            <InputContainer key={index}>
+            <InputContainer key={item._id}>
               <InputItem
-                id={`packingList_${index}`}
-                name={`packingList_${index}`}
+                id={`packingList_${item._id}`}
+                name={`packingList_${item._id}`}
                 type="text"
                 value={item.itemName}
                 onChange={(event) =>
-                  handleUpdateItem(index, event.target.value, item.itemQuantity)
+                  handleUpdateItem(
+                    item._id,
+                    event.target.value,
+                    item.itemQuantity
+                  )
                 }
                 disabled={formDisabled}
               />
               <InputQuantity
-                id={`packingList_quantity_${index}`}
-                name={`packingList_quantity_${index}`}
+                id={`packingList_quantity_${item._id}`}
+                name={`packingList_quantity_${item._id}`}
                 type="number"
                 value={item.itemQuantity}
                 onChange={(event) =>
-                  handleUpdateItem(index, item.itemName, event.target.value)
+                  handleUpdateItem(item._id, item.itemName, event.target.value)
                 }
                 disabled={formDisabled}
                 min="0"
@@ -286,13 +337,13 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
                 type="button"
                 id="delete"
                 action="delete"
-                onClick={() => handleRemoveItem(index)}
+                onClick={() => handleRemoveItem(item._id)}
                 disabled={formDisabled}
               >
                 X
               </StyledMiniButton>
-
-              {index === handoverData.packingList.length - 1 && (
+              {(index === handoverData.packingList.length - 1 ||
+                handoverData.packingList.length === 1) && (
                 <StyledMiniButton
                   type="button"
                   id="add"
