@@ -154,6 +154,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
           setUpdatedPackingList(resetPackingList);
           setHandoverData(defaultData);
           setFormDisabled(false);
+          setHasChanges(false);
         }}
         onCancel={() => {
           setFormDisabled(false);
@@ -174,6 +175,11 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       return;
     }
 
+    const hasPackingListItems =
+      defaultData &&
+      defaultData.packingList &&
+      defaultData.packingList.length > 0;
+
     toast(
       <ToastMessage
         message="Are you sure to discard all changes?"
@@ -182,9 +188,19 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         textCancelButton="No, don&rsquo;t discard!"
         messageAfterCancel="Nothing changed."
         onConfirm={() => {
-          setHandoverData(defaultData);
+          if (!hasPackingListItems) {
+            setHandoverData({
+              ...defaultData,
+              packingList: [
+                { _id: generateObjectId(), itemName: "", itemQuantity: null },
+              ],
+            });
+          } else {
+            setHandoverData(defaultData);
+          }
           setUpdatedPackingList(initialPackingList);
           setFormDisabled(false);
+          setHasChanges(false);
         }}
         onCancel={() => {
           setFormDisabled(false);
@@ -245,6 +261,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onConfirm={() => {
           onSubmit(modifiedHandoverData);
           setFormDisabled(false);
+          setHasChanges(false);
         }}
         onCancel={() => {
           setFormDisabled(false);
