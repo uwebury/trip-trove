@@ -42,8 +42,8 @@ export default function Form({
   const [handoverData, setHandoverData] = useState(defaultData);
   const [hasChanges, setHasChanges] = useState(false);
   const [newPackingListItem, setNewPackingListItem] = useState({
-    itemQuantity: "",
     itemName: "",
+    itemQuantity: null,
   });
 
   const { ObjectId } = mongoose.Types;
@@ -82,7 +82,7 @@ export default function Form({
       ...prevData,
       packingList: updatedPackingList,
     }));
-    setNewPackingListItem({ itemName: "", itemQuantity: "" });
+    setNewPackingListItem({ itemName: "", itemQuantity: null });
     setHasChanges(true);
   }
 
@@ -144,8 +144,8 @@ export default function Form({
         onConfirm={() => {
           setHandoverData(defaultData);
           setNewPackingListItem({
-            itemQuantity: "",
             itemName: "",
+            itemQuantity: null,
           });
           setFormDisabled(false);
           setHasChanges(false);
