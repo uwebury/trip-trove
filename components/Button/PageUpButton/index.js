@@ -14,8 +14,7 @@ const PageUpButtonContainer = styled.div`
   @media (min-width: 600px) {
     bottom: 72px;
     margin: 10px 10px;
-
-
+  }
 `;
 
 const PageUpButtonLink = styled(Link)`
@@ -32,9 +31,14 @@ const PageUpButtonLink = styled(Link)`
 
 const PageUpButtonSvg = styled.svg`
   margin: auto;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   transition: fill 0.6s ease;
+
+  @media (min-width: 600px) {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const PageUpButtonPath = styled.path`
