@@ -214,9 +214,14 @@ export default function Form({
 
   const generatePackingListFromTemplate = () => {
     const template = packingListTemplates[selectedTemplate];
+    const updatedPackingList = template.map((item) => ({
+      ...item,
+      _id: generateObjectId(),
+    }));
+
     setHandoverData((prevData) => ({
       ...prevData,
-      packingList: [...prevData.packingList, ...template],
+      packingList: [...prevData.packingList, ...updatedPackingList],
     }));
     setHasChanges(true);
   };
