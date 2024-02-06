@@ -3,9 +3,17 @@ import Link from "next/link";
 
 const LogoSvg = styled.svg`
   display: block;
+  width: 140px;
   margin: auto;
-  width: 200px;
   height: 100%;
+
+  @media (min-width: 600px) {
+    width: 180px;
+  }
+
+  @media (min-width: 900px) {
+    width: 220px;
+  }
 `;
 
 const LogoPathWordmark = styled.path`

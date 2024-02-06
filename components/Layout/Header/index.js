@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Logo from "@/components/Layout/Logo";
 
 const HeaderContainer = styled.header`
+  margin: 0;
   background-color: var(--color-header);
   display: grid;
   grid-template-columns: 1fr auto;
@@ -17,7 +18,6 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderTitle = styled.h1`
-  font-size: 1.8rem;
   color: var(--color-header-title);
 `;
 

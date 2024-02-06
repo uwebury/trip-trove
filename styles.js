@@ -133,19 +133,51 @@ export default createGlobalStyle`
   --color-sort-selector-border: var(--color-orange-300);
   --color-sort-selector-focus: var(--color-orange-500);
 
-
+  --font-size: 14px;
   }
   
+
+
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
+
+
  
+@media (min-width: 600px) {
+  :root {
+    --font-size: 1rem;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --font-size: 1.1rem;
+  }
+}
+
+
+/* @media (min-width: 1200px) {
+  :root {
+    --font-size: 1.1rem;
+  }
+} */
+
+/* @media (min-width: 1536px) {
+  :root {
+    --font-size: 1.1rem;
+  }
+} */
+
+
   body {
     margin: 0 auto;
     padding: 0;
     min-height: 100vh;
     font-family: ${defaultFont.style.fontFamily};
+    font-size: var(--font-size);
 }
+
 `;
