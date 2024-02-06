@@ -36,18 +36,37 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const StyledSelect = styled.select`
-  padding: 8px 16px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
-  font-size: 16px;
+const SortSelectContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-flow: column wrap; */
+  max-width: 100%;
+  margin-top: 2rem;
+  gap: 1rem;
+`;
+
+const StyledSortSelectLabel = styled.label`
+  margin: 0;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-form-label);
+`;
+
+const StyledSortSelect = styled.select`
+  width: auto;
+  padding: 0.5rem;
+  background-color: var(--color-sort-selector);
+  border: 2px solid var(--color-sort-selector-border);
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
 
   &:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: var(--color-sort-selector-focus);
   }
 `;
 
@@ -102,36 +121,52 @@ export default function CardList() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <StyledCardList>
-      <StyledSelect onChange={(event) => setSortMethod(event.target.value)}>
-        <option value="default">Most Recent Entry First</option>
-        <option value="dateAsc">Start Date: Sooner First</option>
-        <option value="dateDesc">Start Date: Later First</option>
-        <option value="durationAsc">Shorter Trips First</option>
-        <option value="durationDesc">Longer Trips First</option>
-        <option value="alphaAsc">Alphabetical (A-Z)</option>
-        <option value="alphaDesc">Alphabetical (Z-A)</option>
-      </StyledSelect>
-      {sortedData.map((trip) => (
-        <StyledLink href={`trips/${trip._id}`} key={trip._id}>
-          <StyledCard>
-            <h2>{trip.destination}</h2>
-            <strong>Start:</strong> {formatDate(trip.start)} |{" "}
-            <strong>End:</strong> {formatDate(trip.end)}
-            <p>
-              <Image
-                src={
-                  trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
-                }
-                width={300}
-                height={200}
-                alt={trip.destination}
-              />
-            </p>
-            <p>More Details</p>
-          </StyledCard>
-        </StyledLink>
-      ))}
-    </StyledCardList>
+    <>
+      <SortSelectContainer>
+        <StyledSortSelectLabel htmlFor="sortSelect">
+          Sort Trips:
+        </StyledSortSelectLabel>
+        <StyledSortSelect
+          onChange={(event) => setSortMethod(event.target.value)}
+        >
+          {/* <option value="default">Most Recent Entry First</option>
+          <option value="dateAsc">Start Date: Sooner First</option>
+          <option value="dateDesc">Start Date: Later First</option>
+          <option value="durationAsc">Shorter Trips First</option>
+          <option value="durationDesc">Longer Trips First</option>
+          <option value="alphaAsc">Alphabetical (A-Z)</option>
+          <option value="alphaDesc">Alphabetical (Z-A)</option> */}
+          <option value="default">Create Date | Newest &#8593;</option>
+          <option value="dateAsc">Start Date | Earliest &#8593;</option>
+          <option value="dateDesc">Start Date | Latest &#8593;</option>
+          <option value="durationAsc">Duration | Shortest &#8593;</option>
+          <option value="durationDesc">Duration | Longest &#8593;</option>
+          <option value="alphaAsc">Destination (A-Z) &#8595;</option>
+          <option value="alphaDesc">Destination (Z-A) &#8593;</option>
+        </StyledSortSelect>
+      </SortSelectContainer>
+      <StyledCardList>
+        {sortedData.map((trip) => (
+          <StyledLink href={`trips/${trip._id}`} key={trip._id}>
+            <StyledCard>
+              <h2>{trip.destination}</h2>
+              <strong>Start:</strong> {formatDate(trip.start)} |{" "}
+              <strong>End:</strong> {formatDate(trip.end)}
+              <p>
+                <Image
+                  src={
+                    trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
+                  }
+                  width={300}
+                  height={200}
+                  alt={trip.destination}
+                />
+              </p>
+              <p>More Details</p>
+            </StyledCard>
+          </StyledLink>
+        ))}
+      </StyledCardList>
+    </>
   );
 }
