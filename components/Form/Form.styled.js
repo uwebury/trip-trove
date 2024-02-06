@@ -2,29 +2,40 @@ import styled from "styled-components";
 import { defaultFont } from "@/styles.js";
 
 export const TripForm = styled.form`
-  margin: 2rem auto;
+  margin: 0.7rem auto;
   display: grid;
-  gap: 0.3rem;
-  padding: 1rem 1.6rem;
+  gap: 0.1rem;
+  padding: 1rem 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 600px) {
+    margin: 2rem auto;
+    gap: 0.3rem;
+    padding: 1rem 1.6rem;
+  }
 `;
 
 export const Label = styled.label`
   margin-top: 0.4rem;
+  margin-bottom: 0.1rem;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--color-form-label);
+
+  @media (min-width: 600px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const Input = styled.input`
-  padding: 0.5rem;
   font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
   background-color: var(--color-form-input);
   border: 1px solid #ddd;
+  padding: 0.5rem;
   border-radius: 8px;
   margin-bottom: 0.1rem;
 `;
@@ -112,6 +123,14 @@ export const StyledMiniButton = styled.div`
   text-align: center;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
+
+  /* @media (min-width: 600px) {
+    width: 1.8rem;
+  height: 1.8rem;
+  padding: 0.5rem;
+  font-size: ${({ fontSize }) => fontSize || "1rem"};
+
+  } */
 
   &:active,
   :visited {
