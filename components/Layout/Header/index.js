@@ -17,6 +17,7 @@ const HeaderContainer = styled.header`
 `;
 
 const HeaderTitle = styled.h1`
+  font-size: 1.8rem;
   color: var(--color-header-title);
 `;
 
