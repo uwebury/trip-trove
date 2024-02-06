@@ -46,7 +46,7 @@ export default function Form({
     itemName: "",
     itemQuantity: null,
   });
-
+  const [selectedTemplate, setSelectedTemplate] = useState("S");
   const { ObjectId } = mongoose.Types;
 
   function generateObjectId() {
