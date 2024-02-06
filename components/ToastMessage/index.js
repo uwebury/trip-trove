@@ -8,7 +8,11 @@ import { toastDuration } from "@/lib/utils";
 
 const StyledToasterMessage = styled.p`
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
+
+  @media (min-width: 600px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export function ToastMessage({

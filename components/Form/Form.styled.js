@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { defaultFont } from "@/styles.js";
 
 export const TripForm = styled.form`
-  margin: 0.7rem auto;
   display: grid;
+  margin: 0.6rem auto;
   gap: 0.1rem;
-  padding: 1rem 1rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 16px;

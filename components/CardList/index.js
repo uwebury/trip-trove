@@ -41,8 +41,13 @@ const SortSelectContainer = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  margin-top: 2rem;
-  gap: 1rem;
+  margin-top: 0.8rem;
+  gap: 0.6rem;
+
+  @media (min-width: 600px) {
+    margin-top: 2rem;
+    gap: 0.8rem;
+  }
 `;
 
 const StyledSortSelectLabel = styled.label`
@@ -62,6 +67,10 @@ const StyledSortSelect = styled.select`
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+
+  @media (min-width: 600px) {
+    font-size: 1.1rem;
+  }
 
   &:focus {
     outline: none;
