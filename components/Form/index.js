@@ -214,6 +214,12 @@ export default function Form({
   }
 
   const generatePackingListFromTemplate = () => {
+    if (!selectedTemplate) {
+      toast.error("Please select a preset before applying.", {
+        duration: toastDuration,
+      });
+      return;
+    }
     if (lastAppliedTemplate === selectedTemplate) {
       return;
     }
