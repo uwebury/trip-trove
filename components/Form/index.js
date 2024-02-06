@@ -282,13 +282,13 @@ export default function Form({
           <option value="L">Large (L)</option>
           <option value="XL">Extra Large (XL)</option>
         </Select>
-        <button
+        <StyledTextButton
           type="button"
           onClick={generatePackingListFromTemplate}
           disabled={formDisabled}
         >
           Apply Template
-        </button>
+        </StyledTextButton>
         <PackList>
           {handoverData.packingList.map((item, index) => (
             <InputContainer key={item._id}>
