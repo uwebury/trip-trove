@@ -216,6 +216,7 @@ export default function Form({
       ...prevData,
       packingList: [...template],
     }));
+    setHasChanges(true);
   };
 
   return (
