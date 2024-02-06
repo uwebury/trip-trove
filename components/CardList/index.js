@@ -3,6 +3,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const StyledCardList = styled.ul`
   margin: 2rem auto;
@@ -35,17 +36,83 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledSelect = styled.select`
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+`;
+
 export default function CardList() {
   const { data, error, isLoading } = useSWR("/api/trips", {
     fallbackData: [],
   });
+  const [sortMethod, setSortMethod] = useState("default");
+  const [sortedData, setSortedData] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setSortedData(sortTrips(data, sortMethod));
+    }
+  }, [sortMethod, data]);
+
+  const sortTrips = (trips, method) => {
+    switch (method) {
+      case "dateAsc":
+        return [...trips].sort((a, b) => new Date(a.start) - new Date(b.start));
+      case "dateDesc":
+        return [...trips].sort((a, b) => new Date(b.start) - new Date(a.start));
+      case "durationAsc":
+        return [...trips].sort(
+          (a, b) =>
+            new Date(a.end) -
+            new Date(a.start) -
+            (new Date(b.end) - new Date(b.start))
+        );
+      case "durationDesc":
+        return [...trips].sort(
+          (a, b) =>
+            new Date(b.end) -
+            new Date(b.start) -
+            (new Date(a.end) - new Date(a.start))
+        );
+      case "alphaAsc":
+        return [...trips].sort((a, b) =>
+          a.destination.localeCompare(b.destination)
+        );
+      case "alphaDesc":
+        return [...trips].sort((a, b) =>
+          b.destination.localeCompare(a.destination)
+        );
+      default:
+        return [...trips].reverse();
+    }
+  };
+
   if (error) return <div>Failed to load</div>;
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <StyledCardList>
-      {[...data].reverse().map((trip) => (
+      <StyledSelect onChange={(event) => setSortMethod(event.target.value)}>
+        <option value="default">Most Recent Entry First</option>
+        <option value="dateAsc">Start Date: Sooner First</option>
+        <option value="dateDesc">Start Date: Later First</option>
+        <option value="durationAsc">Shorter Trips First</option>
+        <option value="durationDesc">Longer Trips First</option>
+        <option value="alphaAsc">Alphabetical (A-Z)</option>
+        <option value="alphaDesc">Alphabetical (Z-A)</option>
+      </StyledSelect>
+      {sortedData.map((trip) => (
         <StyledLink href={`trips/${trip._id}`} key={trip._id}>
           <StyledCard>
             <h2>{trip.destination}</h2>
