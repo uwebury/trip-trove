@@ -49,6 +49,8 @@ export default function Form({
     itemQuantity: null,
   });
   const [selectedTemplate, setSelectedTemplate] = useState("S");
+  // added line 53
+  const [lastAppliedTemplate, setLastAppliedTemplate] = useState(null);
   const { ObjectId } = mongoose.Types;
 
   function generateObjectId() {
@@ -213,6 +215,15 @@ export default function Form({
   }
 
   const generatePackingListFromTemplate = () => {
+    // Check if the last applied template is the same as the currently selected one
+    if (lastAppliedTemplate === selectedTemplate) {
+      // If they are the same, do nothing
+      return;
+    }
+
+    // Update the last applied template with the currently selected one
+    setLastAppliedTemplate(selectedTemplate);
+
     const template = packingListTemplates[selectedTemplate];
     const updatedPackingList = [...handoverData.packingList];
 
@@ -240,6 +251,35 @@ export default function Form({
     }));
     setHasChanges(true);
   };
+
+  // const generatePackingListFromTemplate = () => {
+  //   const template = packingListTemplates[selectedTemplate];
+  //   const updatedPackingList = [...handoverData.packingList];
+
+  //   const lastItem = updatedPackingList[updatedPackingList.length - 1];
+  //   if (lastItem && lastItem.itemName === "") {
+  //     updatedPackingList.pop();
+  //     updatedPackingList.push(
+  //       ...template.map((item) => ({
+  //         ...item,
+  //         _id: generateObjectId(),
+  //       }))
+  //     );
+  //   } else {
+  //     updatedPackingList.push(
+  //       ...template.map((item) => ({
+  //         ...item,
+  //         _id: generateObjectId(),
+  //       }))
+  //     );
+  //   }
+
+  //   setHandoverData((prevData) => ({
+  //     ...prevData,
+  //     packingList: updatedPackingList,
+  //   }));
+  //   setHasChanges(true);
+  // };
 
   return (
     <TripForm
