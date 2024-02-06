@@ -48,7 +48,7 @@ export default function Form({
     itemName: "",
     itemQuantity: null,
   });
-  const [selectedTemplate, setSelectedTemplate] = useState("S");
+  const [selectedTemplate, setSelectedTemplate] = useState("Weekend");
   const [lastAppliedTemplate, setLastAppliedTemplate] = useState(null);
   const { ObjectId } = mongoose.Types;
 
@@ -306,10 +306,10 @@ export default function Form({
             value={selectedTemplate}
             disabled={formDisabled}
           >
-            <option value="S">Small (S)</option>
-            <option value="M">Medium (M)</option>
-            <option value="L">Large (L)</option>
-            <option value="XL">Extra Large (XL)</option>
+            <option value="Weekend">Weekend</option>
+            <option value="OneWeek">One week</option>
+            <option value="TwoWeeks">Two weeks</option>
+            <option value="ThreeWeeks">Three weeks</option>
           </Select>
           <StyledTextButton
             type="button"
