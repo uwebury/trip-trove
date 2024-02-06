@@ -40,7 +40,6 @@ const SortSelectContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* flex-flow: column wrap; */
   max-width: 100%;
   margin-top: 2rem;
   gap: 1rem;
@@ -129,13 +128,6 @@ export default function CardList() {
         <StyledSortSelect
           onChange={(event) => setSortMethod(event.target.value)}
         >
-          {/* <option value="default">Most Recent Entry First</option>
-          <option value="dateAsc">Start Date: Sooner First</option>
-          <option value="dateDesc">Start Date: Later First</option>
-          <option value="durationAsc">Shorter Trips First</option>
-          <option value="durationDesc">Longer Trips First</option>
-          <option value="alphaAsc">Alphabetical (A-Z)</option>
-          <option value="alphaDesc">Alphabetical (Z-A)</option> */}
           <option value="default">Create Date | Newest &#8593;</option>
           <option value="dateAsc">Start Date | Earliest &#8593;</option>
           <option value="dateDesc">Start Date | Latest &#8593;</option>
