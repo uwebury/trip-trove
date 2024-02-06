@@ -126,6 +126,11 @@ export default createGlobalStyle`
   --color-image-upload-text: var(--color-grey-300);
   --color-image-upload-hover: var(--color-orange-100);
 
+  --color-sort-selector: var(--color-orange-100);
+  --color-sort-selector-text: var(--color-grey-1000);
+  --color-sort-selector-border: var(--color-orange-300);
+  --color-sort-selector-focus: var(--color-orange-500);
+
 
   }
   
