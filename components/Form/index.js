@@ -48,7 +48,7 @@ export default function Form({
     itemName: "",
     itemQuantity: null,
   });
-  const [selectedTemplate, setSelectedTemplate] = useState("Weekend");
+  const [selectedTemplate, setSelectedTemplate] = useState("");
   const [lastAppliedTemplate, setLastAppliedTemplate] = useState(null);
   const { ObjectId } = mongoose.Types;
 
@@ -306,6 +306,9 @@ export default function Form({
             value={selectedTemplate}
             disabled={formDisabled}
           >
+            <option value="" disabled>
+              Please select preset
+            </option>
             <option value="Weekend">Weekend</option>
             <option value="OneWeek">One week</option>
             <option value="TwoWeeks">Two weeks</option>
@@ -316,7 +319,7 @@ export default function Form({
             onClick={generatePackingListFromTemplate}
             disabled={formDisabled}
           >
-            Apply Template
+            Apply
           </StyledTextButton>
         </TemplateContainer>
         <PackList>
