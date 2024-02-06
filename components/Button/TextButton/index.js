@@ -48,3 +48,15 @@ export const StyledTextButton = styled.button`
     color: inherit;
   }
 `;
+
+export const StyledTextButtonMediumSize = styled(StyledTextButton)`
+  min-width: 60px;
+
+  font-size: 0.8rem;
+
+  @media (min-width: 600px) {
+    min-width: 80px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+`;

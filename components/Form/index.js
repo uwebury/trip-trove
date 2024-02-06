@@ -10,6 +10,7 @@ import { ToastMessage } from "@/components/ToastMessage";
 import {
   ButtonContainer,
   StyledTextButton,
+  StyledTextButtonMediumSize,
 } from "@/components/Button/TextButton";
 import {
   Label,
@@ -320,13 +321,13 @@ export default function Form({
             <option value="two weeks">Two weeks</option>
             <option value="three weeks">Three weeks</option>
           </Select>
-          <StyledTextButton
+          <StyledTextButtonMediumSize
             type="button"
             onClick={generatePackingListFromTemplate}
             disabled={formDisabled}
           >
             Apply
-          </StyledTextButton>
+          </StyledTextButtonMediumSize>
         </TemplateContainer>
         <PackList>
           {handoverData.packingList.map((item, index) => (
