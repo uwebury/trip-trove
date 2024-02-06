@@ -22,6 +22,7 @@ import {
   InputItem,
   InputQuantity,
   StyledMiniButton,
+  Select,
 } from "@/components/Form/Form.styled";
 import { packingListTemplates } from "@/lib/packingListTemplates";
 
@@ -269,7 +270,7 @@ export default function Form({
       />
       <PackListContainer>
         <Label htmlFor="packingList">Packing List</Label>
-        <select
+        <Select
           id="template"
           name="template"
           onChange={(event) => setSelectedTemplate(event.target.value)}
@@ -280,7 +281,7 @@ export default function Form({
           <option value="M">Medium (M)</option>
           <option value="L">Large (L)</option>
           <option value="XL">Extra Large (XL)</option>
-        </select>
+        </Select>
         <button
           type="button"
           onClick={generatePackingListFromTemplate}
