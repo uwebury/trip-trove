@@ -119,6 +119,7 @@ export default createGlobalStyle`
 
   --color-form-label: var(--color-grey-800);
   --color-form-input: var(--color-grey-50);
+  --color-form-item-label: var(--color-grey-200);
 
   --color-image-upload: var(--color-orange-50);
   --color-image-upload-border: var(--color-orange-300);

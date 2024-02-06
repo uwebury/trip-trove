@@ -19,12 +19,14 @@ import {
   DateContainer,
   PackListContainer,
   PackList,
+  TemplateContainer,
+  Select,
   InputContainer,
   InputItem,
   InputQuantity,
+  MiniButtonContainer,
+  MiniButtonLabel,
   StyledMiniButton,
-  Select,
-  TemplateContainer,
 } from "@/components/Form/Form.styled";
 import { packingListTemplates } from "@/lib/packingListTemplates";
 
@@ -352,16 +354,19 @@ export default function Form({
               formDisabled={formDisabled}
             />
           )}
-          <StyledMiniButton
-            type="button"
-            id="add"
-            action="add"
-            fontSize={"1.4rem"}
-            onClick={handleAddPackingListItem}
-            disabled={formDisabled}
-          >
-            +
-          </StyledMiniButton>
+          <MiniButtonContainer>
+            <StyledMiniButton
+              type="button"
+              id="add"
+              action="add"
+              fontSize={"1.4rem"}
+              onClick={handleAddPackingListItem}
+              disabled={formDisabled}
+            >
+              +
+            </StyledMiniButton>
+            <MiniButtonLabel>Add Packing List Item</MiniButtonLabel>
+          </MiniButtonContainer>{" "}
         </PackList>
       </PackListContainer>
       <Label htmlFor="notes">Notes</Label>

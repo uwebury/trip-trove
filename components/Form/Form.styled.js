@@ -67,7 +67,7 @@ export const PackList = styled.ul`
 
 export const InputContainer = styled.li`
   display: grid;
-  grid-template-columns: 8fr 2fr 1fr 1fr;
+  grid-template-columns: 8fr 2fr 1fr;
   gap: 6px;
   align-items: center;
   margin: 0;
@@ -101,6 +101,26 @@ export const Select = styled.select`
   border-radius: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
+`;
+
+export const MiniButtonContainer = styled.div`
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const MiniButtonLabel = styled(Label)`
+  justify-self: center;
+  font-size: 0.7rem;
+  color: var(--color-form-item-label);
+  padding: 0;
+  margin: 0;
+
+  @media (min-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const StyledMiniButton = styled.div`
