@@ -214,14 +214,29 @@ export default function Form({
 
   const generatePackingListFromTemplate = () => {
     const template = packingListTemplates[selectedTemplate];
-    const updatedPackingList = template.map((item) => ({
-      ...item,
-      _id: generateObjectId(),
-    }));
+    const updatedPackingList = [...handoverData.packingList];
+
+    const lastItem = updatedPackingList[updatedPackingList.length - 1];
+    if (lastItem && lastItem.itemName === "") {
+      updatedPackingList.pop();
+      updatedPackingList.push(
+        ...template.map((item) => ({
+          ...item,
+          _id: generateObjectId(),
+        }))
+      );
+    } else {
+      updatedPackingList.push(
+        ...template.map((item) => ({
+          ...item,
+          _id: generateObjectId(),
+        }))
+      );
+    }
 
     setHandoverData((prevData) => ({
       ...prevData,
-      packingList: [...prevData.packingList, ...updatedPackingList],
+      packingList: updatedPackingList,
     }));
     setHasChanges(true);
   };
