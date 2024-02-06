@@ -6,9 +6,21 @@ export default function PackingList() {
   const { id } = router.query;
   const { data: trip } = useSWR(`/api/trips/${id}`);
 
+  const filteredPackingList = trip?.packingList?.filter(
+    (item) => item.itemName && item.itemName.trim() !== ""
+  );
+
   return (
-    <p>
-      <strong>Packing list:</strong> {trip.packingList}
-    </p>
+    <div>
+      <strong>Packing list:</strong>
+      <ul>
+        {filteredPackingList?.map((item) => (
+          <li key={item._id}>
+            {item.itemQuantity ? `${item.itemQuantity}x ` : ""}
+            {item.itemName}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

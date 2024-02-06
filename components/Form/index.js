@@ -1,7 +1,6 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import mongoose from "mongoose";
 import toast from "react-hot-toast";
-import { defaultFont } from "@/styles.js";
 import {
   toastDuration,
   validateTripDates,
@@ -12,73 +11,139 @@ import {
   ButtonContainer,
   StyledTextButton,
 } from "@/components/Button/TextButton";
+import {
+  Label,
+  TripForm,
+  Input,
+  DateContainer,
+  PackListContainer,
+  PackList,
+  InputContainer,
+  InputItem,
+  InputQuantity,
+  StyledMiniButton,
+} from "@/components/Form/Form.styled";
 
-const TripForm = styled.form`
-  margin: 2rem auto;
-  display: grid;
-  gap: 0.3rem;
-  padding: 1rem 1.6rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
+const INITIAL_DATA = {
+  destination: "",
+  start: "",
+  end: "",
+  imageURL: "",
+  notes: "",
+  packingList: [],
+};
 
-const Label = styled.label`
-  margin-top: 0.4rem;
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: var(--color-form-label);
-`;
-
-const Input = styled.input`
-  padding: 0.5rem;
-  font-family: ${defaultFont.style.fontFamily};
-  font-size: inherit;
-  background-color: var(--color-form-input);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 0.1rem;
-`;
-
-const DateContainer = styled.fieldset`
-  margin: 0;
-  padding: 0;
-  border-color: transparent;
-
-  display: grid;
-  grid-template-columns: 48% 48%;
-  grid-template-rows: auto auto;
-  gap: inherit;
-  grid-auto-flow: column;
-  justify-content: space-between;
-`;
-
-export default function Form({ defaultData, isEditMode, onSubmit }) {
-  const [handoverData, setHandoverData] = useState(defaultData);
+export default function Form({
+  defaultData = INITIAL_DATA,
+  isEditMode,
+  onSubmit,
+}) {
   const [formDisabled, setFormDisabled] = useState(false);
+  const [handoverData, setHandoverData] = useState(defaultData);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [newPackingListItem, setNewPackingListItem] = useState({
+    itemName: "",
+    itemQuantity: null,
+  });
 
-  useEffect(() => {
-    setHandoverData(defaultData);
-  }, [defaultData]);
+  const { ObjectId } = mongoose.Types;
+
+  function generateObjectId() {
+    const newObjectId = new ObjectId().toString();
+    return newObjectId;
+  }
+
+  function handleUpdateNewPackingListItemName(newName) {
+    const updatedNewPackingListItem = {
+      itemName: newName,
+      itemQuantity: newPackingListItem.itemQuantity,
+    };
+    setNewPackingListItem(updatedNewPackingListItem);
+  }
+
+  function handleUpdateNewPackingListItemQuantity(newQuantity) {
+    const updatedNewPackingListItem = {
+      itemQuantity: newQuantity,
+      itemName: newPackingListItem.itemName,
+    };
+    setNewPackingListItem(updatedNewPackingListItem);
+  }
+
+  function handleAddPackingListItem() {
+    const lastItem =
+      handoverData.packingList[handoverData.packingList.length - 1];
+
+    if (lastItem && lastItem.itemName === "") {
+      return;
+    }
+
+    const nextPackingListItem = {
+      ...newPackingListItem,
+      _id: generateObjectId(),
+    };
+
+    const updatedPackingList = [
+      ...handoverData.packingList,
+      nextPackingListItem,
+    ];
+
+    setHandoverData((prevData) => ({
+      ...prevData,
+      packingList: updatedPackingList,
+    }));
+
+    setNewPackingListItem({ itemName: "", itemQuantity: null });
+    setHasChanges(true);
+  }
 
   function handleInput(event) {
     setHandoverData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+    setHasChanges(true);
+  }
+
+  function handleUpdateItem(itemId, itemName, itemQuantity) {
+    setHandoverData((prev) => {
+      const updatedPackingList = prev.packingList.map((item) =>
+        item._id === itemId ? { ...item, itemName, itemQuantity } : item
+      );
+
+      return {
+        ...prev,
+        packingList: updatedPackingList,
+      };
+    });
+
+    setHasChanges(true);
+  }
+
+  function handleRemoveItem(itemIdToRemove) {
+    setHandoverData((prevData) => {
+      const updatedPackingList = handoverData.packingList.filter((item) => {
+        return item._id !== itemIdToRemove;
+      });
+
+      return {
+        ...prevData,
+        packingList: updatedPackingList,
+      };
+    });
+    setHasChanges(true);
   }
 
   function handleReset() {
     toast.dismiss();
     setFormDisabled(true);
-    if (handoverData === defaultData) {
+    if (!hasChanges) {
       toast.error("No entries yet, nothing to reset.", {
         duration: toastDuration,
       });
       setFormDisabled(false);
       return;
     }
+
     toast(
       <ToastMessage
         message="Are you sure to reset form?"
@@ -88,37 +153,12 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         messageAfterCancel="Ok, no reset."
         onConfirm={() => {
           setHandoverData(defaultData);
+          setNewPackingListItem({
+            itemName: "",
+            itemQuantity: null,
+          });
           setFormDisabled(false);
-        }}
-        onCancel={() => {
-          setFormDisabled(false);
-        }}
-      />,
-      { duration: Infinity }
-    );
-  }
-
-  function handleDiscard() {
-    toast.dismiss();
-    setFormDisabled(true);
-    if (handoverData === defaultData) {
-      toast.error("No changes yet, nothing to discard.", {
-        duration: toastDuration,
-      });
-      setFormDisabled(false);
-      return;
-    }
-
-    toast(
-      <ToastMessage
-        message="Are you sure to discard all changes?"
-        textConfirmButton="Yes, discard please."
-        messageAfterConfirm="Form reset to last saved version."
-        textCancelButton="No, don&rsquo;t discard!"
-        messageAfterCancel="Nothing changed."
-        onConfirm={() => {
-          setHandoverData(defaultData);
-          setFormDisabled(false);
+          setHasChanges(false);
         }}
         onCancel={() => {
           setFormDisabled(false);
@@ -133,7 +173,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
     toast.dismiss();
     setFormDisabled(true);
 
-    if (handoverData === defaultData) {
+    if (!hasChanges) {
       toast.error("No changes yet, nothing to save.", {
         duration: toastDuration,
       });
@@ -159,6 +199,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onConfirm={() => {
           onSubmit(handoverData);
           setFormDisabled(false);
+          setHasChanges(false);
         }}
         onCancel={() => {
           setFormDisabled(false);
@@ -216,15 +257,43 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         onInput={handleInput}
         disabled={formDisabled}
       />
-      <Label htmlFor="packingList">Packing List</Label>
-      <Input
-        id="packingList"
-        name="packingList"
-        type="text"
-        value={handoverData?.packingList || ""}
-        onInput={handleInput}
-        disabled={formDisabled}
-      />
+      <PackListContainer>
+        <Label htmlFor="packingList">Packing List</Label>
+        <PackList>
+          {handoverData.packingList.map((item, index) => (
+            <InputContainer key={item._id}>
+              <InputItemAndQuantity
+                item={item}
+                handleUpdateItem={handleUpdateItem}
+                handleRemoveItem={handleRemoveItem}
+                formDisabled={formDisabled}
+              />
+            </InputContainer>
+          ))}
+          {handoverData.showNewPackingListItem && (
+            <NewPackingListItem
+              newPackingListItem={newPackingListItem}
+              handleUpdateNewPackingListItemName={
+                handleUpdateNewPackingListItemName
+              }
+              handleUpdateNewPackingListItemQuantity={
+                handleUpdateNewPackingListItemQuantity
+              }
+              formDisabled={formDisabled}
+            />
+          )}
+          <StyledMiniButton
+            type="button"
+            id="add"
+            action="add"
+            fontSize={"1.4rem"}
+            onClick={handleAddPackingListItem}
+            disabled={formDisabled}
+          >
+            +
+          </StyledMiniButton>
+        </PackList>
+      </PackListContainer>
       <Label htmlFor="notes">Notes</Label>
       <Input
         id="notes"
@@ -237,7 +306,7 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
       <ButtonContainer>
         <StyledTextButton
           type="button"
-          onClick={isEditMode ? handleDiscard : handleReset}
+          onClick={handleReset}
           disabled={formDisabled}
         >
           {isEditMode ? "Discard" : "Reset"}
@@ -247,5 +316,78 @@ export default function Form({ defaultData, isEditMode, onSubmit }) {
         </StyledTextButton>
       </ButtonContainer>
     </TripForm>
+  );
+}
+
+function InputItemAndQuantity({
+  item,
+  handleUpdateItem,
+  handleRemoveItem,
+  formDisabled,
+}) {
+  return (
+    <>
+      <InputItem
+        id={`packingList_${item._id}`}
+        name={`packingList_${item._id}`}
+        type="text"
+        value={item.itemName}
+        onChange={(event) =>
+          handleUpdateItem(item._id, event.target.value, item.itemQuantity)
+        }
+        disabled={formDisabled}
+      />
+      <InputQuantity
+        id={`packingList_quantity_${item._id}`}
+        name={`packingList_quantity_${item._id}`}
+        type="number"
+        value={item.itemQuantity}
+        onChange={(event) =>
+          handleUpdateItem(item._id, item.itemName, event.target.value)
+        }
+        disabled={formDisabled}
+        min="0"
+        max="999"
+      />
+      <StyledMiniButton
+        type="button"
+        id="delete"
+        action="delete"
+        onClick={() => handleRemoveItem(item._id)}
+        disabled={formDisabled}
+      >
+        X
+      </StyledMiniButton>
+    </>
+  );
+}
+
+function NewPackingListItem({
+  newPackingListItem,
+  handleUpdateNewPackingListItemName,
+  handleUpdateNewPackingListItemQuantity,
+  formDisabled,
+}) {
+  return (
+    <InputContainer>
+      <InputItem
+        type="text"
+        disabled={formDisabled}
+        value={newPackingListItem.itemName}
+        onChange={(event) =>
+          handleUpdateNewPackingListItemName(event.target.value)
+        }
+      />
+      <InputQuantity
+        type="number"
+        disabled={formDisabled}
+        value={newPackingListItem.itemQuantity}
+        onChange={(event) =>
+          handleUpdateNewPackingListItemQuantity(event.target.value)
+        }
+        min="0"
+        max="999"
+      />
+    </InputContainer>
   );
 }
