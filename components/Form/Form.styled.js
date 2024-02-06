@@ -92,9 +92,9 @@ export const StyledMiniButton = styled.div`
   align-items: center;
   justify-content: center;
   justify-self: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  padding: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.2rem;
   background-color: ${(props) => {
     switch (props.action) {
       case "add":
@@ -116,7 +116,7 @@ export const StyledMiniButton = styled.div`
     }
   }};
   border: 0px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-family: ${defaultFont.style.fontFamily};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   font-weight: bold;
@@ -124,13 +124,12 @@ export const StyledMiniButton = styled.div`
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 
-  /* @media (min-width: 600px) {
+  @media (min-width: 600px) {
     width: 1.8rem;
-  height: 1.8rem;
-  padding: 0.5rem;
-  font-size: ${({ fontSize }) => fontSize || "1rem"};
-
-  } */
+    height: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
 
   &:active,
   :visited {
