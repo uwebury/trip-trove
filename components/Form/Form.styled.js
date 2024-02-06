@@ -151,3 +151,18 @@ export const StyledMiniButton = styled.div`
     transform: scale(1.03);
   }
 `;
+
+export const Select = styled.select`
+  padding: 0.5rem;
+  font-family: ${defaultFont.style.fontFamily};
+  font-size: inherit;
+  background-color: var(--color-form-input);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 0.1rem;
+`;
+
+export const TemplateContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
