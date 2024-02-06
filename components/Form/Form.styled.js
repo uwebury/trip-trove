@@ -146,5 +146,5 @@ export const Select = styled.select`
 
 export const TemplateContainer = styled.div`
   display: flex;
-  gap: 10px; // Adjust the gap as needed
+  gap: 10px;
 `;
