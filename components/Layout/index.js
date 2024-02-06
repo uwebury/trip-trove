@@ -12,8 +12,8 @@ const LayoutContainer = styled.div`
 `;
 
 const Main = styled.main`
-  flex: 1; // Grow to fill available space
-  overflow-y: auto; // Allow for vertical scrolling if needed
+  flex: 1;
+  overflow-y: auto;
   margin: 90px auto;
   padding: 0px 15px;
 `;

@@ -4,11 +4,15 @@ import Link from "next/link";
 const BackButtonContainer = styled.div`
   display: flex;
   position: fixed;
-  bottom: 80px;
+  bottom: 54px;
   left: 50%;
   transform: translateX(-50%);
   margin: 10px auto;
   z-index: 2;
+
+
+  @media (min-width: 600px) {
+    bottom: 72px;
 `;
 
 const BackButtonLink = styled(Link)`

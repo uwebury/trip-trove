@@ -13,8 +13,12 @@ const HeaderContainer = styled.header`
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 90px;
+  height: 70px;
   z-index: 10;
+
+  @media (min-width: 600px) {
+    height: 90px;
+  }
 `;
 
 const HeaderTitle = styled.h1`
