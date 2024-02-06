@@ -23,6 +23,7 @@ import {
   InputQuantity,
   StyledMiniButton,
 } from "@/components/Form/Form.styled";
+import { packingListTemplates } from "@/lib/packingListTemplates";
 
 const INITIAL_DATA = {
   destination: "",
