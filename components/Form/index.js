@@ -23,6 +23,7 @@ import {
   InputQuantity,
   StyledMiniButton,
   Select,
+  TemplateContainer,
 } from "@/components/Form/Form.styled";
 import { packingListTemplates } from "@/lib/packingListTemplates";
 
@@ -270,25 +271,27 @@ export default function Form({
       />
       <PackListContainer>
         <Label htmlFor="packingList">Packing List</Label>
-        <Select
-          id="template"
-          name="template"
-          onChange={(event) => setSelectedTemplate(event.target.value)}
-          value={selectedTemplate}
-          disabled={formDisabled}
-        >
-          <option value="S">Small (S)</option>
-          <option value="M">Medium (M)</option>
-          <option value="L">Large (L)</option>
-          <option value="XL">Extra Large (XL)</option>
-        </Select>
-        <StyledTextButton
-          type="button"
-          onClick={generatePackingListFromTemplate}
-          disabled={formDisabled}
-        >
-          Apply Template
-        </StyledTextButton>
+        <TemplateContainer>
+          <Select
+            id="template"
+            name="template"
+            onChange={(event) => setSelectedTemplate(event.target.value)}
+            value={selectedTemplate}
+            disabled={formDisabled}
+          >
+            <option value="S">Small (S)</option>
+            <option value="M">Medium (M)</option>
+            <option value="L">Large (L)</option>
+            <option value="XL">Extra Large (XL)</option>
+          </Select>
+          <StyledTextButton
+            type="button"
+            onClick={generatePackingListFromTemplate}
+            disabled={formDisabled}
+          >
+            Apply Template
+          </StyledTextButton>
+        </TemplateContainer>
         <PackList>
           {handoverData.packingList.map((item, index) => (
             <InputContainer key={item._id}>

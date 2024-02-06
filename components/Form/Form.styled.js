@@ -143,3 +143,8 @@ export const Select = styled.select`
   border-radius: 8px;
   margin-bottom: 0.1rem;
 `;
+
+export const TemplateContainer = styled.div`
+  display: flex;
+  gap: 10px; // Adjust the gap as needed
+`;
