@@ -214,7 +214,7 @@ export default function Form({
     const template = packingListTemplates[selectedTemplate];
     setHandoverData((prevData) => ({
       ...prevData,
-      packingList: [...template],
+      packingList: [...prevData.packingList, ...template],
     }));
     setHasChanges(true);
   };
