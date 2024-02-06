@@ -210,6 +210,14 @@ export default function Form({
     );
   }
 
+  const generatePackingListFromTemplate = () => {
+    const template = packingListTemplates[selectedTemplate];
+    setHandoverData((prevData) => ({
+      ...prevData,
+      packingList: [...template],
+    }));
+  };
+
   return (
     <TripForm
       aria-label="trip form"
