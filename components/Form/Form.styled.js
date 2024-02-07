@@ -3,6 +3,7 @@ import { defaultFont } from "@/styles.js";
 
 export const TripForm = styled.form`
   display: grid;
+  width: 300px;
   margin: 0.6rem auto;
   gap: 0.1rem;
   padding: 0.8rem 1rem;
@@ -13,6 +14,7 @@ export const TripForm = styled.form`
 
   @media (min-width: 600px) {
     margin: 2rem auto;
+    width: 500px;
     gap: 0.3rem;
     padding: 1rem 1.6rem;
   }
@@ -35,9 +37,13 @@ export const StyledInput = styled.input`
   font-size: inherit;
   background-color: var(--color-form-input);
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  padding: 0.3rem;
   border-radius: 8px;
   margin-bottom: 0.1rem;
+
+  @media (min-width: 600px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const DateContainer = styled.fieldset`
@@ -93,7 +99,6 @@ export const TemplateContainer = styled.div`
 `;
 
 export const StyledSelect = styled.select`
-  padding: 0.5rem;
   font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
   background-color: var(--color-form-input);
@@ -101,14 +106,19 @@ export const StyledSelect = styled.select`
   border-radius: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
+  padding: 0.3rem;
+
+  @media (min-width: 600px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const MiniButtonContainer = styled.div`
-  margin-top: 0.8rem;
   display: flex;
   gap: 0.5rem;
-  justify-content: center;
   align-items: center;
+  margin-top: 0.4rem;
+  margin-bottom: 0.2rem;
 `;
 
 export const MiniButtonLabel = styled(StyledLabel)`
