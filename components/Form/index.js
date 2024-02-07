@@ -13,14 +13,14 @@ import {
   StyledTextButtonMediumSize,
 } from "@/components/Button/TextButton";
 import {
-  Label,
   TripForm,
-  Input,
+  StyledLabel,
+  StyledInput,
   DateContainer,
   PackListContainer,
   PackList,
   TemplateContainer,
-  Select,
+  StyledSelect,
   InputContainer,
   InputItem,
   InputQuantity,
@@ -263,8 +263,8 @@ export default function Form({
       onSubmit={handleSubmit}
       formDisabled={formDisabled}
     >
-      <Label htmlFor="destination">Destination</Label>
-      <Input
+      <StyledLabel htmlFor="destination">Destination</StyledLabel>
+      <StyledInput
         id="destination"
         name="destination"
         type="text"
@@ -275,8 +275,8 @@ export default function Form({
         autoFocus
       />
       <DateContainer>
-        <Label htmlFor="start">Start</Label>
-        <Input
+        <StyledLabel htmlFor="start">Start</StyledLabel>
+        <StyledInput
           id="start"
           name="start"
           type="date"
@@ -285,8 +285,8 @@ export default function Form({
           required
           disabled={formDisabled}
         />
-        <Label htmlFor="end">End</Label>
-        <Input
+        <StyledLabel htmlFor="end">End</StyledLabel>
+        <StyledInput
           id="end"
           name="end"
           type="date"
@@ -296,8 +296,8 @@ export default function Form({
           disabled={formDisabled}
         />
       </DateContainer>
-      <Label htmlFor="imageURL">Image URL</Label>
-      <Input
+      <StyledLabel htmlFor="imageURL">Image URL</StyledLabel>
+      <StyledInput
         id="imageURL"
         name="imageURL"
         type="text"
@@ -306,9 +306,9 @@ export default function Form({
         disabled={formDisabled}
       />
       <PackListContainer>
-        <Label htmlFor="packingList">Packing List</Label>
+        <StyledLabel htmlFor="packingList">Packing List</StyledLabel>
         <TemplateContainer>
-          <Select
+          <StyledSelect
             id="template"
             name="template"
             onChange={(event) => setSelectedTemplate(event.target.value)}
@@ -322,7 +322,7 @@ export default function Form({
             <option value="OneWeek">One week</option>
             <option value="TwoWeeks">Two weeks</option>
             <option value="ThreeWeeks">Three weeks</option>
-          </Select>
+          </StyledSelect>
           <StyledTextButtonMediumSize
             type="button"
             onClick={generatePackingListFromTemplate}
@@ -369,8 +369,8 @@ export default function Form({
           </MiniButtonContainer>{" "}
         </PackList>
       </PackListContainer>
-      <Label htmlFor="notes">Notes</Label>
-      <Input
+      <StyledLabel htmlFor="notes">Notes</StyledLabel>
+      <StyledInput
         id="notes"
         name="notes"
         type="text"

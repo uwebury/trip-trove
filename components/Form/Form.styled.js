@@ -18,7 +18,7 @@ export const TripForm = styled.form`
   }
 `;
 
-export const Label = styled.label`
+export const StyledLabel = styled.label`
   margin-top: 0.4rem;
   margin-bottom: 0.1rem;
   font-weight: bold;
@@ -30,7 +30,7 @@ export const Label = styled.label`
   }
 `;
 
-export const Input = styled.input`
+export const StyledInput = styled.input`
   font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
   background-color: var(--color-form-input);
@@ -76,12 +76,12 @@ export const InputContainer = styled.li`
   width: 100%;
 `;
 
-export const InputItem = styled(Input)`
+export const InputItem = styled(StyledInput)`
   width: 100%;
   margin: 0;
 `;
 
-export const InputQuantity = styled(Input)`
+export const InputQuantity = styled(StyledInput)`
   width: 100%;
   margin: 0;
 `;
@@ -92,7 +92,7 @@ export const TemplateContainer = styled.div`
   gap: 10px;
 `;
 
-export const Select = styled.select`
+export const StyledSelect = styled.select`
   padding: 0.5rem;
   font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
@@ -111,7 +111,7 @@ export const MiniButtonContainer = styled.div`
   align-items: center;
 `;
 
-export const MiniButtonLabel = styled(Label)`
+export const MiniButtonLabel = styled(StyledLabel)`
   justify-self: center;
   font-size: 0.7rem;
   color: var(--color-form-item-label);
