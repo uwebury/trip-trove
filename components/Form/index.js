@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import mongoose from "mongoose";
 import toast from "react-hot-toast";
 import {
@@ -22,7 +22,10 @@ import {
   InputItem,
   InputQuantity,
   StyledMiniButton,
+  Select,
+  TemplateContainer,
 } from "@/components/Form/Form.styled";
+import { packingListTemplates } from "@/lib/packingListTemplates";
 
 const INITIAL_DATA = {
   destination: "",
@@ -45,7 +48,8 @@ export default function Form({
     itemName: "",
     itemQuantity: null,
   });
-
+  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [lastAppliedTemplate, setLastAppliedTemplate] = useState(null);
   const { ObjectId } = mongoose.Types;
 
   function generateObjectId() {
@@ -209,6 +213,47 @@ export default function Form({
     );
   }
 
+  const generatePackingListFromTemplate = () => {
+    if (!selectedTemplate) {
+      toast.error("Please select a preset before applying.", {
+        duration: toastDuration,
+      });
+      return;
+    }
+    if (lastAppliedTemplate === selectedTemplate) {
+      return;
+    }
+
+    setLastAppliedTemplate(selectedTemplate);
+
+    const template = packingListTemplates[selectedTemplate];
+    const updatedPackingList = [...handoverData.packingList];
+
+    const lastItem = updatedPackingList[updatedPackingList.length - 1];
+    if (lastItem && lastItem.itemName === "") {
+      updatedPackingList.pop();
+      updatedPackingList.push(
+        ...template.map((item) => ({
+          ...item,
+          _id: generateObjectId(),
+        }))
+      );
+    } else {
+      updatedPackingList.push(
+        ...template.map((item) => ({
+          ...item,
+          _id: generateObjectId(),
+        }))
+      );
+    }
+
+    setHandoverData((prevData) => ({
+      ...prevData,
+      packingList: updatedPackingList,
+    }));
+    setHasChanges(true);
+  };
+
   return (
     <TripForm
       aria-label="trip form"
@@ -259,6 +304,30 @@ export default function Form({
       />
       <PackListContainer>
         <Label htmlFor="packingList">Packing List</Label>
+        <TemplateContainer>
+          <Select
+            id="template"
+            name="template"
+            onChange={(event) => setSelectedTemplate(event.target.value)}
+            value={selectedTemplate}
+            disabled={formDisabled}
+          >
+            <option value="" disabled>
+              Please select preset
+            </option>
+            <option value="weekend">Weekend</option>
+            <option value="one week">One week</option>
+            <option value="two weeks">Two weeks</option>
+            <option value="three weeks">Three weeks</option>
+          </Select>
+          <StyledTextButton
+            type="button"
+            onClick={generatePackingListFromTemplate}
+            disabled={formDisabled}
+          >
+            Apply
+          </StyledTextButton>
+        </TemplateContainer>
         <PackList>
           {handoverData.packingList.map((item, index) => (
             <InputContainer key={item._id}>
