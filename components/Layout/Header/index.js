@@ -4,7 +4,11 @@ import Logo from "@/components/Layout/Logo";
 
 const HeaderContainer = styled.header`
   margin: 0;
-  background-color: var(--color-header);
+  background: linear-gradient(
+    to right,
+    var(--color-header),
+    var(--color-header-lightened)
+  );
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;

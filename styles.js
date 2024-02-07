@@ -10,32 +10,18 @@ export const defaultFont = Outfit({
 export default createGlobalStyle`
 :root {
       
-  /* --color-blue-0: #fff;
-  --color-blue-50: #e7f4ff;
-  --color-blue-100: #d4eaff;
-  --color-blue-200: #b1d7ff;
-  --color-blue-300: #83baff;
-  --color-blue-400: #528fff;
-  --color-blue-500: #2b62ff;
-  --color-blue-600: #0732ff;
-  --color-blue-700: #002aff;
-  --color-blue-800: #0226d1;
-  --color-blue-900: #0b2488;
-  --color-blue-950: #08175e;
-  --color-blue-1000: #000; */
-
   --color-blue-0: #fff;
-  --color-blue-50: #ecf9ff;
-  --color-blue-100: #e4f0ff;
-  --color-blue-200: #b2e7ff;
-  --color-blue-300: #7ed9ff;
-  --color-blue-400: #41c2ff;
-  --color-blue-500: #16a0ff;
-  --color-blue-600: #007eff;
-  --color-blue-700: #0066fd;
-  --color-blue-800: #0156d5;
-  --color-blue-900: #0849a0;
-  --color-blue-950: #0b2c60;
+  --color-blue-50: #f0f7ff;
+  --color-blue-100: #e0effe;
+  --color-blue-200: #eadffd;
+  --color-blue-300: #7dc5fc;
+  --color-blue-400: #3aa9f8;
+  --color-blue-500: #0e8de9;
+  --color-blue-600: #026fc7;
+  --color-blue-700: #0358a1;
+  --color-blue-800: #074b85;
+  --color-blue-900: #0c3f6e;
+  --color-blue-950: #082849;
   --color-blue-1000: #000;
 
   
@@ -96,16 +82,16 @@ export default createGlobalStyle`
   --color-grey-1000: #000;
   
 
+  --color-header: var(--color-blue-600);
+  --color-header-lightened: var(--color-blue-300);
+  --color-header-title: var(--color-orange-0);
   
-  --color-header: var(--color-blue-300);
-  --color-header-title: var(--color-blue-0);
-  
-  --color-logo-main: var(--color-blue-900);
-  --color-logo-jewel: var(--color-orange-300);
+  --color-logo-main: var(--color-blue-800);
+  --color-logo-jewel: var(--color-orange-400);
 
-  --color-navigation: var(--color-blue-300);
-  --color-navigation-active: var(--color-blue-200);
-  --color-navigation-hover: var(--color-blue-400);
+  --color-navigation: var(--color-blue-400);
+  --color-navigation-active: var(--color-blue-600);
+  --color-navigation-hover: var(--color-blue-700);
   --color-navigation-item: var(--color-blue-0);
   --color-navigation-border: var(--color-blue-0);
 
@@ -153,13 +139,11 @@ export default createGlobalStyle`
   }
   
 
-
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
-
 
  
 @media (min-width: 600px) {
@@ -174,18 +158,6 @@ export default createGlobalStyle`
   }
 }
 
-
-/* @media (min-width: 1200px) {
-  :root {
-    --font-size: 1.1rem;
-  }
-} */
-
-/* @media (min-width: 1536px) {
-  :root {
-    --font-size: 1.1rem;
-  }
-} */
 
 
   body {
