@@ -14,12 +14,20 @@ const StyledCardList = styled.ul`
 `;
 
 const StyledCard = styled.li`
-  border: 1px solid #ddd;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.1rem;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
   border-radius: 8px;
-  padding: 16px;
+  width: 300px;
+  padding: 0.2rem 1.2rem;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   list-style: none;
+
+  @media (min-width: 600px) {
+    width: 500px;
 `;
 
 const StyledLink = styled(Link)`
@@ -34,6 +42,61 @@ const StyledLink = styled(Link)`
   &:visited {
     color: inherit;
   }
+`;
+
+const CardDestination = styled.h2`
+  margin: 0.8rem;
+  padding: 0;
+  text-align: center;
+  align-self: center;
+  color: var(--color-card-title);
+  font-size: 1.8rem;
+`;
+
+const CardDateContainer = styled.div`
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.2rem;
+  border-color: transparent;
+  display: grid;
+  align-self: center;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  justify-content: flex-start; /* Adjusted */
+  gap: 0.5rem;
+  align-items: center; /* Added */
+`;
+
+const CardDateLabel = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--color-card-date-label);
+`;
+
+const CardDate = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-card-date);
+`;
+
+const CardImage = styled.img`
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+`;
+
+const CardCallToAction = styled.p`
+  margin: 0.6rem;
+  padding: 0;
+  align-self: center;
+  color: var(--color-card-call-to-action);
 `;
 
 const SortSelectContainer = styled.div`
@@ -150,20 +213,24 @@ export default function CardList() {
         {sortedData.map((trip) => (
           <StyledLink href={`trips/${trip._id}`} key={trip._id}>
             <StyledCard>
-              <h2>{trip.destination}</h2>
-              <strong>Start:</strong> {formatDate(trip.start)} |{" "}
-              <strong>End:</strong> {formatDate(trip.end)}
-              <p>
-                <Image
-                  src={
-                    trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
-                  }
-                  width={300}
-                  height={200}
-                  alt={trip.destination}
-                />
-              </p>
-              <p>More Details</p>
+              <CardDestination>{trip.destination}</CardDestination>
+              <CardDateContainer>
+                <CardDateLabel>Start:</CardDateLabel>
+                <CardDate>{formatDate(trip.start)}</CardDate>
+                <CardDateLabel>End:</CardDateLabel>
+                <CardDate>{formatDate(trip.end)}</CardDate>
+              </CardDateContainer>
+
+              <CardImage
+                src={
+                  trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
+                }
+                width={300}
+                height={200}
+                alt={trip.destination}
+              />
+
+              <CardCallToAction>More Details</CardCallToAction>
             </StyledCard>
           </StyledLink>
         ))}

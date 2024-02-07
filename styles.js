@@ -23,7 +23,6 @@ export default createGlobalStyle`
   --color-blue-900: #0c3f6e;
   --color-blue-950: #082849;
   --color-blue-1000: #000;
-
   
   --color-orange-0: #fff;
   --color-orange-50: #fffbec;
@@ -122,18 +121,17 @@ export default createGlobalStyle`
   --color-form-input: var(--color-grey-50);
   --color-form-item-label: var(--color-grey-200);
 
-  --color-image-upload: var(--color-orange-50);
-  --color-image-upload-border: var(--color-orange-300);
-  --color-image-upload-dash-line: var(--color-grey-200);
-  --color-image-upload-icon: var(--color-grey-300);
-  --color-image-upload-headline: var(--color-grey-1000);
-  --color-image-upload-text: var(--color-grey-300);
-  --color-image-upload-hover: var(--color-orange-100);
-
   --color-sort-selector: var(--color-orange-100);
   --color-sort-selector-text: var(--color-grey-1000);
   --color-sort-selector-border: var(--color-orange-300);
   --color-sort-selector-focus: var(--color-orange-500);
+
+  --color-card: var(--color-orange-0);
+  --color-card-border: var(--color-grey-200);
+  --color-card-title: var(--color-grey-800);
+  --color-card-date-label: var(--color-grey-300);
+  --color-card-date: var(--color-orange-600);
+  --color-card-call-to-action: var(--color-orange-600);
 
   --font-size: 14px;
   }
