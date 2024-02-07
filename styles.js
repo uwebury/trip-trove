@@ -130,7 +130,7 @@ export default createGlobalStyle`
   --color-card-border: var(--color-grey-200);
   --color-card-title: var(--color-grey-800);
   --color-card-date-label: var(--color-grey-300);
-  --color-card-date: var(--color-orange-600);
+  --color-card-date: var(--color-orange-1000);
   --color-card-call-to-action: var(--color-orange-600);
 
   --font-size: 14px;

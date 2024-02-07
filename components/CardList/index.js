@@ -63,9 +63,9 @@ const CardDateContainer = styled.div`
   grid-template-columns: auto auto auto auto;
   grid-template-rows: auto auto;
   grid-auto-flow: row;
-  justify-content: flex-start; /* Adjusted */
+  justify-content: center;
   gap: 0.5rem;
-  align-items: center; /* Added */
+  align-items: center;
 `;
 
 const CardDateLabel = styled.p`
@@ -77,10 +77,15 @@ const CardDateLabel = styled.p`
 
 const CardDate = styled.p`
   margin: 0;
-  padding: 0;
-  font-size: 1.2rem;
+  padding: 0.1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   color: var(--color-card-date);
+ 
+  @media (min-width: 600px) {
+    font-size: 1.1rem;
+
+
 `;
 
 const CardImage = styled.img`
