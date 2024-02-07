@@ -318,10 +318,10 @@ export default function Form({
             <option value="" disabled>
               Please select preset
             </option>
-            <option value="Weekend">Weekend</option>
-            <option value="OneWeek">One week</option>
-            <option value="TwoWeeks">Two weeks</option>
-            <option value="ThreeWeeks">Three weeks</option>
+            <option value="weekend">Weekend</option>
+            <option value="one week">One week</option>
+            <option value="two weeks">Two weeks</option>
+            <option value="three weeks">Three weeks</option>
           </StyledSelect>
           <StyledTextButtonMediumSize
             type="button"
