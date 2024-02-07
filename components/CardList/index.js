@@ -91,7 +91,7 @@ const CardDate = styled.p`
 
 `;
 
-const CardImage = styled.img`
+const CardImage = styled(Image)`
   margin: 0;
   padding: 0;
   border-radius: 8px;
@@ -100,7 +100,7 @@ const CardImage = styled.img`
   align-self: center;
 `;
 
-const CardCallToAction = styled.p`
+const CardText = styled.p`
   margin: 0.6rem;
   padding: 0;
   align-self: center;
@@ -232,14 +232,16 @@ export default function CardList() {
 
               <CardImage
                 src={
-                  trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
+                  trip.imageURL !== ""
+                    ? trip.imageURL
+                    : "/images/TripTrove_default.png"
                 }
                 width={300}
                 height={200}
                 alt={trip.destination}
               />
 
-              <CardCallToAction>More Details</CardCallToAction>
+              <CardText>More Details</CardText>
             </StyledCard>
           </StyledLink>
         ))}

@@ -132,6 +132,7 @@ export default createGlobalStyle`
   --color-card-date-label: var(--color-grey-300);
   --color-card-date: var(--color-orange-1000);
   --color-card-call-to-action: var(--color-orange-500);
+  --color-card-text: var(--color-orange-1000);
 
   --font-size: 14px;
   }
