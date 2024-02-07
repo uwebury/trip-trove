@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const StyledCardList = styled.ul`
-  margin: 2rem auto;
+  margin: 1.8rem auto;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -112,7 +112,7 @@ const SortSelectContainer = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  margin-top: 0.8rem;
+  margin-top: 0.4rem;
   gap: 0.6rem;
 
   @media (min-width: 600px) {
@@ -130,16 +130,17 @@ const StyledSortSelectLabel = styled.label`
 
 const StyledSortSelect = styled.select`
   width: auto;
-  padding: 0.5rem;
+  padding: 0.3rem;
   background-color: var(--color-sort-selector);
   border: 2px solid var(--color-sort-selector-border);
   border-radius: 8px;
   font-family: var(--font-family);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
 
   @media (min-width: 600px) {
+    padding: 0.5rem;
     font-size: 1.1rem;
   }
 
