@@ -50,7 +50,11 @@ const CardDestination = styled.h2`
   text-align: center;
   align-self: center;
   color: var(--color-card-title);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  
+  @media (min-width: 600px) {
+    font-size: 1.8rem;
+
 `;
 
 const CardDateContainer = styled.div`
@@ -84,7 +88,6 @@ const CardDate = styled.p`
  
   @media (min-width: 600px) {
     font-size: 1.1rem;
-
 
 `;
 
