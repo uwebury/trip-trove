@@ -10,7 +10,7 @@ export const defaultFont = Outfit({
 export default createGlobalStyle`
 :root {
       
-  --color-blue-0: #fff;
+  /* --color-blue-0: #fff;
   --color-blue-50: #e7f4ff;
   --color-blue-100: #d4eaff;
   --color-blue-200: #b1d7ff;
@@ -22,7 +22,22 @@ export default createGlobalStyle`
   --color-blue-800: #0226d1;
   --color-blue-900: #0b2488;
   --color-blue-950: #08175e;
+  --color-blue-1000: #000; */
+
+  --color-blue-0: #fff;
+  --color-blue-50: #ecf9ff;
+  --color-blue-100: #e4f0ff;
+  --color-blue-200: #b2e7ff;
+  --color-blue-300: #7ed9ff;
+  --color-blue-400: #41c2ff;
+  --color-blue-500: #16a0ff;
+  --color-blue-600: #007eff;
+  --color-blue-700: #0066fd;
+  --color-blue-800: #0156d5;
+  --color-blue-900: #0849a0;
+  --color-blue-950: #0b2c60;
   --color-blue-1000: #000;
+
   
   --color-orange-0: #fff;
   --color-orange-50: #fffbec;
