@@ -28,6 +28,7 @@ const StyledCard = styled.li`
 
   @media (min-width: 600px) {
     width: 500px;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -51,10 +52,10 @@ const CardDestination = styled.h2`
   align-self: center;
   color: var(--color-card-title);
   font-size: 1.6rem;
-  
+
   @media (min-width: 600px) {
     font-size: 1.8rem;
-
+  }
 `;
 
 const CardDateContainer = styled.div`
@@ -85,10 +86,10 @@ const CardDate = styled.p`
   font-size: 0.9rem;
   font-weight: bold;
   color: var(--color-card-date);
- 
+
   @media (min-width: 600px) {
     font-size: 1.1rem;
-
+  }
 `;
 
 const CardImage = styled(Image)`
