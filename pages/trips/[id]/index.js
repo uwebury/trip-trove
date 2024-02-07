@@ -183,9 +183,15 @@ export default function DetailsPage() {
             Edit
           </StyledTextButton>
         </ButtonContainer>
-        <CardNotesLabel>Notes:</CardNotesLabel>
-        <CardNotes>{trip.notes}</CardNotes>
-        <PackingList />
+        {trip.notes !== "" && (
+          <>
+            <CardNotesLabel>Notes:</CardNotesLabel>
+            <CardNotes>{trip.notes}</CardNotes>
+          </>
+        )}
+        {trip.packingList &&
+          trip.packingList.length <= 1 &&
+          trip.packingList[0] === "" && <PackingList />}{" "}
         <BackButton href="/" />
       </StyledCard>
     </>
