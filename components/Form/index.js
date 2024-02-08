@@ -27,8 +27,6 @@ import {
   MiniButtonContainer,
   MiniButtonLabel,
   StyledMiniButton,
-  Select,
-  TemplateContainer,
 } from "@/components/Form/Form.styled";
 import { packingListTemplates } from "@/lib/packingListTemplates";
 
