@@ -30,7 +30,7 @@ This enhances the packing list feature by allowing users to select from various 
 
 ![Primary Tech Stack](https://skillicons.dev/icons?i=nextjs,react,styledcomponents,js,html,css)
 
-![More Tech](https://skillicons.dev/icons?i=mongodb,jest,vercel,git,github,nodejs)
+![More Tech](https://skillicons.dev/icons?i=mongodb,figma,vercel,git,github,nodejs)
 
 ## Development
 
