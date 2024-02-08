@@ -34,7 +34,7 @@ const StyledCard = styled.div`
   @media (min-width: 600px) {
     width: 500px;
     margin-top: 2.6rem;
-    padding: 1rem 1.5rem;
+    padding: 1rem 2rem;
 `;
 
 const CardDestination = styled.h2`
@@ -189,9 +189,7 @@ export default function DetailsPage() {
             <CardNotes>{trip.notes}</CardNotes>
           </>
         )}
-        {trip.packingList &&
-          trip.packingList.length <= 1 &&
-          trip.packingList[0] === "" && <PackingList />}{" "}
+        {trip.packingList && trip.packingList.length !== 0 && <PackingList />}
         <BackButton href="/" />
       </StyledCard>
     </>
