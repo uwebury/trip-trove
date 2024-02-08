@@ -169,7 +169,7 @@ export default function DetailsPage() {
           src={
             trip.imageURL !== ""
               ? trip.imageURL
-              : "/images/TripTrove_default.png"
+              : "/images/triptrove-default.png"
           }
           width={300}
           height={200}
