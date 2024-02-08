@@ -2,13 +2,13 @@
 
 ## Project
 
-A personal travel app that allows the user to create, update and delete journeys along with a packing list. TripTrove transforms travel planning into a breeze by offering a one-stop solution for seamlessly managing itineraries, packing lists, and journey details, all tailored to their users personal travel needs.
+A personal travel app that allows the user to create, update and delete journeys along with a packing list. TripTrove transforms travel planning into a breeze by offering a one-stop solution for seamlessly managing itineraries, packing lists and journey details, all tailored to their users personal travel needs.
 
 ## Key features
 
 ### 🗺️ Journey Management
 
-Users can create, edit, and delete journeys, incorporating all necessary information for each trip.
+Users can create, edit and delete journeys, incorporating all necessary information for each trip.
 
 ### 👀 Overview of Journeys
 
