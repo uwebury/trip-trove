@@ -4,12 +4,17 @@ import Link from "next/link";
 const PageUpButtonContainer = styled.div`
   display: flex;
   position: fixed;
-  bottom: 80px;
+  bottom: 54px;
   right: 0;
   justify-content: flex-end;
-  margin: 10px 15px;
+  margin: 15px 10px;
   z-index: 2;
   transition: opacity 0.6s ease;
+
+  @media (min-width: 600px) {
+    bottom: 72px;
+    margin: 10px 10px;
+  }
 `;
 
 const PageUpButtonLink = styled(Link)`
@@ -17,10 +22,7 @@ const PageUpButtonLink = styled(Link)`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition:
-    color 0.6s ease,
-    background-color 0.6s ease,
-    transform 0.6s ease;
+  transition: color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
   &:hover {
     background-color: var(--color-page-up-button-hover);
     transform: scale(1.1);
@@ -29,9 +31,14 @@ const PageUpButtonLink = styled(Link)`
 
 const PageUpButtonSvg = styled.svg`
   margin: auto;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   transition: fill 0.6s ease;
+
+  @media (min-width: 600px) {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const PageUpButtonPath = styled.path`

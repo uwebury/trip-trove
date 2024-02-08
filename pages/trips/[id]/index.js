@@ -17,6 +17,93 @@ const StyledMessage = styled.h2`
   margin: 2rem auto;
 `;
 
+const StyledCard = styled.div`
+  margin-top: 0.8rem;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.5rem;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+  width: 300px;
+  padding: 0.2rem 1.2rem;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+
+  @media (min-width: 600px) {
+    width: 500px;
+    margin-top: 2.6rem;
+    padding: 1rem 2rem;
+`;
+
+const CardDestination = styled.h2`
+  margin: 0.8rem;
+  padding-top: 0.4rem;
+  text-align: center;
+  align-self: center;
+  color: var(--color-card-title);
+  font-size: 1.6rem;
+  
+  @media (min-width: 600px) {
+    font-size: 1.8rem;
+
+`;
+
+const CardDateContainer = styled.div`
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.2rem;
+  border-color: transparent;
+  display: grid;
+  align-self: center;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+const CardDateLabel = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--color-card-date-label);
+`;
+
+const CardDate = styled.p`
+  margin: 0;
+  padding: 0.1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--color-card-date);
+ 
+  @media (min-width: 600px) {
+    font-size: 1.1rem;
+
+`;
+
+const CardImage = styled(Image)`
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+`;
+
+const CardNotes = styled.p`
+  margin: 0;
+  padding: 0;
+  color: var(--color-card-text);
+  margin-bottom: 0.8rem;
+`;
+const CardNotesLabel = styled(CardNotes)`
+  font-weight: bold;
+  margin-bottom: 0;
+`;
+
 export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
@@ -70,30 +157,41 @@ export default function DetailsPage() {
   return (
     <>
       <Toaster />
-      <h2>{trip.destination}</h2>
-      <strong>Start:</strong> {formatDate(trip.start)} | <strong>End:</strong>{" "}
-      {formatDate(trip.end)}
-      <p>
-        <Image
-          src={trip.imageURL !== "" ? trip.imageURL : "/images/default.png"}
+      <StyledCard>
+        <CardDestination>{trip.destination}</CardDestination>
+        <CardDateContainer>
+          <CardDateLabel>Start:</CardDateLabel>
+          <CardDate>{formatDate(trip.start)}</CardDate>
+          <CardDateLabel>End:</CardDateLabel>
+          <CardDate>{formatDate(trip.end)}</CardDate>
+        </CardDateContainer>
+        <CardImage
+          src={
+            trip.imageURL !== ""
+              ? trip.imageURL
+              : "/images/triptrove-default.png"
+          }
           width={300}
           height={200}
           alt={trip.destination}
         />
-      </p>
-      <ButtonContainer>
-        <StyledTextButton onClick={handleDelete} disabled={buttonsDisabled}>
-          Delete
-        </StyledTextButton>
-        <StyledTextButton onClick={handleEdit} disabled={buttonsDisabled}>
-          Edit
-        </StyledTextButton>
-      </ButtonContainer>
-      <p>
-        <strong>Notes:</strong> {trip.notes}
-      </p>
-      <PackingList />
-      <BackButton href="/" />
+        <ButtonContainer>
+          <StyledTextButton onClick={handleDelete} disabled={buttonsDisabled}>
+            Delete
+          </StyledTextButton>
+          <StyledTextButton onClick={handleEdit} disabled={buttonsDisabled}>
+            Edit
+          </StyledTextButton>
+        </ButtonContainer>
+        {trip.notes !== "" && (
+          <>
+            <CardNotesLabel>Notes:</CardNotesLabel>
+            <CardNotes>{trip.notes}</CardNotes>
+          </>
+        )}
+        {trip.packingList && trip.packingList.length !== 0 && <PackingList />}
+        <BackButton href="/" />
+      </StyledCard>
     </>
   );
 }

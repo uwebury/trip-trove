@@ -3,7 +3,12 @@ import { useRouter } from "next/router";
 import Logo from "@/components/Layout/Logo";
 
 const HeaderContainer = styled.header`
-  background-color: var(--color-header);
+  margin: 0;
+  background: linear-gradient(
+    to right,
+    var(--color-header),
+    var(--color-header-lightened)
+  );
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -12,8 +17,12 @@ const HeaderContainer = styled.header`
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 90px;
+  height: 70px;
   z-index: 10;
+
+  @media (min-width: 600px) {
+    height: 90px;
+  }
 `;
 
 const HeaderTitle = styled.h1`

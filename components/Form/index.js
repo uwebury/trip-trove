@@ -10,20 +10,23 @@ import { ToastMessage } from "@/components/ToastMessage";
 import {
   ButtonContainer,
   StyledTextButton,
+  StyledTextButtonMediumSize,
 } from "@/components/Button/TextButton";
 import {
-  Label,
   TripForm,
-  Input,
+  StyledLabel,
+  StyledInput,
   DateContainer,
   PackListContainer,
   PackList,
+  TemplateContainer,
+  StyledSelect,
   InputContainer,
   InputItem,
   InputQuantity,
+  MiniButtonContainer,
+  MiniButtonLabel,
   StyledMiniButton,
-  Select,
-  TemplateContainer,
 } from "@/components/Form/Form.styled";
 import { packingListTemplates } from "@/lib/packingListTemplates";
 
@@ -260,8 +263,8 @@ export default function Form({
       onSubmit={handleSubmit}
       formDisabled={formDisabled}
     >
-      <Label htmlFor="destination">Destination</Label>
-      <Input
+      <StyledLabel htmlFor="destination">Destination</StyledLabel>
+      <StyledInput
         id="destination"
         name="destination"
         type="text"
@@ -272,8 +275,8 @@ export default function Form({
         autoFocus
       />
       <DateContainer>
-        <Label htmlFor="start">Start</Label>
-        <Input
+        <StyledLabel htmlFor="start">Start</StyledLabel>
+        <StyledInput
           id="start"
           name="start"
           type="date"
@@ -282,8 +285,8 @@ export default function Form({
           required
           disabled={formDisabled}
         />
-        <Label htmlFor="end">End</Label>
-        <Input
+        <StyledLabel htmlFor="end">End</StyledLabel>
+        <StyledInput
           id="end"
           name="end"
           type="date"
@@ -293,8 +296,8 @@ export default function Form({
           disabled={formDisabled}
         />
       </DateContainer>
-      <Label htmlFor="imageURL">Image URL</Label>
-      <Input
+      <StyledLabel htmlFor="imageURL">Image URL</StyledLabel>
+      <StyledInput
         id="imageURL"
         name="imageURL"
         type="text"
@@ -303,9 +306,9 @@ export default function Form({
         disabled={formDisabled}
       />
       <PackListContainer>
-        <Label htmlFor="packingList">Packing List</Label>
+        <StyledLabel htmlFor="packingList">Packing List</StyledLabel>
         <TemplateContainer>
-          <Select
+          <StyledSelect
             id="template"
             name="template"
             onChange={(event) => setSelectedTemplate(event.target.value)}
@@ -319,14 +322,14 @@ export default function Form({
             <option value="one week">One week</option>
             <option value="two weeks">Two weeks</option>
             <option value="three weeks">Three weeks</option>
-          </Select>
-          <StyledTextButton
+          </StyledSelect>
+          <StyledTextButtonMediumSize
             type="button"
             onClick={generatePackingListFromTemplate}
             disabled={formDisabled}
           >
             Apply
-          </StyledTextButton>
+          </StyledTextButtonMediumSize>
         </TemplateContainer>
         <PackList>
           {handoverData.packingList.map((item, index) => (
@@ -351,20 +354,23 @@ export default function Form({
               formDisabled={formDisabled}
             />
           )}
-          <StyledMiniButton
-            type="button"
-            id="add"
-            action="add"
-            fontSize={"1.4rem"}
-            onClick={handleAddPackingListItem}
-            disabled={formDisabled}
-          >
-            +
-          </StyledMiniButton>
+          <MiniButtonContainer>
+            <StyledMiniButton
+              type="button"
+              id="add"
+              action="add"
+              fontSize={"1.4rem"}
+              onClick={handleAddPackingListItem}
+              disabled={formDisabled}
+            >
+              +
+            </StyledMiniButton>
+            <MiniButtonLabel>Add Packing List Item</MiniButtonLabel>
+          </MiniButtonContainer>{" "}
         </PackList>
       </PackListContainer>
-      <Label htmlFor="notes">Notes</Label>
-      <Input
+      <StyledLabel htmlFor="notes">Notes</StyledLabel>
+      <StyledInput
         id="notes"
         name="notes"
         type="text"

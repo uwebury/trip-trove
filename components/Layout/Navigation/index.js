@@ -8,7 +8,6 @@ const NaviContainer = styled.nav`
   bottom: 0px;
   left: 0px;
   width: 100%;
-  height: 90;
   z-index: 1;
 `;
 
@@ -16,8 +15,12 @@ const NaviList = styled.ul`
   display: flex;
   justify-content: center;
   list-style: none;
+  height: 60px;
   padding: 0;
   margin: 0;
+
+  @media (min-width: 600px) {
+    height: 75px;
 `;
 
 const NaviItem = styled.li`
@@ -40,8 +43,13 @@ const NaviItem = styled.li`
 const StyledSvg = styled.svg`
   display: block;
   margin: auto;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
+
+  @media (min-width: 600px) {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 const StyledPath = styled.path`

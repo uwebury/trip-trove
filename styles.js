@@ -11,17 +11,17 @@ export default createGlobalStyle`
 :root {
       
   --color-blue-0: #fff;
-  --color-blue-50: #e7f4ff;
-  --color-blue-100: #d4eaff;
-  --color-blue-200: #b1d7ff;
-  --color-blue-300: #83baff;
-  --color-blue-400: #528fff;
-  --color-blue-500: #2b62ff;
-  --color-blue-600: #0732ff;
-  --color-blue-700: #002aff;
-  --color-blue-800: #0226d1;
-  --color-blue-900: #0b2488;
-  --color-blue-950: #08175e;
+  --color-blue-50: #f0f7ff;
+  --color-blue-100: #e0effe;
+  --color-blue-200: #eadffd;
+  --color-blue-300: #7dc5fc;
+  --color-blue-400: #3aa9f8;
+  --color-blue-500: #0e8de9;
+  --color-blue-600: #026fc7;
+  --color-blue-700: #0358a1;
+  --color-blue-800: #074b85;
+  --color-blue-900: #0c3f6e;
+  --color-blue-950: #082849;
   --color-blue-1000: #000;
   
   --color-orange-0: #fff;
@@ -80,23 +80,25 @@ export default createGlobalStyle`
   --color-grey-950: #22262a;
   --color-grey-1000: #000;
   
-  --color-header: var(--color-grey-400);
-  --color-header-title: var(--color-grey-0);
+
+  --color-header: var(--color-blue-600);
+  --color-header-lightened: var(--color-blue-300);
+  --color-header-title: var(--color-orange-0);
   
-  --color-logo-main: var(--color-grey-1000);
+  --color-logo-main: var(--color-blue-800);
   --color-logo-jewel: var(--color-orange-400);
 
-  --color-navigation: var(--color-grey-400);
-  --color-navigation-active: var(--color-grey-300);
-  --color-navigation-hover: var(--color-grey-200);
-  --color-navigation-item: var(--color-grey-0);
-  --color-navigation-border: var(--color-grey-0);
+  --color-navigation: var(--color-blue-400);
+  --color-navigation-active: var(--color-blue-600);
+  --color-navigation-hover: var(--color-blue-700);
+  --color-navigation-item: var(--color-blue-0);
+  --color-navigation-border: var(--color-blue-0);
 
-  --color-back-button: var(--color-grey-300);
-  --color-back-button-hover: var(--color-grey-50);
+  --color-back-button: var(--color-blue-300);
+  --color-back-button-hover: var(--color-blue-50);
 
-  --color-page-up-button: var(--color-grey-300);
-  --color-page-up-button-hover: var(--color-grey-50);
+  --color-page-up-button: var(--color-blue-300);
+  --color-page-up-button-hover: var(--color-blue-50);
   
   --color-mini-button: var(--color-orange-200);
   --color-mini-button-hover: var(--color-orange-300);
@@ -117,33 +119,52 @@ export default createGlobalStyle`
 
   --color-form-label: var(--color-grey-800);
   --color-form-input: var(--color-grey-50);
-
-  --color-image-upload: var(--color-orange-50);
-  --color-image-upload-border: var(--color-orange-300);
-  --color-image-upload-dash-line: var(--color-grey-200);
-  --color-image-upload-icon: var(--color-grey-300);
-  --color-image-upload-headline: var(--color-grey-1000);
-  --color-image-upload-text: var(--color-grey-300);
-  --color-image-upload-hover: var(--color-orange-100);
+  --color-form-item-label: var(--color-grey-200);
 
   --color-sort-selector: var(--color-orange-100);
   --color-sort-selector-text: var(--color-grey-1000);
   --color-sort-selector-border: var(--color-orange-300);
   --color-sort-selector-focus: var(--color-orange-500);
 
+  --color-card: var(--color-orange-0);
+  --color-card-border: var(--color-grey-200);
+  --color-card-title: var(--color-grey-900);
+  --color-card-date-label: var(--color-grey-300);
+  --color-card-date: var(--color-orange-1000);
+  --color-card-call-to-action: var(--color-orange-500);
+  --color-card-text: var(--color-orange-1000);
 
+  --font-size: 14px;
   }
   
+
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
+
  
+@media (min-width: 600px) {
+  :root {
+    --font-size: 1rem;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --font-size: 1.1rem;
+  }
+}
+
+
+
   body {
     margin: 0 auto;
     padding: 0;
     min-height: 100vh;
     font-family: ${defaultFont.style.fontFamily};
+    font-size: var(--font-size);
 }
+
 `;

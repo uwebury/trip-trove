@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const StyledCardList = styled.ul`
-  margin: 2rem auto;
+  margin: 1.8rem auto;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -14,12 +14,21 @@ const StyledCardList = styled.ul`
 `;
 
 const StyledCard = styled.li`
-  border: 1px solid #ddd;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.1rem;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-card-border);
   border-radius: 8px;
-  padding: 16px;
+  width: 300px;
+  padding: 0.2rem 1.2rem;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   list-style: none;
+
+  @media (min-width: 600px) {
+    width: 500px;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -36,13 +45,81 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const CardDestination = styled.h2`
+  margin: 0.8rem;
+  padding: 0;
+  text-align: center;
+  align-self: center;
+  color: var(--color-card-title);
+  font-size: 1.6rem;
+
+  @media (min-width: 600px) {
+    font-size: 1.8rem;
+  }
+`;
+
+const CardDateContainer = styled.div`
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.2rem;
+  border-color: transparent;
+  display: grid;
+  align-self: center;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+const CardDateLabel = styled.p`
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--color-card-date-label);
+`;
+
+const CardDate = styled.p`
+  margin: 0;
+  padding: 0.1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--color-card-date);
+
+  @media (min-width: 600px) {
+    font-size: 1.1rem;
+  }
+`;
+
+const CardImage = styled(Image)`
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+`;
+
+const CardText = styled.p`
+  margin: 0.6rem;
+  padding: 0;
+  align-self: center;
+  color: var(--color-card-call-to-action);
+`;
+
 const SortSelectContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 100%;
-  margin-top: 2rem;
-  gap: 1rem;
+  margin-top: 0.4rem;
+  gap: 0.6rem;
+
+  @media (min-width: 600px) {
+    margin-top: 2rem;
+    gap: 0.8rem;
+  }
 `;
 
 const StyledSortSelectLabel = styled.label`
@@ -54,14 +131,19 @@ const StyledSortSelectLabel = styled.label`
 
 const StyledSortSelect = styled.select`
   width: auto;
-  padding: 0.5rem;
+  padding: 0.3rem;
   background-color: var(--color-sort-selector);
   border: 2px solid var(--color-sort-selector-border);
   border-radius: 8px;
   font-family: var(--font-family);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
+
+  @media (min-width: 600px) {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
 
   &:focus {
     outline: none;
@@ -141,20 +223,26 @@ export default function CardList() {
         {sortedData.map((trip) => (
           <StyledLink href={`trips/${trip._id}`} key={trip._id}>
             <StyledCard>
-              <h2>{trip.destination}</h2>
-              <strong>Start:</strong> {formatDate(trip.start)} |{" "}
-              <strong>End:</strong> {formatDate(trip.end)}
-              <p>
-                <Image
-                  src={
-                    trip.imageURL !== "" ? trip.imageURL : "/images/default.png"
-                  }
-                  width={300}
-                  height={200}
-                  alt={trip.destination}
-                />
-              </p>
-              <p>More Details</p>
+              <CardDestination>{trip.destination}</CardDestination>
+              <CardDateContainer>
+                <CardDateLabel>Start:</CardDateLabel>
+                <CardDate>{formatDate(trip.start)}</CardDate>
+                <CardDateLabel>End:</CardDateLabel>
+                <CardDate>{formatDate(trip.end)}</CardDate>
+              </CardDateContainer>
+
+              <CardImage
+                src={
+                  trip.imageURL !== ""
+                    ? trip.imageURL
+                    : "/images/triptrove-default.png"
+                }
+                width={300}
+                height={200}
+                alt={trip.destination}
+              />
+
+              <CardText>More Details</CardText>
             </StyledCard>
           </StyledLink>
         ))}

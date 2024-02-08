@@ -2,31 +2,48 @@ import styled from "styled-components";
 import { defaultFont } from "@/styles.js";
 
 export const TripForm = styled.form`
-  margin: 2rem auto;
   display: grid;
-  gap: 0.3rem;
-  padding: 1rem 1.6rem;
+  width: 300px;
+  margin: 0.6rem auto;
+  gap: 0.1rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 600px) {
+    margin: 2rem auto;
+    width: 500px;
+    gap: 0.3rem;
+    padding: 1rem 1.6rem;
+  }
 `;
 
-export const Label = styled.label`
+export const StyledLabel = styled.label`
   margin-top: 0.4rem;
+  margin-bottom: 0.1rem;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--color-form-label);
+
+  @media (min-width: 600px) {
+    font-size: 0.9rem;
+  }
 `;
 
-export const Input = styled.input`
-  padding: 0.5rem;
+export const StyledInput = styled.input`
   font-family: ${defaultFont.style.fontFamily};
   font-size: inherit;
   background-color: var(--color-form-input);
   border: 1px solid #ddd;
+  padding: 0.3rem;
   border-radius: 8px;
   margin-bottom: 0.1rem;
+
+  @media (min-width: 600px) {
+    padding: 0.5rem;
+  }
 `;
 
 export const DateContainer = styled.fieldset`
@@ -56,7 +73,7 @@ export const PackList = styled.ul`
 
 export const InputContainer = styled.li`
   display: grid;
-  grid-template-columns: 8fr 2fr 1fr 1fr;
+  grid-template-columns: 8fr 2fr 1fr;
   gap: 6px;
   align-items: center;
   margin: 0;
@@ -65,14 +82,55 @@ export const InputContainer = styled.li`
   width: 100%;
 `;
 
-export const InputItem = styled(Input)`
+export const InputItem = styled(StyledInput)`
   width: 100%;
   margin: 0;
 `;
 
-export const InputQuantity = styled(Input)`
+export const InputQuantity = styled(StyledInput)`
   width: 100%;
   margin: 0;
+`;
+
+export const TemplateContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const StyledSelect = styled.select`
+  font-family: ${defaultFont.style.fontFamily};
+  font-size: inherit;
+  background-color: var(--color-form-input);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 0.3rem;
+
+  @media (min-width: 600px) {
+    padding: 0.5rem;
+  }
+`;
+
+export const MiniButtonContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.4rem;
+  margin-bottom: 0.2rem;
+`;
+
+export const MiniButtonLabel = styled(StyledLabel)`
+  justify-self: center;
+  font-size: 0.7rem;
+  color: var(--color-form-item-label);
+  padding: 0;
+  margin: 0;
+
+  @media (min-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const StyledMiniButton = styled.div`
@@ -81,9 +139,9 @@ export const StyledMiniButton = styled.div`
   align-items: center;
   justify-content: center;
   justify-self: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  padding: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.2rem;
   background-color: ${(props) => {
     switch (props.action) {
       case "add":
@@ -105,13 +163,20 @@ export const StyledMiniButton = styled.div`
     }
   }};
   border: 0px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-family: ${defaultFont.style.fontFamily};
   font-size: ${({ fontSize }) => fontSize || "1rem"};
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
+
+  @media (min-width: 600px) {
+    width: 1.8rem;
+    height: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
 
   &:active,
   :visited {
@@ -142,9 +207,4 @@ export const Select = styled.select`
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 0.1rem;
-`;
-
-export const TemplateContainer = styled.div`
-  display: flex;
-  gap: 10px;
 `;
