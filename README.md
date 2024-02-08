@@ -1,12 +1,36 @@
-# New Next Project
+# TripTrove
 
-This project was created from the neue fische `next` template.
+## Project
 
-You can [🔗 **use this template on CodeSandbox**](https://codesandbox.io/p/sandbox/github/neuefische/web-exercises/tree/main/templates/next?file=/README.md) or locally by running this command in your Terminal:
+A personal travel app that allows the user to create, update and delete journeys along with a packing list. TripTrove transforms travel planning into a breeze by offering a one-stop solution for seamlessly managing itineraries, packing lists, and journey details, all tailored to their users personal travel needs.
 
-```bash
-npx -y ghcd@latest neuefische/web-exercises/tree/main/templates/next my-app -i
-```
+## Key features
+
+### 🗺️ Journey Management
+
+Users can create, edit, and delete journeys, incorporating all necessary information for each trip.
+
+### 👀 Overview of Journeys
+
+Provides a comprehensive dashboard or overview where users can view all their journeys.
+
+### 📋 Packing List Customization
+
+Users can create personalized packing lists from scratch or generate them using predefined templates (S/M/L/XL).
+
+### 🔍 Advanced Sorting Options
+
+Enables users to sort their journeys based on specific criteria such as upcoming dates, past journeys, and possibly other relevant filters.
+
+### 📄 Template-based Packing Lists
+
+This enhances the packing list feature by allowing users to select from various templates for their packing lists.
+
+## Technologies and Tools
+
+![Primary Tech Stack](https://skillicons.dev/icons?i=nextjs,react,styledcomponents,js,html,css)
+
+![More Tech](https://skillicons.dev/icons?i=mongodb,jest,vercel,git,github,nodejs)
 
 ## Development
 
